@@ -1,0 +1,33 @@
+\begin{table*}[h]
+    \centering
+    \setlength\tabcolsep{10pt}
+    \renewcommand{\arraystretch}{0.8}
+    \caption{实验结果：准确率和压缩比率}
+    \label{tab:randomized_topk:main-result}
+    \small
+    \begin{tabular}{@{}ccrrrrr@{}}
+    \toprule
+    任务          & 压缩  & 随机top-$k$                        & Top-$k$                        & 缩小拆分层             & 量化                 & L1正则化    \\ \midrule
+    \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR-100\\      67.20\end{tabular}}\hspace{-3pt}      
+        & 高      & \textbf{65.25 / 2.86}       & \underline{62.23 / 2.86} & 55.52 / 3.13       & -                            & -          \\ \cmidrule(lr){2-7} 
+        & 中      & \textbf{65.83 / 5.71}       & \underline{61.56 / 5.71} & 60.43 / 6.25       & 53.56 / 6.25          & \underline{62.11 / 8.41}   \\ \cmidrule(lr){2-7} 
+        & 低      & \underline{65.98 / 12.4}         & 62.11 / 12.3       & 62.93 / 12.4       & \textbf{66.01 / 12.5} & 63.87 / 19.5          \\ \midrule
+    \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}YooChoose\\      63.57\end{tabular}}\hspace{-3pt}      
+        & 高      & \textbf{60.29 / 0.85}       & \underline{60.28 / 0.85} & 50.71 / 1.00       & -                            & -          \\ \cmidrule(lr){2-7} 
+        & 中      & \textbf{64.55 / 1.71}       & \underline{63.81 / 1.71} & 62.20 / 2.00       & -                            & -                                   \\ \cmidrule(lr){2-7} 
+        & 低      & \textbf{66.88 / 3.84}       & \underline{66.12 / 3.84} & \underline{66.12 / 4.00} & 64.69 / 3.13          & 61.48 / 3.01          \\ \midrule
+    \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}DBPedia\\      93.11\end{tabular}}\hspace{-3pt}        
+        & 很高    & \textbf{84.88 / 0.44}       & \underline{83.04 / 0.44} & 64.80 / 0.50       & -                            & -          \\ \cmidrule(lr){2-7} 
+        & 高      & \textbf{88.01 / 0.88}       & \underline{85.49 / 0.88} & 78.57 / 1.00       & -                            & 81.35 / 1.08          \\ \cmidrule(lr){2-7} 
+        & 中      & \textbf{90.50 / 1.97}       & 87.74 / 1.97       & 86.42 / 2.00       & -                            & \underline{87.88 / 0.93}    \\ \cmidrule(lr){2-7} 
+        & 低      & \underline{91.59 / 3.06}          & 90.05 / 3.06       & 88.38 / 3.00       & 91.20 / 6.25          & \textbf{93.11 / 5.31} \\ \midrule
+    \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}Tiny-ImageNet \\ 随机初始化 \\      53.11\end{tabular}}\hspace{-3pt}   
+        & 高      & \textbf{50.83 / 0.21}       & 48.36 / 0.21       & 35.46 / 0.23       & -                            & -           \\ \cmidrule(lr){2-7} 
+        & 中      & \textbf{51.75 / 0.42}       & \underline{47.24 / 0.42} & 45.66 / 0.47       & -                            &  -                                 \\ \cmidrule(lr){2-7} 
+        & 低      & \textbf{51.16 / 0.94}       & 45.50 / 0.94       & \underline{48.87 / 0.14} & -                            & -                                   \\ \midrule
+    \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}Tiny-ImageNet \\ 预训练 \\ 75.18\end{tabular}}\hspace{-3pt} 
+        & 高      & \textbf{71.09 / 0.21}       & \underline{70.86 / 0.21} & 59.23 / 0.23       & -                            & -           \\ \cmidrule(lr){2-7} 
+        & 中      & \textbf{72.15 / 0.42}       & \underline{71.19 / 0.42} & 66.52 / 0.47       & -                            & -                                   \\ \cmidrule(lr){2-7} 
+        & 低      & \textbf{73.83 / 0.94}       & \underline{72.52 / 0.94} & 68.67 / 0.94       & -                            & 67.82 / 1.24          \\ \bottomrule
+    \end{tabular}
+\end{table*}

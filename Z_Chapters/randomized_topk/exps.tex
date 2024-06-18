@@ -1,0 +1,182 @@
+\section{实验分析}
+
+为了验证本章所提出的随机top-$k$算法的性能，我们在4个不同类型数据集上使用不同的模型进行了实验：
+\begin{itemize}
+    \item CIFAR-100~\cite{krizhevsky_2009_cifar}: 一个常用的包含了100类总共5万张大小为$32\times 32$的彩色图片。
+        我们使用ResNet-20模型~\cite{hekaiming2016resnet}进行分类，拆分层设置为最后的隐层，大小为128。
+    %
+    \item YooChoose（1/64）~\cite{ben2015yoochoose}：一个推荐系统的数据集，包含了大约15万条用户的点击序列，总共有约1.8万个商品类别。
+        我们使用GRU4Rec模型~\cite{jannach2017gru4rec}进行分类，隐层大小设置为300。
+        拆分层设置为最后的隐层，大小为300。
+    %
+    \item DBPedia~\cite{2007dbpedia}：一个文本分类数据集，包含了219种类别，总共有大约34万条文本。
+        我们采用TextCNN模型~\cite{kimyoon2014textcnn}进行分类，卷积核的大小为 $(3,4,5)$，并且使用Glove预训练词向量~\cite{pennington2014glove}。
+        拆分层设置为最后的隐层，大小为300。
+    %
+    \item Tiny-Imagenet~\cite{tiny-imagenet}：一个图像分类数据集，包含了200类的10万张彩色图片，图片尺寸为$64\times 64$。
+        我们采用EfficientNet-b0模型~\cite{tanmingxing2019efficientnet}进行分类。
+        拆分层设置为最后的隐层，大小为1280。
+        额外地，我们对权重采用ImageNet的预训练权重和随机初始化两种情况分别进行了实验并汇报结果。
+\end{itemize}
+%
+对于每个任务，我们都测试了不同的模型压缩方法和压缩比率，并且对每一个设定都重复了5次实验取平均值汇报。
+%
+实验的代码基于Pytorch框架编写，在带有NVIDIA RTX 3090的服务器上进行。
+%
+实验时我们按照8:1:1的比例划分训练集、验证集合测试集（对于Yoochoose数据集按照先后时间划分），使用Early Stop策略获得验证集上最佳的模型，然后在测试集上进行测试。
+
+\subsection{压缩比率和模型准确率对比}
+%
+我们测试了模型在测试集上的准确率（对于Yoochoose数据集，我们用前20准确率代替），汇报在。
+%
+我们把随机top-$k$的随机参数在CIFAR-100, DBPedia, Tiny-Imagenet三个任务上$\alpha$设置为0.1，在Yoochoose任务上设置为0.05。
+%
+我们把实验结果汇报在\autoref{tab:randomized_topk:main-result}中的。
+表内每一项的格式为“准确率/压缩比率*100”，任务名称下方的准确率表示无压缩的普通拆分学习的准确率（压缩比率=100）。
+表内空白项表示该方法无法达到对应的压缩比率。
+我们用粗体表示同等压缩比率下最高的准确率，用下划线表示次高的准确率。
+
+
+\input{Z_Chapters/randomized_topk/main_table.tex}
+
+实验结果表明，随机top-$k$算法几乎在所有任务上都取得了最好的准确率和最低的压缩比率，且大幅领先于其他方法，在很低的压缩比率情况下依然保持了和原始无压缩拆分学习相近的表现。
+%
+在YooChoose任务中，随机top-$k$算法甚至超过了无压缩的拆分学习，我们认为这可能归功于随机top-$k$的正则化效果。
+%
+同时，我们注意到，量化方法和$L1$正则化方法在无法达到一些较低的压缩比率。
+这是因为量化方法最低智能达到1/32的压缩比率，并且此时拆分层表征被压缩为2值，往往会导致模型无法收敛。
+而$L1$正则化在系数过大时也会导致模型无法收敛。
+%
+
+\subsection{训练速度分析}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{Z_Resources/随机topk_训练曲线.pdf}
+    \caption{训练轮次/通讯量和准确率}
+    \label{fig:randomized_topk:training}
+\end{figure}
+
+
+我们在\autoref*{fig:randomized_topk:training}中汇报了训练过程中准确率和训练轮次以及通信量的关系。
+图的第一行是训练轮次和准确率的对比，第二行是通信量和训练轮次的对比，其中我们把一轮无压缩的拆分学习的通信量设为1。
+%
+实验结果表明，无压缩的拆分学习收敛所需要的训练论次数最少。
+但是以通信量衡量时，几乎所有压缩方法的收敛所需的通信量都不无压缩的拆分学习少，并且相比于其他方法，随机top-$k$的收敛速度和准确率都是最高的。
+%
+
+\subsection{随机参数$\alpha$分析}
+本节我们汇报了变化随机参数$\alpha$时的实验结果，包括了$\alpha$和准确率、收敛速度、泛化误差，top-$k$神经元分布、以及输入特征重构攻击效果的关系，为选取合适的$\alpha$提供参考，并且印证前文关于收敛性、泛化效果以及隐私保护的理论分析。
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.46\linewidth}
+        \includegraphics[width=1\linewidth]{Z_Resources/随机topk_cifar-alpha.pdf}
+        \subcaption{CIFAR.}
+        \label{fig:cifar-trainloss}
+    \end{subfigure}
+    \begin{subfigure}{0.46\linewidth}
+        \includegraphics[width=1\linewidth]{Z_Resources/随机topk_yoochoose-alpha.pdf}
+        \subcaption{YooChoose.}
+        \label{fig:cifar-generror}
+    \end{subfigure}
+    \caption{$\alpha$与准确率的关系}
+    \label{fig:randomized_topk-alpha-acc}
+\end{figure}
+
+\textbf{准确率}：
+\autoref{fig:randomized_topk-alpha-acc}展示了在CIFAR-100任务中$k=3$情况下，随机参数$\alpha$与模型测试准确率的关系。
+可以看出，在CIFAR-100任务中，无论怎样选取$\alpha$都可以比无压缩情况下显著提高准确率，而在YooChoose任务中，提高的幅度则相对有限。
+同时，在$\alpha$ 提高到 0.1之后，准确率随着$\alpha$的进一步提高呈现出下降趋势。
+%
+分析表明，$\alpha \in [0.5, 1]$ 可以使得模型达到较高准确率；而过大的$\alpha$会引入过多的噪声，从而损害模型的效果。
+
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}{0.45\linewidth}
+        \includegraphics[width=1\linewidth]{Z_Resources/随机topk_cifar100-trainacc.pdf}
+        \subcaption{训练损失.}
+        \label{fig:randomized_topk-cifar-trainloss}
+    \end{subfigure}
+    \begin{subfigure}{0.47\linewidth}
+        \includegraphics[width=1\linewidth]{Z_Resources/随机topk_cifar100-generror.pdf}
+        \subcaption{泛化误差.}
+        \label{fig:randomized_topk-cifar-generror}
+    \end{subfigure}
+    \caption{$\alpha$与训练损失以及泛化误差的关系}
+    \label{fig:randomized_topk-alpha-loss}
+\end{figure}
+\textbf{收敛性和泛化误差}：
+\autoref{fig:randomized_topk-alpha-loss}展示了在CIFAR-100任务中$k=3$情况下,随机参数$\alpha$与模型训练损失和泛化误差的关系。
+为了更清晰呈现泛化误差的变化，我们再对泛化误差进行了调整，将\autoref{fig:randomized_topk-cifar-trainloss}调整为的Y轴调整为如下：
+\begin{equation}
+    y = \text{泛化误差（训练集准确率 - 测试集准确率）} - 0.5 \times \text{训练集准确率} + 0.2.
+\end{equation}
+%
+从图中可以看出，top-$k$稀疏化在训练开始时损失下降较快，但是随着训练轮数的增长，随机top-$k$的损失下降变快，并且最终收敛的损失低于top-$k$。
+另外，太大的$\alpha$也导致损失下降变慢。
+%
+同时，相对于无压缩的情况，top-$k$稀疏化显著增加了泛化误差。而增大$\alpha$也显著降低了泛化误差。
+%
+这和我们在\autoref{sec:randomized_topk:method}中对于随机top-$k$算法的收敛性和泛化性的理论分析相对应。
+
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Z_Resources/随机topk_cifar100-dist-topk.pdf}
+    \caption{两方拆分学习推断示意图}
+    \label{fig:randomized_topk-dist}
+\end{figure}
+
+\textbf{Top-$k$神经元的分布}
+\autoref{fig:randomized_topk-dist}显示了采用不同的$\alpha$训练后，在推断阶段使用测试集样本时，神经元被选为top-$k$次数的分布。具体而言，隐层的第$i$个神经元被选为top-$k$的次数按照如下公式计算：
+\begin{equation}
+    C_i = \sum_{j=1}^N [\text{$M_b(X_j)$的 top-$k$ 神经元包含了其第 $i$ 个神经元（是=1，否=0）}],
+\end{equation}
+其中，$N$表示测试集样本数，$X_j$表示第$j$个样本。
+%
+%
+可以看出，仅使用top-$k$稀疏化时，神经元被选为top-$k$次数的分布不均匀，部分神经元几乎从未被选为top-$k$，而某些神经元则总是被选中；而使用随机top-$k$有效地解决了这一问题，top-$k$次数的分布变得均匀，说明各个神经元被选为top-$k$的概率更加均等。
+%
+即使是一个较小的$\alpha$（0.05），也能显著使得top-$k$次数的分布变得均匀。
+%
+这也说明，随机top-$k$更好地利用了表征空间，从而提高了泛化性能。
+%
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{Z_Resources/随机topk_inversion-attack.pdf}
+    \caption{CIFAR-100输入重建攻击效果}
+    \label{fig:randomized_topk-inversion_attack}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.58\linewidth]{Z_Resources/随机topk_attack-error.pdf}
+    \caption{CIFAR-100输入重建攻击误差}
+    \label{fig:randomized_topk-attack-error}
+\end{figure}
+
+
+\subsection{隐私分析}
+为了表明随机top-$k$压缩方法对于输入数据的隐私的影响，我们在CIFAR-100数据集上进行了输入特征重建攻击的实验。
+%
+输入重建攻击是一种从隐层恢复出输入数据的手段，其方法是通过泄漏的数据，训练一个重构神经网络将拆分层数据逆向回原始输入特征~\cite{hezecheng_2019_model_inversion_attack,vepakomma2020nopeek}。
+%
+本实验中，重构神经网络的结构为（全连接，卷积，反卷积，卷积），其中全连接层将128维拆分层投影为$4 \times 16\times 16$ （4表示频道数），此后三层的输出大小分别为$16\times 16 \times  16$，$32\times 32 \times 32$，$3\times 32 \times 32$。激活函数为LeakyReLU~\cite{maas2013leaky_relu}。
+
+\autoref{fig:randomized_topk-inversion_attack}展示了在CIFAR-100任务中$k=3$情况下，在模型推断阶段，攻击者根据拆分层表征对原始输入图片进行恢复攻击的效果。
+从图中可以看出，由于拆分层被设置在最后一层线性层，因此即使是无压缩的情况下，攻击者依然难以还原图片的主要信息，只能呈现出模糊的类似于类别的“平均图”的图片。
+%
+而top-$k$和随机top-$k$进一步使得原始图片中的色彩信息几乎也被丢失。
+%
+
+为了更加清晰地现实随机top-$k$和其他方法的输入特征隐私保护效果，我们测量了图片恢复攻击的平方误差，即$\mathbb E\left[ \Vert \text{恢复值} - \text{原始值} \Vert_2^2 \right]$，并汇报在\autoref{fig:randomized_topk-attack-error}中。
+%
+从图中可以看出，top-$k$稀疏相对于原始无压缩的拆分学习显著提高了攻击者的重建损失，增强了隐私保护效果。
+而随机top-$k$比top-$k$拥有更高的重建损失，说明其进一步提高了对于输入特征的隐私保护。
+
+

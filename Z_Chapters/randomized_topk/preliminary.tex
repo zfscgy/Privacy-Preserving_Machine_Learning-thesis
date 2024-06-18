@@ -1,0 +1,82 @@
+\section{压缩方法初步研究}
+本节介绍了几种基础的可以对拆分学习的通讯量进行压缩的方法，包括缩小拆分层、top-$k$稀疏、量化拆分层、使用$L1$损失函数诱导稀疏，并对各方法进行初步分析。
+%
+在以下的分析中，我们将拆分学习的底部模型记作$M_b$，顶部模型记作$M_t$，输入、中间结果、输出分别记作$X, H, Y$。
+我们使用$d$表示初始的拆分层的维度，$k$表示拆分层压缩后的维度。
+
+
+\textbf{缩小拆分层}：
+在拆分学习中，每一轮训练或推断中都会传输拆分层的值以及（训练时）梯度。
+%
+因此，缩小拆分层的大小可以直接减少拆分学习每一轮的通讯量。
+%
+假设1个全连接网络的隐层维度分别是1000（输入）-100（第1层）-100（第2层/拆分层）-10（输出层），则每一轮前向传播需要传输100个数值；若把拆分层维度缩小到10，则只需要传输10个数值。
+%
+同样地，在反向传播过程中，也只需要传输10个梯度值。
+%
+因此，这种方法可以削减90\%的每轮通讯量。
+
+\textbf{量化拆分层}：
+量化指的是将较高比特位的值（如32位浮点数）转化为较小比特位的近似值（如16位浮点数，4位整数，甚至1位的0-1布尔值）~\cite{zhou2016dorefa,banner2018_8bit,yang2019quantization}。
+%
+其在神经网络中被广泛应用于减少计算和存储开销。
+%
+通过对拆分层的值以及梯度进行量化压缩，也可以减少拆分学习训练和推断过程中的通讯量。
+%
+本文考虑最常用的等距均匀量化（Uniform Quantization），对于一个隐层向量$\bvec{h} = (h_1, \cdots, h_d)$，将其量化为 $b$ 比特的量化方法为：
+\begin{equation}
+    \bvec{h}^C = \mathsf{Compress}(\bvec{h}) = \left( \left\lfloor \dfrac{h_1 - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot  2^b \rfloor, \cdots, \lfloor \dfrac{h_n - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot 2^b \right\rfloor \right)，
+\end{equation}
+其中，$h_\text{min}$ 和 $h_\text{max}$ 分别表示向量$\bvec{h}$中的最小值和最大值。
+%
+而解压缩的过程则可以表示为：
+\begin{equation}
+    \bvec{h}' = \mathsf{Decompress}(\bvec{h}^C) = \left(\cdots, h_\text{min} + (h^C_i + \dfrac12)(\dfrac{h_\text{max} - h_\text{min}}{2^b}), \cdots \right).
+\end{equation}
+% 
+尽管量化压缩可以应用于前向传播的隐层值和反向传播的梯度值，但是在实验中我们发现，如果将量化压缩同时应用于前向传播和反向传播，会带来严重的模型效果损失。
+%
+考虑到本文主要关注拆分学习推断过程中的通讯压缩，因此只将量化压缩应用于反向传播的隐层梯度中。
+
+\textbf{Top-$k$稀疏化}：
+Top-$k$稀疏化指在向量中只保留$k$个绝对值最大的元素，而将其他元素设为0.
+%
+在这种情况下，只需要传输$k$个元素的值和下标。
+%
+如果在前向传播中应用了top-$k$稀疏化，则较小的$d-k$个元素没有参与顶部模型的计算，因此，在反向传播过程中也无需传播这$d-k$个元素的信息。
+%
+因此，top-$k$稀疏化可以自然地同时应用于前向传播和反向传播。
+%
+
+\textbf{L1正则化}：$L1$正则化通过$L1$损失来诱导稀疏性，被广泛应用在不同的机器学习领域~\cite{tibshirani1996lasso,wright2008sparse_face,yin2012kernel,hoefler2021sparse_deeplearning}。
+%
+具体来说，在拆分学习的训练过程中，我们在原有的损失函数上加入一个对于拆分层的隐层向量的$L1$损失：$L' = L + \lambda \sum_{i=1}^d |h_i|$。
+%
+其中，$\lambda$ 用于控制稀疏化的强度，大的$\lambda$会导致更高的稀疏性，但是同时也会降低模型训练的效果。
+%
+由于$L1$正则化需要在训练过程中逐渐实现稀疏化，因此其稀疏化只适用于模型的推断阶段，此时我们可以将隐层中接近0的元素删除，类似top-$k$稀疏化来传播绝对值较大的值和对应的下标。
+%
+
+
+我们将各种方法对应的压缩比率（压缩后大小/压缩前大小）总结在表 \ref{tab:randomized_top-k:compression_ratio}中。
+%
+对于top-$k$即$L1$稀疏化，我们未考虑对下标进行压缩。
+%
+表中 $N$ 表示初始值的比特位数，一般为32，$k$表示保留的元素的个数。
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ccc}
+    \toprule
+    \multirow{2}{*}{压缩方法} & \multicolumn{2}{c}{压缩比率} \\ 
+    \cmidrule(lr){2-3}
+            & 前向传播 & 反向传播 \\ \midrule
+    拆分层缩小     & $k/d$       & $k/d$ \\
+    $b$比特量化    & $2^b/N$    & 1 \\
+    Top-$k$稀疏化  & $k/d\cdot (1 + \lceil \log_2 d \rceil/N)$ & $k/d$ \\
+    L1正则化       & $k/d\cdot (1 + \lceil \log_2 d \rceil/N)$ & 1 \\
+    \bottomrule
+    \end{tabular}
+    \caption{不同压缩方法的压缩比率}
+    \label{tab:randomized_top-k:compression_ratio}
+\end{table}

@@ -1,0 +1,33 @@
+\section{密码学与非密码学混合的隐私保护机器学习}
+考虑到基于密码学的隐私保护机器学习框架往往开销巨大且实现困难，也有许多研究尝试将密码学和非密码学方法进行融合，从而实现更高效的隐私保护机器学习。
+%
+
+一种方法是将同态加密和其他方法结合，其计算流程大致可以表示为
+\begin{equation}
+    \llbracket \bvec y \rrbracket = W \otimes \llbracket \bvec x \rrbracket  + \llbracket \bvec b \rrbracket,
+\end{equation}
+其中，$\llbracket \cdot \rrbracket$表示加同态加密的密文，$\otimes$ 表示明文和密文的同态乘法，其结果为乘积的密文。
+%
+GELU-Net算法~\cite{zhangqiao_2018_gelu_net}利用同态加密实现了两方的安全神经网络推断。
+该算法假设用户拥有同态加密的私钥。
+对于神经网络的每一层，用户将数据上传至服务器，服务器执行同态乘法运算，得到加密的结果后返回给用户，用户再计算非线性的激活函数值。
+%
+该方法虽然保护了用户的隐私，但是若用户多次进行查询，即可通过对多个输入$\bvec x_i$和输出$\bvec y_i$ 解线性方程组$(W\bvec x_i + b = y_i)$，恢复出神经网络的权重。
+%
+BAYHENN算法~\cite{xiepeichen_2019_bayhenn}类似Gelu-Net，区别在于其则采用贝叶斯神经网络来保证模型的隐私。
+在贝叶斯神经网络中，模型的权重是随机变量，使得根据输入和输出学习权重转换成一个“噪声学习（Learning With Errors）”问题，而该问题被证明是一个困难问题。
+%
+然而后续研究指出~\cite{wong_2020_lwe_model}，BAYHENN和GELU-Net的安全性都存在问题，很容易被攻击者通过选取特定输入的方式窃取模型数据。
+
+此外，还有一些研究通过结合拆分学习和密码学方法，提高了隐私保护机器学习的效率。
+Zhou等~\cite{zhou_2022_codesign}提出在多方的纵向联邦学习中使用秘密分享计算神经网络的第一个全连接层，此后在服务器上明文计算。
+Chen等~\cite{chen2020vertically}将该方法进一步扩展到图神经网络中。
+%
+BlindFL框架~\cite{fu2022blindfl}将纵向联邦学习的底部模型拆分层使用密码学方法计算，同时明文计算底部模型的其他层和顶部模型。
+%
+这些方法在一定程度上权衡了效率和隐私，相比于传统的拆分学习，其一般只暴露多个底部模型产生的联合表征而非单一参与方底部模型的输出。
+%
+但是由于中间结果的暴露，其依然面临着较大的隐私泄漏风险，存在着被逆向攻击的可能性~\cite{hezecheng_2019_model_inversion_attack,abuadbba2020can_split,luoxinjian2021feature_attack,erdogan2022unsplit,qiupengyu_2023_label_selling_you_out}。
+
+综上所述，当前密码学和非密码学方法混合实现隐私保护机器学习的研究仍然处于起步阶段。
+%

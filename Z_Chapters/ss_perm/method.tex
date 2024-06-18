@@ -1,0 +1,382 @@
+\section{方法描述}
+\subsection{基于秘密分享的线性运算}
+由于本章的设定是两方拥有数据和模型，外加第三方辅助计算，因此本章采用两方加法（Additive Sharing）分享作为秘密分享方案。
+%
+秘密分享一般在有限域上进行，在本章中我们将其定义在整数环$\mathbb Z_N$上。
+%
+$\mathbb Z_N$表示模$N$的整数环，其元素为$\{0, 1, \cdots, N - 1\}$。
+所有的计算都通过模$N$进行，也就是将自然数运算的结果对$N$取余数。
+%
+在$\mathbb  Z_N$上两方加法分享的基本运算如下：
+\begin{itemize}
+    \item $\mathsf{Share}(x)$：
+    将一个数$x \in \mathbb Z_N$分享给$P_0$和$P_1$。
+    具体而言，分享方（可以是$P_0, P_1$或其他外部参与方）产生随机数$r \stackrel{\$}{\gets} \mathbb Z_N$（$\stackrel{\$}{\gets}$表示等概率地从集合中选取），然后将$\langle x \rangle_0 := r$发送给$P_0$，将$\langle x \rangle_1 := x - r$发送给 $P_1$。
+    我们用$\langle  x \rangle$表示$x$处于分享状态。
+
+    \item $\mathsf{Reconst}(\langle x \rangle, P_i)$：
+    将分享状态的$\langle x \rangle$恢复给$P_i$方（默认$P_i = \{P_0, P_1\}$）。
+    $P_0$和$P_1$分别把$\langle x \rangle_0, \langle x \rangle_1$发送给$P_i$，然后$P_i$计算$x = \langle x \rangle_0 + \langle x \rangle_1$。
+
+    \item $\mathsf{Add}(\langle x \rangle, y)$：
+    将一个分享状态的数$\langle x \rangle$与一个公开的数$y$相加。
+    将其和记为$\langle z \rangle$，$P_0$本地计算$\langle z \rangle_0 = \langle x \rangle_0 + y$，$P_1$本地计算$\langle z \rangle_1 = \langle x \rangle_1$。
+    
+    \item $\mathsf{Add}(\langle x \rangle, \langle x \rangle)$：
+    将分享状态的$\langle x \rangle, \langle y \rangle$相加。
+    将其和记为$\langle z \rangle$，$P_i$（$i\in \{0, 1\}$）本地计算$\langle z\rangle_i = \langle x \rangle_i + \langle y \rangle_i$。
+    
+    \item $\mathsf{Mul}(\langle x \rangle, y)$：
+    将一个分享状态的数$\langle x \rangle$与一个公开的数$y$相乘。
+    将其乘积记为$\langle z \rangle$，$P_i$（$i\in \{0, 1\}$）本地计算$\langle z\rangle_i = \langle x \rangle_i y$。
+
+    \item $\mathsf{Mul}(\langle x \rangle, \langle y \rangle)$：
+    将两个分享状态的数$\langle x \langle, \langle y \rangle$相乘。
+    该过程较为复杂，需要借助Beaver三元组才可以进行。
+    本章使用辅助第三方$P_2$来产生Beaver三元组。
+    %
+    具体步骤如下：
+    \begin{enumerate}
+        \item $P_2$产生$u, v\stackrel{\$}{\gets} \mathbb Z_N$，并计算$w = uv$。
+        
+        \item $P_2$执行$\mathsf{Share}(u), \mathsf{Share}(v), \mathsf{Share}(w)$，将$u, v, w$分享给$P_0, P_1$。
+        
+        \item $P_0$和$P_1$执行$\mathsf{Reconst}(\langle x \rangle - \langle u \rangle), \mathsf{Reconst}(\langle y \rangle - \langle v \rangle)$。
+
+        \item $P_0$计算$\langle  z \rangle_0 = (x - u)(y - v) + (x - u)\langle v \rangle_0 + \langle u \rangle_0 (y - v) + \langle w \rangle_0$；$P_1$计算$\langle  z \rangle_1 = (x - u)\langle v \rangle_1 + \langle u \rangle_1 (y - v) + \langle w \rangle_1$。
+    \end{enumerate}
+    我们可以简单地验证 $z = xy$。
+\end{itemize}
+
+可以看到，秘密分享的所有运算中，仅有两个分享状态的数的乘法需要参与方之间进行信息传输。
+%
+且对于任何一个参与方$P_i$，如果其没有关于$x$的信息，则$x - u$对其来说也是一个均匀分布的随机变量；同理，如果没有关于$y$的信息，则$y - v$ 对其来说也是一个均匀分布的随机变量。
+%
+因此，使用上述方法计算两个分享状态的数的乘法并不会暴露任何隐私信息。
+%
+事实上，上述秘密分享的运算均满足信息论安全性（Information-Theoretic Security），也就是在各个参与方不共谋的情况下，即使攻击者拥有无穷的计算机，他依然无法获得任何原始数据的信息\cite{}。
+
+尽管上述的秘密分享运算只定义在单独一个整数上，很容易可以看出我们也可以将其定义到任何向量、矩阵，乃至张量（Tensor）的运算上，乘法也可以拓展为矩阵乘法、张量乘法等一切满足乘法分配律的运算上，且安全性得到完全保留。
+
+\subsubsection{定点数编码}
+一般的神经网络的计算都定义在实数上，并且以浮点数的格式进行实际的计算。
+%
+但是上述的秘密分享运算只适用于整数。
+%
+因此，我们需要定义实数与浮点数点相互转换机制。
+%
+我们把整数环$\mathbb Z_N$分为两个部分：$[0, \lfloor N/2 \rfloor)$ 用于表示正数，而$[\lfloor N/2 \rfloor, N)$用于表示负数。
+%
+对于一个实数$x$，我们首先计算其正整数部分$\lfloor x\cdot P \rceil$，其中$P$表示放缩系数，用于控制小数部分的精度。
+%
+然后对于负数，我们则用$N - 1$对其进行相减，得到 $N - x - \lfloor x\cdot P \rceil$。
+%
+综上所述，将实数编码为整数的函数为：
+\begin{equation}
+    x_Z := \mathsf{Encode}(x) = x \cdot P \bmod N.
+\end{equation}
+%
+相应的解码函数为：
+\begin{equation}
+    x := \mathsf{Decode}(x_Z) = \begin{cases}
+        x_Z / P         & \text{if $x < N/2$ ($x$是正数)} \\
+        N - x_Z / P     & \text{else ($x$ 是负数)}
+    \end{cases}
+\end{equation}
+%
+
+同时，为了保证编码和解码的准确性，实数$x$必须处于区间$\big[ -\dfrac{N}{2P}, \dfrac{N}{2P} \big)$中。
+
+
+\subsubsection{乘法截断}
+当两个被编码的实数$x_Z, y_Z$进行乘法后，其对应的放缩系数也会被平方：
+\begin{equation}
+    x_Zy_Z = (xP \bmod N)(yP \bmod N) = xyP^2 \bmod N = [(xy)_F \bmod N \cdot P] \bmod N.
+\end{equation}
+%
+若乘法执行了$L$次，则对应的放缩系数会变为$P^L$，此时是$xyP^L$很可能已经超出了$[-N/2, N/2)$这一个有效的解码范围，导致解码错误。
+%
+为此，我们需要在每次乘法之后进行截断操作，即
+\begin{equation}
+    z = xy \Rightarrow z_Z = \Big\lfloor \dfrac{(x_Z y_Z) \bmod P}{P} \Big\rceil.
+\end{equation}
+%
+
+在明文状态下，该截断操作可以直接执行。
+%
+对于秘密分享状态下的正整数，则截断操作会更为复杂。
+%
+SecureML论文的作者采用了两方直接本地截断（Local Truncation）的办法，也就是：
+\begin{equation}
+    \langle z_Z \rangle_i \gets \langle x_Zy_Z \rangle_i / P.
+\end{equation}
+%
+注意这里的除法需要考虑符号位。
+此处我们直接用“/”来表示整数除法（$\lfloor \cdot / \cdot \rceil$）。
+%
+可以证明，该方法能够以很大的概率产生和在明文上截断最多相差1的结果。
+
+\begin{theorem}[本地截断]
+\label{thm:ss-perm:local-truncation}
+    对于在$\mathbb Z_N$下分享状态的数$\langle x \rangle_0, \langle x \rangle_1$，且$|x| \le x_\text{max} < N/2$，则最多有
+    $\dfrac{2x_\text{max}}{N}$的概率使得$\langle x \rangle_0/P + \langle x \rangle_1/P\notin [x/P - 1, x/P + 1]$。
+\end{theorem}
+\begin{proof}
+    首先考虑$\langle x \rangle_0, \langle x \rangle_1$符号相反的情况，此时在$\mathbb Z$上有$\langle x \rangle_0 + \langle x \rangle_1 = x$。
+    注意到因为四舍五入的误差不超过0.5，因此对于任何$a + b = c \in \mathbb R$，有$\lfloor a \rceil + \lfloor b \rceil \in [\lfloor c \rceil - 1, \lfloor c \rceil + 1]$。
+    将其带入$\langle x \rangle_0/P + \langle x \rangle_1/P = x/P$，即可得到$\langle x \rangle_0, \langle x \rangle_1$符号相反时该结论成立。
+    接下来考虑$\langle x \rangle_0, \langle x \rangle_1$符号相同的概率。
+    %
+    假设$-x_\text{max} \le x \le 0$，则需要满足 
+    %
+    \begin{equation}
+    \begin{cases}
+        0 \le \langle x \rangle_0 < N/2 \\
+        0 \le x - \langle x \rangle_0 < N/2
+    \end{cases}
+    \end{equation}
+    第二行可以改为$N/2 < \langle x \rangle_0 - x \le N$，只有$\langle x \rangle_0 \in (N/2 - x, N/2)$时，上述条件成立。
+    再考虑$-x_\text{max} \le x \le 0$，得到其概率小于 $2x_\text{max}/N$。
+    对于$0 \le x \le x_\text{max}$的情况，我们也可以得到类似结果$\langle x \rangle_0 \in [N/2, N/2 + x)$，证明完毕。
+\end{proof}
+%
+上述定理表明，采用简单的本地截断方法，其截断出错的概率也是很小的。
+%
+但是小概率的截断错误在神经网络训练中也是不可接受的，下面我们举例说明。
+%
+比如我们令$N = 2^{64}$，放缩系数$P = 2^{20}$，$|x|, |y| \le 2^{8}$，则经过一次乘法$z = xy$，$|z| \le 2^{56}$。
+%
+通过\autoref{thm:ss-perm:local-truncation}可以得到，此时截断出错的概率小于$2 \times 2^{56} / 2^{64} = 1/128$。
+%
+考虑到神经网络的计算中会涉及到较大的矩阵，则截断出错很容易在计算中出现。
+%
+不仅如此，我们可以看到该截断产生的误差是非常大的，可以到接近$\dfrac{N}{2P}$的量级。
+%
+如此巨大的误差将会给神经网络的训练或推断带来重大的影响，使得其结果毫无意义。
+%
+因此，我们必须采取措施避免简单的“本地截断”带来的误差。
+
+
+根据\autoref{thm:ss-perm:local-truncation}的分析，可以看到截断错误是否发生与$\langle x \rangle_0$有关。
+%
+具体而言，当$|\langle x \rangle_0| \in (N/2-x_\text{max}, N/2]$时，才有可能产生截断错误。
+%
+因此，对$x$进行截断时，我们只需要让$P_0$检查$|\langle x \rangle_0|$是否在可能截断错误的范围内，再对其进行缩小处理。如果$|\langle x \rangle_0|$在该范围内，若$\langle x\rangle_0$为正数（在$[0, N/2)$区间），则$P_0$首先计算$\langle x \rangle_0 \gets \langle x \rangle_0 - N/4$，并发送“+”给$P_1$，$P_1$执行$\langle x \rangle_1 \gets \langle x \rangle_1 + N/4$。
+%
+注意到这种方法会暴露关于$x$的范围信息，但是其暴露的概率较小（等价于定理\autoref{thm:ss-perm:local-truncation}中截断出错的概率），且即使暴露，很大概率也只暴露一个宽度为$x_\text{max}$左右的范围。
+%
+考虑到神经网络的计算过程中的变量元素都很多，暴露其中很少部分元素的范围不会造成实质性的隐私泄露。
+%
+总而言之，本章所以出的方法是将小概率的截断错误转化为小概率的部分元素范围泄露。
+因为在神经网络的训练和推断中往往涉及到数量庞大的大规模的矩阵运算，即使是小概率的截断错误，由于其错误的误差极大，也会导致神经网络的训练崩溃或输出无意义结果。
+而相比之下，泄露少量元素的范围并不会让攻击者窃取有意义的隐私数据。
+%
+因此，本章提出的截断方法更适合神经网络的安全计算。
+
+\subsubsection{优化的秘密分享乘法}
+为了进一步提高效率，我们注意到上述截断过程可以与秘密分享的乘法过程绑定，从而实现减少通讯量的目的。
+%
+在秘密分享的乘法中，$P_0$和$P_1$之间要进行两次通信来重构$x - u$和$y - v$，分别是$P_0$发送自身对应的分享值和$P_1$发送自身对应的分享值。
+%
+假设$P_1$先发送自身的秘密分享值，则$P_0$收到分享值后，可以先计算乘积分享值$\langle z \rangle_0$，同时利用该值检查是否有需要进行缩小，再把是否需要缩小的信息连同$\langle x \rangle_0 - \langle u \rangle_0, \langle y \rangle_0 - \langle v \rangle_0$一同发给$P_1$。
+%
+这样不会在秘密分析乘法中带来任何额外的通讯。
+%
+我们将优化后的秘密分享张量乘法定义在\autoref{alg:ss-perm:ss-mul}中。
+
+
+\begin{algorithm}[h!]
+\caption{秘密分享乘法{$\mathsf{SSMul}(\langle X \rangle, \langle Y \rangle, f_\text{mul}$)}}
+\label{alg:ss-perm:ss-mul}
+    \begin{algorithmic}[1]
+    \Require{秘密分享的张量$\langle X \rangle, \langle Y \rangle$, 乘法函数$f_\text{mul}$, 放缩系数$P$，结果范围$z_\text{max}$}
+    \Ensure{秘密分享的张量$\langle Z = \dfrac{XY}P \rangle$}
+    \State 各方将默认乘法设置为$f_\text{mul}$ \LineComment{视具体情况，可以是逐元素乘法、矩阵乘法等}
+    \State $P_2$生成Beaver三元组$UV=W$（$U, V$形状和$X, Y$相同，其元素从$\mathbb Z_N$中均匀采样），并将其分享给$P_0, P_1$
+    \State $P_1$发送$\langle X \rangle_1 - \langle U \rangle_1, \langle Y \rangle_1 - \langle V \rangle_1$给$P_0$
+    %
+    \State $P_0$恢复出
+    $X - U = \langle X \rangle_0 - \langle U \rangle_0 + \langle X \rangle_1 - \langle U \rangle_1, 
+     Y - V = \langle Y \rangle_0 - \langle V \rangle_0 + \langle Y \rangle_1 - \langle V \rangle_1$
+    %
+     \State $P_0$计算出$\langle Z \rangle_0 = (X - U)(Y - V) + (X - U)\langle V \rangle_0 + \langle U \rangle_0 (Y - V) + \langle W \rangle_0$
+    %
+    \State $P_0$找出$\langle Z \rangle_0$中满足 $\langle Z \rangle_0[i] \in (N/2 - z_\text{max}, N/2)$的下标$i$集合，记作$I_\text{large}$；同理找到$\langle Z \rangle_0[i] \in [-N/2, -N/2 + z_\text{max})$的下标$i$集合，记作$I_\text{small}$
+    %
+    \NewlineComment{此处下标为把张量$\langle Z \rangle_0$转化为1维向量的下标}
+    %
+    \For{$i \in I_\text{large}$}
+        \State $P_0$ 设置 $\langle Z \rangle_0[i] \gets \langle Z \rangle_0[i] - N/4$
+    \EndFor
+    \For{$i \in I_\text{small}$}
+        \State $P_0$ 设置 $\langle Z \rangle_0[i] \gets \langle Z \rangle_0[i] + N/4$
+    \EndFor
+    %
+    \State $P_0$发送$\langle X \rangle_0 - \langle U \rangle_0, \langle Y \rangle_0 - \langle V \rangle_0, I_\text{small}, I_\text{large}$给$P_1$
+    %
+    \State $P_1$恢复出$X - U, Y - V$
+    \State $P_1$计算出$\langle Z \rangle_1 = (X - U)\langle V \rangle_1 + \langle U \rangle_1(Y - V) + \langle W \rangle_1$
+    %
+    \For{$i \in I_\text{large}$}
+        \State $P_1$ 设置 $\langle Z \rangle_1[i] \gets \langle Z \rangle_1[i] + N/4$
+    \EndFor
+    \For{$i \in I_\text{small}$}
+        \State $P_1$ 设置 $\langle Z \rangle_1[i] \gets \langle Z \rangle_1[i] - N/4$
+    \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+
+
+
+\subsection{基于随机排列的激活函数计算}
+神经网络中除了矩阵的线性运算（加法、乘法），另一种不可或缺的运算是非线性激活函数（Activation Function）。
+%
+若没有激活函数，则整个神经网络将退化为一个线性映射。
+%
+由于激活函数是非线性的，甚至无法使用多项式表示，因此其对密码学方案不友好，当前许多研究采用混淆电路或其他精心设计的MPC协议计算，产生了大量的开销，同时由于其中采用了近似计算，可能还会带来神经网络的精确度损失~\cite{}。
+%
+另一方面，如果将神经网络中间结果发送给第三方来算激活函数，则第三方可以根据中间结果来反推神经网络的权重。
+%
+为此，本章提出利用随机排列来安全地解决激活函数的计算。
+
+
+对$n$个元素进行随机排列（Random Permutation），表示将$n$个元素打乱顺序，总共有$n!$种不同的排列顺序。
+%
+注意到，排列的数目随着$n$的增长呈现出超指数（Super-Exponential）增长，因此即使是较少的元素，其可能的排列顺序也是天文数字。
+%
+比如，仅仅10个元素有360多万种排列（$\approx 2^{22}$）；而当元素个数增长到100，则可能的排列数超出$2^{524}$。
+%
+如此大量的排列个数，使得从随机排列中猜测出原排列的概率几乎为0。
+%
+考虑到神经网络中间结果往往是包含大量元素的张量，我们可以认为对其进行随机排列后可以几乎消除所有原始张量的信息。
+%
+并且注意到，神经网络的激活函数是作用于每个元素上的（Element-wise），因此打乱顺序后执行激活函数与执行激活函数后再打乱顺序是等价的。
+
+因此，我们可以让$P_0$和$P_1$对秘密分享的神经网络中间结果执行随机排列后，再恢复到$P_2$上。
+%
+$P_2$随即在随机排列后的明文上计算出激活函数的值，再将其重新分享给$P_0$和$P_1$两方。
+%
+$P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
+%
+注意到，在此过程中，$P_0$和$P_1$必须采用同样的随机排列，否则会导致恢复错误。
+%
+此外，我们还可以通过（在元素数量不足够大时）添加扰动元素；对Tanh、Sigmoid等对称激活函数在随机排列中加入随机翻转来进一步提高安全性。
+上述方法实现简单，本文不再赘述。
+%
+我们将该方法在\autoref{alg:ss-perm:perm-act}中进行具体描述。
+
+
+\begin{algorithm}[h!]
+    \caption{基于随机排列的激活函数计算方法{$\mathsf{PermNonlinear}(\langle X \rangle, f$)}}
+    \label{alg:ss-perm:perm-act}
+        \begin{algorithmic}[1]
+        \Require{秘密分享的张量$\langle X \rangle$, 激活函数$f$}
+        \Ensure{秘密分享的张量$\langle Y = f(X) \rangle$}
+        %
+        \State $P_0$ 生成一个随机排列 $\pi \stackrel{\$}{\gets} \text{Perm}(\text{Size}(X))$
+        \LineComment{Size$(X)$表示张量$X$的元素个数}
+        \State $P_0$ 将$\pi$ 发送给$P_1$
+        %
+        \State $P_0, P_1$分别将$\pi[\langle X \rangle_0], \pi[\langle X \rangle_1]$发送给$P_2$
+        %
+        \State $P_2$恢复出$\pi[X] = \pi[\langle X \rangle_0] + \pi[\langle X \rangle_1]$，并计算出$\pi[f(X)] = f(\pi[X])$
+        \State $P_2$将$\pi[f(X)]$分享给$P_0, P_1$
+        \State $P_0$和$P_1$分别计算得到$\langle Y \rangle_0 = \pi^{-1} \langle \pi[f(X)] \rangle_0, \langle Y \rangle_1 = \pi^{-1} \langle \pi[f(X)] \rangle_1$
+    \end{algorithmic}
+\end{algorithm}
+
+
+通过该方法，我们可以极大的降低激活函数的计算开销。我们在\autoref{tab:ss-perm:relu}中对本方法和对比算法的ReLU激活函数计算的通讯轮次/通讯量进行对比。
+%
+表中的$p$是一个质数（一般为三位数），$k$是混淆电路的安全性参数（Security Paramter），一般大于128。
+%
+注意到，本方法的开销已经考虑了下一节所用基于关联随机性（Correlated Randomness）的通讯优化算法。
+
+\begin{table}[t]
+    \caption{不同算法ReLU开销对比}
+    \label{tab:ss-perm:relu}
+    \centering
+    \begin{tabular}{ccc}
+    \toprule
+    算法 & 通讯轮次 & 通讯量（比特） \\ 
+    \midrule
+    基于随机排列（本方法） & $3$ & $3L$ \\
+    SecureNN\cite{wagh2019securenn} & $11$ & $8L\log_2 p + 32L + 2$ \\
+    ABY3\cite{mohassel2018aby3} & $6 + \log L$ & $105L$ \\
+    基于混淆电路\cite{rouhani2018deepsecure} & $4$ & $k(3L - 1)$ \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{基于关联随机性的通讯优化}
+两方具有关联随机性，可以理解为两方有一个同样的随机数生成器，可以使得其每次采样时产生同样的随机数。
+%
+通过关联随机性，我们可以进一步降低上述的秘密分享乘法（\autoref{alg:ss-perm:ss-mul}）以及基于随机排列的激活函数计算方法（\autoref{alg:ss-perm:perm-act}）的通讯复杂度~\cite{riazi_2018_chameleon}。
+%
+
+\textbf{优化\textsf{SSMul}}：具体而言，$P_0$和$P_2$分享一个随机数生成器$G_\text{beaver}$。
+在\autoref{alg:ss-perm:ss-mul}第2行中，$P_2$使用$G_\text{beaver}$产生Beaver三元组给$P_0$的分享：$\langle U \rangle_0, \langle V \rangle_0, \langle W \rangle_0 \gets G_\text{beaver}$。
+同时，$P_0$自身也可以产生这些分享，因此$P_2$无需再将这些分享值发送给$P_0$。
+
+
+\textbf{优化\textsf{PermNonlinear}}：$P_0$和$P_1$分享一个随机数生成器$G_\text{perm}$，用于在\autoref{alg:ss-perm:perm-act}中产生同样的随机排列。因此，\autoref{alg:ss-perm:perm-act}第2行可以改为$P_1$通过$G_\text{perm}$产生随机排列，从而减少一次通讯。
+%
+此外，$P_0$和$P_2$分享一个随机数生成器$G_\text{share}$，用于$P_2$产生$\langle \pi[f(X)] \rangle_0$时。此时在\autoref{alg:ss-perm:perm-act}第5行时，$P_2$无需再将$\langle \pi[f(X)] \rangle_0$发送给$P_0$，从而减少一次通讯。
+
+
+\subsection{隐私保护神经网络框架实现}
+基于上述的秘密分享乘法和基于随机排列的激活函数，我们已经能够实现基本的全连接神经网络的推断和训练。
+%
+在神经网络中有如下的操作：
+\begin{itemize}
+    \item 线性运算：加法、减法、乘法（包含矩阵乘法和逐元素相乘）；
+    \item 激活函数运算：比如ReLU, Sigmoid, Tanh等；
+    \item 本地计算，包括了矩阵转置（Transpose）等。
+\end{itemize}
+%
+对于加法和乘法，我们采用秘密分享以及本章提出的\autoref{alg:ss-perm:ss-mul}来实现。
+对于减法$x - y$，我们将其转换为$x + (-y)$，而负数在秘密分享中也只需要双方本地将该数取负号（在$\mathbb Z_N$中，$-x = N - x$）。
+%
+对于激活函数，采用上述的\autoref{alg:ss-perm:perm-act}实现。
+%
+综上，我们将全连接神经网络的推断和训练在\autoref{}中进行描述。
+%
+\begin{algorithm}[h!]
+    \caption{隐私保护神经网络推断{$\mathsf{PriavteNNInfer}(\langle X \rangle, (\langle W \rangle_i, \langle \bvec{b} \rangle_i, f_i))$}}
+    \label{alg:ss-perm:perm-act}
+        \begin{algorithmic}[1]
+        \Require{秘密分享的输入$\langle X \rangle$, 秘密分享的第$i$层权重$\langle W \rangle_i$，偏置$\langle \bvec b \rangle_i$, 激活函数$f_i$, 总层数$L$}
+        \Ensure{秘密分享的神经网络输出$\langle Y\rangle$}
+        %
+        \State $\langle H \rangle_0 \gets \langle X \rangle$
+        \For{$i = 0$ to $L -1$} \LineComment{$L$为总层数}
+            \State $Z_{i + 1} = \mathsf{SSMul}(\langle H_i \rangle, W_i, \text{矩阵乘}) + \bvec b_i$
+            \State $A_{i + 1} = \mathsf{PermNonlinear}(\langle Z \rangle_{i+1}, f_i)$
+        \EndFor
+        \State \Return $\langle A_L\rangle$
+    \end{algorithmic}
+\end{algorithm}
+
+%
+\begin{algorithm}[h!]
+\caption{隐私保护神经网络训练{$\mathsf{PriavteNNTrainStep}(\langle X \rangle, \langle Y \rangle, (\langle W \rangle_i, \langle \bvec{b} \rangle_i, f_i), \alpha)$}}
+\label{alg:ss-perm:perm-act}
+    \begin{algorithmic}[1]
+    \Require{秘密分享的输入特征$\langle X \rangle$ 和标签$\langle Y \rangle$, 秘密分享的第$i$层权重$\langle W \rangle_i$，偏置$\langle \bvec b \rangle_i$, 激活函数$f_i$, 学习率$\alpha$}
+    \Ensure{一次梯度下降后更新的权重和偏置}
+    %
+    \State 各方执行$\langle Y' \rangle \gets \mathsf{PrivateNNInfer}(\langle X \rangle, (\langle W \rangle_i, \langle \bvec{b} \rangle_i, f_i))$，并且在执行过程中保留中间变量$Z_1, \cdots, Z_L$和$A_1, \cdots, A_L$
+    %
+    \State $G_L \gets 2 \cdot (\langle Y \rangle - \langle Y' \rangle)$
+    %
+    \For{$i = L - 1$ to $0$} \LineComment{$L$为总层数}
+        \State $G_{i + 1} \gets \mathsf{PermNonlinear}(Z_{i+1}, \dfrac{df_i}{dx})$ \LineComment{$\dfrac{df_i}{dx}$也是逐元素函数}
+        \State $G_{i + 1} = \mathsf{SSMul}(\langle G_{i+1} \rangle, \langle W_i^T \rangle, \text{矩阵乘})$ \LineComment{对权重进行了转置}
+        \State $\bvec b_i \gets \bvec b_i - \alpha \cdot \mathsf{sum}(G_i, \mathsf{axis}=0)$
+        \State $W_i \gets W_i - \alpha \cdot \mathsf{SSMul}(A_i^T, G_i)$
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+%
