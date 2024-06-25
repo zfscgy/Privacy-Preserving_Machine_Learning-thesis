@@ -4,5 +4,9 @@
 {
 }
 {
-    \inputbody{post/cv}
+    \ifthenelse{\equal{\Period}{proposal}}
+    {}
+    {
+        \inputbody{post/cv}
+    }
 }

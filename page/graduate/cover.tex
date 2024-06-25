@@ -1,4 +1,9 @@
 \inputpage{cover-chn}
-\inputpage{title-chn}
-\inputpage{title-eng}
-\inputpage{auth-claim}
+\ifthenelse{\equal{\Period}{proposal}}
+{
+}
+{
+    \inputpage{title-chn}
+    \inputpage{title-eng}
+    \inputpage{auth-claim}
+}

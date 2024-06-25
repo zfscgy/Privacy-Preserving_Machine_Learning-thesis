@@ -17,7 +17,7 @@ GELU-Net算法~\cite{zhangqiao_2018_gelu_net}利用同态加密实现了两方�
 BAYHENN算法~\cite{xiepeichen_2019_bayhenn}类似Gelu-Net，区别在于其则采用贝叶斯神经网络来保证模型的隐私。
 在贝叶斯神经网络中，模型的权重是随机变量，使得根据输入和输出学习权重转换成一个“噪声学习（Learning With Errors）”问题，而该问题被证明是一个困难问题。
 %
-然而后续研究指出~\cite{wong_2020_lwe_model}，BAYHENN和GELU-Net的安全性都存在问题，很容易被攻击者通过选取特定输入的方式窃取模型数据。
+然而后续研究指出~\cite{wong_2020_lwe_model}，BAYHENN和GELU-Net的安全性都存在问题，很容易被攻击者通过选取特定输入的方式窃取模型参数
 
 此外，还有一些研究通过结合拆分学习和密码学方法，提高了隐私保护机器学习的效率。
 Zhou等~\cite{zhou_2022_codesign}提出在多方的纵向联邦学习中使用秘密分享计算神经网络的第一个全连接层，此后在服务器上明文计算。
