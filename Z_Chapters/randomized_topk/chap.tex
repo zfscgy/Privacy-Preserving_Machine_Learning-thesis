@@ -1,6 +1,15 @@
 \chapter{基于随机Top-$k$算法的拆分学习效率优化}
 \label{chap:randomized_topk}
 
+拆分学习是一种简单的隐私保护机器学习方法，其适用于纵向联邦学习和隐私推断的场景。
+%
+在拆分学习中，各方交换模型的中间表征或梯度，实现多方的推断和训练。
+%
+尽管拆分学习的效率远高于基于密码学的隐私保护机器学习方法，但是其效率依然存在进一步优化的空间。
+%
+本章探索了拆分学习通信效率的优化方法，对稀疏、量化、缩小拆分层等方法进行了研究，从收敛和泛化两个角度进行优化，最终提出随机top-$k$稀疏化方法，提高了拆分学习的通信效率。
+%
+
 \input{Z_Chapters/randomized_topk/background.tex}
 \input{Z_Chapters/randomized_topk/preliminary.tex}
 \input{Z_Chapters/randomized_topk/method.tex}

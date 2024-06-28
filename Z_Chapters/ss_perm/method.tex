@@ -340,11 +340,11 @@ $P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
 %
 对于激活函数，采用上述的\autoref{alg:ss-perm:perm-act}实现。
 %
-综上，我们将全连接神经网络的推断和训练在\autoref{}中进行描述。
+综上，我们将全连接神经网络的推断和训练在\autoref{alg:ss-perm:train,alg:ss-perm:infer}中进行描述。
 %
 \begin{algorithm}[h!]
     \caption{隐私保护神经网络推断{$\mathsf{PriavteNNInfer}(\langle X \rangle, (\langle W \rangle_i, \langle \bvec{b} \rangle_i, f_i))$}}
-    \label{alg:ss-perm:perm-act}
+    \label{alg:ss-perm:train}
         \begin{algorithmic}[1]
         \Require{秘密分享的输入$\langle X \rangle$, 秘密分享的第$i$层权重$\langle W \rangle_i$，偏置$\langle \bvec b \rangle_i$, 激活函数$f_i$, 总层数$L$}
         \Ensure{秘密分享的神经网络输出$\langle Y\rangle$}
@@ -361,7 +361,7 @@ $P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
 %
 \begin{algorithm}[h!]
 \caption{隐私保护神经网络训练{$\mathsf{PriavteNNTrainStep}(\langle X \rangle, \langle Y \rangle, (\langle W \rangle_i, \langle \bvec{b} \rangle_i, f_i), \alpha)$}}
-\label{alg:ss-perm:perm-act}
+\label{alg:ss-perm:infer}
     \begin{algorithmic}[1]
     \Require{秘密分享的输入特征$\langle X \rangle$ 和标签$\langle Y \rangle$, 秘密分享的第$i$层权重$\langle W \rangle_i$，偏置$\langle \bvec b \rangle_i$, 激活函数$f_i$, 学习率$\alpha$}
     \Ensure{一次梯度下降后更新的权重和偏置}
