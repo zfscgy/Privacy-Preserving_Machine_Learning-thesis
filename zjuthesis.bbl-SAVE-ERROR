@@ -8827,7 +8827,7 @@
       \field{dateera}{ce}
       \keyw{liu2024vertical}
     \endentry
-    \entry{jannach2017gru4rec}{inproceedings}{}{}
+    \entry{hidasi_2016_gru4rec}{inproceedings}{}{}
       \name{author}{2}{}{%
         {{hash=8044b9528a8ea937291cf64035350877}{%
            family={Jannach},
@@ -8883,7 +8883,7 @@
       \field{dateera}{ce}
       \field{pages}{306\bibrangedash 310}
       \range{pages}{5}
-      \keyw{jannach2017gru4rec}
+      \keyw{hidasi_2016_gru4rec}
     \endentry
     \entry{kang2018sasrec}{inproceedings}{}{}
       \name{author}{2}{}{%

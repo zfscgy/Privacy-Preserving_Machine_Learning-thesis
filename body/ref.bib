@@ -90,6 +90,35 @@
   organization={Springer}
 }
 
+@inproceedings{chase_2020_secret_shared_shuffle,
+  title={Secret-shared shuffle},
+  author={Chase, Melissa and Ghosh, Esha and Poburinnaya, Oxana},
+  booktitle={Advances in Cryptology--ASIACRYPT 2020: 26th International Conference on the Theory and Application of Cryptology and Information Security, Daejeon, South Korea, December 7--11, 2020, Proceedings, Part III 26},
+  pages={342--372},
+  year={2020},
+  organization={Springer}
+}
+
+### Real-value sharing
+
+@article{tjell_2021_real_sharing,
+  title={Privacy in distributed computations based on real number secret sharing},
+  author={Tjell, Katrine and Wisniewski, Rafael},
+  journal={arXiv preprint arXiv:2107.00911},
+  year={2021}
+}
+
+@inproceedings{gundersen_2023_real_sharing,
+  title={Secure PAC Bayesian Regression via Real Shamir Secret Sharing},
+  author={Gundersen, Jaron Skovsted and Kuskonmaz, Bulut and Wisniewski, Rafael},
+  booktitle={2023 European Control Conference (ECC)},
+  pages={1--6},
+  year={2023},
+  organization={IEEE}
+}
+
+
+
 
 ## Garbled Circuits
 @inproceedings{yao1986gc,
@@ -216,6 +245,91 @@ YASHE encryption/Cryptonets
   biburl       = {https://dblp.org/rec/conf/asiacrypt/CheonKKS17.bib},
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
+
+## MPC Protocol
+@inproceedings{gmw_1987,
+  title={How to play any mental game},
+  author={Micali, Silvio and Goldreich, Oded and Wigderson, Avi},
+  booktitle={Proceedings of the Nineteenth ACM Symp. on Theory of Computing, STOC},
+  pages={218--229},
+  year={1987},
+  organization={ACM New York}
+}
+
+@article{evans_2018_pragmatic_mpc,
+  title={A pragmatic introduction to secure multi-party computation},
+  author={Evans, David and Kolesnikov, Vladimir and Rosulek, Mike and others},
+  journal={Foundations and Trends{\textregistered} in Privacy and Security},
+  volume={2},
+  number={2-3},
+  pages={70--246},
+  year={2018},
+  publisher={Now Publishers, Inc.}
+}
+
+## Oblivious Transfer
+@article{yadav_2022_ot_survey,
+  title={A survey of oblivious transfer protocol},
+  author={Yadav, Vijay Kumar and Andola, Nitish and Verma, Shekhar and Venkatesan, S},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={54},
+  number={10s},
+  pages={1--37},
+  year={2022},
+  publisher={ACM New York, NY}
+}
+
+@inproceedings{chou_2015_simplest_ot,
+  title={The simplest protocol for oblivious transfer},
+  author={Chou, Tung and Orlandi, Claudio},
+  booktitle={Progress in Cryptology--LATINCRYPT 2015: 4th International Conference on Cryptology and Information Security in Latin America, Guadalajara, Mexico, August 23-26, 2015, Proceedings 4},
+  pages={40--58},
+  year={2015},
+  organization={Springer}
+}
+
+## Differential Privacy
+@inproceedings{dwork_2006_differential_privacy,
+  title={Differential privacy},
+  author={Dwork, Cynthia},
+  booktitle={International colloquium on automata, languages, and programming},
+  pages={1--12},
+  year={2006},
+  organization={Springer}
+}
+
+## TEE
+@inproceedings{sabt_2015_tee,
+  title={Trusted execution environment: What it is, and what it is not},
+  author={Sabt, Mohamed and Achemlal, Mohammed and Bouabdallah, Abdelmadjid},
+  booktitle={2015 IEEE Trustcom/BigDataSE/Ispa},
+  volume={1},
+  pages={57--64},
+  year={2015},
+  organization={IEEE}
+}
+
+@article{2016_intel_sgx,
+  title={Intel SGX explained},
+  author={Costan, Victor and Devadas, Srinivas},
+  journal={Cryptology ePrint Archive},
+  year={2016}
+}
+
+## Others
+@article{regev_2010_lwe,
+  title={The learning with errors problem},
+  author={Regev, Oded},
+  journal={Invited survey in CCC},
+  volume={7},
+  number={30},
+  pages={11},
+  year={2010},
+  publisher={Citeseer}
+}
+
+
+
 
 # PPML
 @article{al_2019_ppml,
@@ -531,6 +645,14 @@ YASHE encryption/Cryptonets
   publisher={Privacy Enhancing Technologies Symposium Advisory Board}
 }
 
+@inproceedings{abadi_2016_dp_dl,
+  title={Deep learning with differential privacy},
+  author={Abadi, Martin and Chu, Andy and Goodfellow, Ian and McMahan, H Brendan and Mironov, Ilya and Talwar, Kunal and Zhang, Li},
+  booktitle={Proceedings of the 2016 ACM SIGSAC conference on computer and communications security},
+  pages={308--318},
+  year={2016}
+}
+
 ## LLM
 ### Transformer
 @article{hao2022iron,
@@ -565,6 +687,15 @@ YASHE encryption/Cryptonets
   organization={IEEE}
 }
 
+@inproceedings{pang_2024_bolt_transformer,
+  title={BOLT: Privacy-Preserving, Accurate and Efficient Inference for Transformers},
+  author={Pang, Qi and Zhu, Jinhao and M{\"o}llering, Helen and Zheng, Wenting and Schneider, Thomas},
+  booktitle={2024 IEEE Symposium on Security and Privacy (SP)},
+  pages={130--130},
+  year={2024},
+  organization={IEEE Computer Society}
+}
+
 
 ### Large models
 @article{dong2023puma,
@@ -584,6 +715,21 @@ YASHE encryption/Cryptonets
   author={Hou, Xiaoyang and Liu, Jian and Li, Jingyu and Li, Yuhan and Lu, Wen-jie and Hong, Cheng and Ren, Kui},
   journal={Cryptology ePrint Archive},
   year={2023}
+}
+
+## Opensourced
+@misc{latticex_rosetta,
+  author = {Yuanfeng Chen and Gaofeng Huang and Junjie Shi and Xiang Xie and Yilin Yan},
+  title = {{Rosetta: A Privacy-Preserving Framework Based on TensorFlow}},
+  howpublished = {\url{https://github.com/LatticeX-Foundation/Rosetta}},
+  year={2020}
+}
+
+@misc{tf_encrypted,
+  author = {TF-Encrypted},
+  title = {A Framework for Encrypted Machine Learning in TensorFlow},
+  howpublished = {\url{https://github.com/tf-encrypted/tf-encrypted}},
+  year={2020}
 }
 
 
@@ -1065,7 +1211,7 @@ mmWave+Image for receiving power prediction
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
-# Graph Learning
+Graph Learning
 @inproceedings{ccc2022vfgnn,
   author       = {Chaochao Chen and
                   Jun Zhou and
@@ -1090,6 +1236,8 @@ mmWave+Image for receiving power prediction
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
+
+
 # Federated Learning
 @inproceedings{mcmahan_2017_fedavg,
   title={Communication-efficient learning of deep networks from decentralized data},
@@ -1098,6 +1246,35 @@ mmWave+Image for receiving power prediction
   pages={1273--1282},
   year={2017},
   organization={PMLR}
+}
+
+## Privacy
+@article{weikang_2020_fed_dp,
+  title={Federated learning with differential privacy: Algorithms and performance analysis},
+  author={Wei, Kang and Li, Jun and Ding, Ming and Ma, Chuan and Yang, Howard H and Farokhi, Farhad and Jin, Shi and Quek, Tony QS and Poor, H Vincent},
+  journal={IEEE transactions on information forensics and security},
+  volume={15},
+  pages={3454--3469},
+  year={2020},
+  publisher={IEEE}
+}
+
+@inproceedings{bonawitz_2017_secure_agg,
+  title={Practical secure aggregation for privacy-preserving machine learning},
+  author={Bonawitz, Keith and Ivanov, Vladimir and Kreuter, Ben and Marcedone, Antonio and McMahan, H Brendan and Patel, Sarvar and Ramage, Daniel and Segal, Aaron and Seth, Karn},
+  booktitle={proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security},
+  pages={1175--1191},
+  year={2017}
+}
+
+@inproceedings{thapa_2022_splitfed,
+  title={Splitfed: When federated learning meets split learning},
+  author={Thapa, Chandra and Arachchige, Pathum Chamikara Mahawaga and Camtepe, Seyit and Sun, Lichao},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={36},
+  number={8},
+  pages={8485--8493},
+  year={2022}
 }
 
 ## Sparsification
@@ -1148,7 +1325,7 @@ mmWave+Image for receiving power prediction
 
 ## Basics
 
-@article{2019——pytorch,
+@article{2019_pytorch,
   title={Pytorch: An imperative style, high-performance deep learning library},
   author={Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and others},
   journal={Advances in neural information processing systems},
@@ -1167,9 +1344,39 @@ mmWave+Image for receiving power prediction
   organization={Atlanta, GA}
 }
 
+@article{srivastava_2014_dropout,
+  title={Dropout: a simple way to prevent neural networks from overfitting},
+  author={Srivastava, Nitish and Hinton, Geoffrey and Krizhevsky, Alex and Sutskever, Ilya and Salakhutdinov, Ruslan},
+  journal={The journal of machine learning research},
+  volume={15},
+  number={1},
+  pages={1929--1958},
+  year={2014},
+  publisher={JMLR. org}
+}
+
+@article{hinton_2016_layernorm,
+  title={Layer normalization},
+  author={Ba, Jimmy Lei and Kiros, Jamie Ryan and Hinton, Geoffrey E},
+  journal={arXiv preprint arXiv:1607.06450},
+  year={2016}
+}
+
+
 
 ## Fundamental Models
 ### Image classification
+@article{lecun_1998_lenet,
+  title={Gradient-based learning applied to document recognition},
+  author={LeCun, Yann and Bottou, L{\'e}on and Bengio, Yoshua and Haffner, Patrick},
+  journal={Proceedings of the IEEE},
+  volume={86},
+  number={11},
+  pages={2278--2324},
+  year={1998},
+  publisher={Ieee}
+}
+
 @inproceedings{parkhi2015deepface,
   title={Deep face recognition},
   author={Parkhi, Omkar and Vedaldi, Andrea and Zisserman, Andrew},
@@ -1214,6 +1421,31 @@ mmWave+Image for receiving power prediction
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
+@inproceedings{alexey_2021_vit,
+  author       = {Alexey Dosovitskiy and
+                  Lucas Beyer and
+                  Alexander Kolesnikov and
+                  Dirk Weissenborn and
+                  Xiaohua Zhai and
+                  Thomas Unterthiner and
+                  Mostafa Dehghani and
+                  Matthias Minderer and
+                  Georg Heigold and
+                  Sylvain Gelly and
+                  Jakob Uszkoreit and
+                  Neil Houlsby},
+  title        = {An Image is Worth 16x16 Words: Transformers for Image Recognition
+                  at Scale},
+  booktitle    = {9th International Conference on Learning Representations, {ICLR} 2021,
+                  Virtual Event, Austria, May 3-7, 2021},
+  publisher    = {OpenReview.net},
+  year         = {2021},
+  url          = {https://openreview.net/forum?id=YicbFdNTTy},
+  timestamp    = {Wed, 23 Jun 2021 17:36:39 +0200},
+  biburl       = {https://dblp.org/rec/conf/iclr/DosovitskiyB0WZ21.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
 ### AutoEncoder
 @article{kramer1991autoencoder,
   title={Nonlinear principal component analysis using autoassociative neural networks},
@@ -1234,15 +1466,38 @@ mmWave+Image for receiving power prediction
   organization={JMLR Workshop and Conference Proceedings}
 }
 
+@inproceedings{kingma_2014_vae,
+  author       = {Diederik P. Kingma and
+                  Max Welling},
+  editor       = {Yoshua Bengio and
+                  Yann LeCun},
+  title        = {Auto-Encoding Variational Bayes},
+  booktitle    = {2nd International Conference on Learning Representations, {ICLR} 2014,
+                  Banff, AB, Canada, April 14-16, 2014, Conference Track Proceedings},
+  year         = {2014},
+  url          = {http://arxiv.org/abs/1312.6114},
+  timestamp    = {Thu, 04 Apr 2019 13:20:07 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/KingmaW13.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
 
 ### Recommendation
 
-@inproceedings{jannach2017gru4rec,
-  title={When recurrent neural networks meet the neighborhood for session-based recommendation},
-  author={Jannach, Dietmar and Ludewig, Malte},
-  booktitle={Proceedings of the eleventh ACM conference on recommender systems},
-  pages={306--310},
-  year={2017}
+@inproceedings{hidasi_2016_gru4rec,
+  author       = {Bal{\'{a}}zs Hidasi and
+                  Alexandros Karatzoglou and
+                  Linas Baltrunas and
+                  Domonkos Tikk},
+
+  title        = {Session-based Recommendations with Recurrent Neural Networks},
+  booktitle    = {4th International Conference on Learning Representations, {ICLR} 2016,
+                  San Juan, Puerto Rico, May 2-4, 2016, Conference Track Proceedings},
+  year         = {2016},
+  url          = {http://arxiv.org/abs/1511.06939},
+  timestamp    = {Thu, 25 Jul 2019 14:25:38 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/HidasiKBT15.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
 @inproceedings{kang2018sasrec,
@@ -1252,6 +1507,63 @@ mmWave+Image for receiving power prediction
   pages={197--206},
   year={2018},
   organization={IEEE}
+}
+
+@inproceedings{lijing_2017_narm,
+  title={Neural attentive session-based recommendation},
+  author={Li, Jing and Ren, Pengjie and Chen, Zhumin and Ren, Zhaochun and Lian, Tao and Ma, Jun},
+  booktitle={Proceedings of the 2017 ACM on Conference on Information and Knowledge Management},
+  pages={1419--1428},
+  year={2017}
+}
+
+
+### Graph
+
+@article{defferrard_2016_gcn,
+  title={Convolutional neural networks on graphs with fast localized spectral filtering},
+  author={Defferrard, Micha{\"e}l and Bresson, Xavier and Vandergheynst, Pierre},
+  journal={Advances in neural information processing systems},
+  volume={29},
+  year={2016}
+}
+
+@article{wuzonghan_2020_gnn_survey,
+  title={A comprehensive survey on graph neural networks},
+  author={Wu, Zonghan and Pan, Shirui and Chen, Fengwen and Long, Guodong and Zhang, Chengqi and Philip, S Yu},
+  journal={IEEE transactions on neural networks and learning systems},
+  volume={32},
+  number={1},
+  pages={4--24},
+  year={2020},
+  publisher={IEEE}
+}
+
+@article{hamilton_2017_graphsage,
+  title={Inductive representation learning on large graphs},
+  author={Hamilton, Will and Ying, Zhitao and Leskovec, Jure},
+  journal={Advances in neural information processing systems},
+  volume={30},
+  year={2017}
+}
+
+### Sequence
+@article{hochreiter_1997_lstm,
+  title={Long short-term memory},
+  author={Hochreiter, Sepp and Schmidhuber, J{\"u}rgen},
+  journal={Neural computation},
+  volume={9},
+  number={8},
+  pages={1735--1780},
+  year={1997},
+  publisher={MIT press}
+}
+
+@article{chung_2014_gru,
+  title={Empirical evaluation of gated recurrent neural networks on sequence modeling},
+  author={Chung, Junyoung and Gulcehre, Caglar and Cho, KyungHyun and Bengio, Yoshua},
+  journal={arXiv preprint arXiv:1412.3555},
+  year={2014}
 }
 
 ### NLP
@@ -1281,6 +1593,44 @@ mmWave+Image for receiving power prediction
   year={2014}
 }
 
+@inproceedings{yeqi_2018_word_embedding_translation,
+  title={When and Why Are Pre-Trained Word Embeddings Useful for Neural Machine Translation?},
+  author={Qi, Ye and Sachan, Devendra and Felix, Matthieu and Padmanabhan, Sarguna and Neubig, Graham},
+  booktitle={Proceedings of the 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 2 (Short Papers)},
+  pages={529--535},
+  year={2018}
+}
+
+@inproceedings{lample_2016_ner,
+    title = "Neural Architectures for Named Entity Recognition",
+    author = "Lample, Guillaume  and
+      Ballesteros, Miguel  and
+      Subramanian, Sandeep  and
+      Kawakami, Kazuya  and
+      Dyer, Chris",
+    editor = "Knight, Kevin  and
+      Nenkova, Ani  and
+      Rambow, Owen",
+    booktitle = "Proceedings of the 2016 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    month = jun,
+    year = "2016",
+    address = "San Diego, California",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/N16-1030",
+    doi = "10.18653/v1/N16-1030",
+    pages = "260--270",
+}
+
+
+@article{sujianlin_2024_rope,
+  title={Roformer: Enhanced transformer with rotary position embedding},
+  author={Su, Jianlin and Ahmed, Murtadha and Lu, Yu and Pan, Shengfeng and Bo, Wen and Liu, Yunfeng},
+  journal={Neurocomputing},
+  volume={568},
+  pages={127063},
+  year={2024},
+  publisher={Elsevier}
+}
 
 ## Hidden layer
 ### Visualization
@@ -1369,6 +1719,15 @@ mmWave+Image for receiving power prediction
   timestamp = {Mon, 31 Jan 2022 17:23:36 +0100},
   biburl    = {https://dblp.org/rec/journals/jmlr/HoeflerABDP21.bib},
   bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{jayakumar_2020_topkast,
+  title={Top-kast: Top-k always sparse training},
+  author={Jayakumar, Siddhant and Pascanu, Razvan and Rae, Jack and Osindero, Simon and Elsen, Erich},
+  journal={Advances in Neural Information Processing Systems},
+  volume={33},
+  pages={20744--20754},
+  year={2020}
 }
 
 ### L1
@@ -1469,9 +1828,35 @@ mmWave+Image for receiving power prediction
   bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
+## Others
+@article{renpengzhen_2021_nas_survey,
+  title={A comprehensive survey of neural architecture search: Challenges and solutions},
+  author={Ren, Pengzhen and Xiao, Yun and Chang, Xiaojun and Huang, Po-Yao and Li, Zhihui and Chen, Xiaojiang and Wang, Xin},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={54},
+  number={4},
+  pages={1--34},
+  year={2021},
+  publisher={ACM New York, NY, USA}
+}
+
+@inproceedings{alemi_2022_deep_variational,
+  title={Deep Variational Information Bottleneck},
+  author={Alemi, Alexander A and Fischer, Ian and Dillon, Joshua V and Murphy, Kevin},
+  booktitle={International Conference on Learning Representations},
+  year={2022}
+}
+
 # LLMs
+@article{zhao_2023_llm_survey,
+  title={A survey of large language models},
+  author={Zhao, Wayne Xin and Zhou, Kun and Li, Junyi and Tang, Tianyi and Wang, Xiaolei and Hou, Yupeng and Min, Yingqian and Zhang, Beichen and Zhang, Junjie and Dong, Zican and others},
+  journal={arXiv preprint arXiv:2303.18223},
+  year={2023}
+}
+
 ## Basic
-@inproceedings{vaswani2017attention,
+@inproceedings{vaswani_2017_attention,
   author       = {Ashish Vaswani and
                   Noam Shazeer and
                   Niki Parmar and
@@ -1492,7 +1877,16 @@ mmWave+Image for receiving power prediction
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
-@inproceedings{devlin2019bert,
+@article{pope_2023_efficiently_kv_cache,
+  title={Efficiently scaling transformer inference},
+  author={Pope, Reiner and Douglas, Sholto and Chowdhery, Aakanksha and Devlin, Jacob and Bradbury, James and Heek, Jonathan and Xiao, Kefan and Agrawal, Shivani and Dean, Jeff},
+  journal={Proceedings of Machine Learning and Systems},
+  volume={5},
+  pages={606--624},
+  year={2023}
+}
+
+@inproceedings{devlin_2019_bert,
   author       = {Jacob Devlin and
                   Ming{-}Wei Chang and
                   Kenton Lee and
@@ -1549,6 +1943,14 @@ mmWave+Image for receiving power prediction
   url={https://openai.com/blog/chatgpt}
 }
 
+@misc{gpt3_technical_report,
+  author       = {Chuan Li},
+  url = {https://lambdalabs.com/blog/demystifying-gpt-3},
+  title        = {OpenAI's GPT-3 Language Model: A Technical Overview},
+  year         = {2020}
+}
+
+
 ## GPT variations
 llama
 @article{touvron_2023_llama,
@@ -1574,6 +1976,22 @@ glm
   year={2022}
 }
 
+mistral
+@article{jiang_2023_mistral,
+  title={Mistral 7B},
+  author={Jiang, Albert Q and Sablayrolles, Alexandre and Mensch, Arthur and Bamford, Chris and Chaplot, Devendra Singh and Casas, Diego de las and Bressand, Florian and Lengyel, Gianna and Lample, Guillaume and Saulnier, Lucile and others},
+  journal={arXiv preprint arXiv:2310.06825},
+  year={2023}
+}
+
+gemini
+@article{2023_gemini,
+  title={Gemini: a family of highly capable multimodal models},
+  author={Team, Gemini and Anil, Rohan and Borgeaud, Sebastian and Wu, Yonghui and Alayrac, Jean-Baptiste and Yu, Jiahui and Soricut, Radu and Schalkwyk, Johan and Dai, Andrew M and Hauth, Anja and others},
+  journal={arXiv preprint arXiv:2312.11805},
+  year={2023}
+}
+
 ## Datasets
 @article{2016_squad,
        author = {{Rajpurkar}, Pranav and {Zhang}, Jian and {Lopyrev},
@@ -1596,10 +2014,86 @@ archivePrefix = {arXiv},
   year={2023}
 }
 
+## Applications
+Text to SQL
+@article{gaodawei_2024_text2sql_llm,
+  author       = {Dawei Gao and
+                  Haibin Wang and
+                  Yaliang Li and
+                  Xiuyu Sun and
+                  Yichen Qian and
+                  Bolin Ding and
+                  Jingren Zhou},
+  title        = {Text-to-SQL Empowered by Large Language Models: {A} Benchmark Evaluation},
+  journal      = {Proc. {VLDB} Endow.},
+  volume       = {17},
+  number       = {5},
+  pages        = {1132--1145},
+  year         = {2024},
+  url          = {https://www.vldb.org/pvldb/vol17/p1132-gao.pdf},
+  timestamp    = {Tue, 26 Mar 2024 22:14:30 +0100},
+  biburl       = {https://dblp.org/rec/journals/pvldb/GaoWLSQDZ24.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
 
+Translation
+@inproceedings{jiaowenxiang_2023_llm_translation,
+  title={ParroT: Translating during Chat using Large Language Models tuned with Human Translation and Feedback},
+  author={Wenxiang Jiao and Jen-tse Huang and Wenxuan Wang and Zhiwei He and Tian Liang and Xing Wang and Shuming Shi and Zhaopeng Tu},
+  booktitle={The 2023 Conference on Empirical Methods in Natural Language Processing},
+  year={2023},
+  url={https://openreview.net/forum?id=3k5GFJEGem}
+}
+
+## Optimization
+@inproceedings{edward_2022_lora,
+  author       = {Edward J. Hu and
+                  Yelong Shen and
+                  Phillip Wallis and
+                  Zeyuan Allen{-}Zhu and
+                  Yuanzhi Li and
+                  Shean Wang and
+                  Lu Wang and
+                  Weizhu Chen},
+  title        = {LoRA: Low-Rank Adaptation of Large Language Models},
+  booktitle    = {The Tenth International Conference on Learning Representations, {ICLR}
+                  2022, Virtual Event, April 25-29, 2022},
+  publisher    = {OpenReview.net},
+  year         = {2022},
+  url          = {https://openreview.net/forum?id=nZeVKeeFYf9},
+  timestamp    = {Sat, 20 Aug 2022 01:15:42 +0200}
+}
+
+
+## Privacy
+@misc{samsung_chatgpt_leak,
+  author       = {Forbes},
+  url = {https://www.forbes.com/sites/siladityaray/2023/05/02/samsung-bans-chatgpt-and-other-chatbots-for-employees-after-sensitive-code-leak/},
+  title        = {Samsung Bans ChatGPT Among Employees After Sensitive Code Leak},
+  year         = {2023}
+}
+
+@inproceedings{xuhengyuan_2024_permutation_transformer,
+  title={Permutation Equivariance of Transformers and Its Applications},
+  author={Xu, Hengyuan and Xiang, Liyao and Ye, Hangyu and Yao, Dixi and Chu, Pengzhi and Li, Baochun},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={5987--5996},
+  year={2024}
+}
 
 # Other
 ## Statistics
+@article{matouvsek_2008_jl_lemma,
+  title={On variants of the Johnson--Lindenstrauss lemma},
+  author={Matou{\v{s}}ek, Ji{\v{r}}{\'\i}},
+  journal={Random Structures \& Algorithms},
+  volume={33},
+  number={2},
+  pages={142--156},
+  year={2008},
+  publisher={Wiley Online Library}
+}
+
 @article{szekely2007dcor,
   title={MEASURING AND TESTING DEPENDENCE BY CORRELATION OF DISTANCES},
   author={SZ{\'E}KELY, G{\'A}BOR J and RIZZO, MARIA L and BAKIROV, NAIL K},
@@ -1769,7 +2263,37 @@ archivePrefix = {arXiv},
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
+
+@article{murtagh_2012_cluster,
+  title={Algorithms for hierarchical clustering: an overview},
+  author={Murtagh, Fionn and Contreras, Pedro},
+  journal={Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery},
+  volume={2},
+  number={1},
+  pages={86--97},
+  year={2012},
+  publisher={Wiley Online Library}
+}
+
 ## Physics
+@book{thomson_1913_atom,
+  title={The structure of the atom},
+  author={Thomson, Joseph John},
+  year={1913},
+  publisher={Academie Royale de Belgique}
+}
+
+@article{bakhoum_2008_thomson_proof,
+  title={Proof of Thomson's theorem of electrostatics},
+  author={Bakhoum, Ezzat G},
+  journal={Journal of electrostatics},
+  volume={66},
+  number={11-12},
+  pages={561--563},
+  year={2008},
+  publisher={Elsevier}
+}
+
 @misc{griffiths2005introduction,
   title={Introduction to electrodynamics},
   author={Griffiths, David J},
@@ -1778,10 +2302,72 @@ archivePrefix = {arXiv},
   chapter=2
 }
 
+## Programming
+@article{ieee_754_float,
+  title={IEEE standard 754 for binary floating-point arithmetic},
+  author={Kahan, William},
+  journal={Lecture Notes on the Status of IEEE},
+  volume={754},
+  number={94720-1776},
+  pages={11},
+  year={1996}
+}
 
+@ARTICLE{stefan_2011_numpy,
+  author={van der Walt, Stefan and Colbert, S. Chris and Varoquaux, Gael},
+  journal={Computing in Science & Engineering}, 
+  title={The NumPy Array: A Structure for Efficient Numerical Computation}, 
+  year={2011},
+  volume={13},
+  number={2},
+  pages={22-30},
+  doi={10.1109/MCSE.2011.37}
+}
+
+
+@article{kuhn_1955_hungarian,
+  title={The Hungarian method for the assignment problem},
+  author={Kuhn, Harold W},
+  journal={Naval research logistics quarterly},
+  volume={2},
+  number={1-2},
+  pages={83--97},
+  year={1955},
+  publisher={Wiley Online Library}
+}
+
+@article{pedregosa_2011_scikit,
+  title={Scikit-learn: Machine learning in Python},
+  author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and others},
+  journal={the Journal of machine Learning research},
+  volume={12},
+  pages={2825--2830},
+  year={2011},
+  publisher={JMLR. org}
+}
+
+## Blockchain
+@article{belotti_2019_blockchain,
+  title={A vademecum on blockchain technologies: When, which, and how},
+  author={Belotti, Marianna and Bo{\v{z}}i{\'c}, Nikola and Pujolle, Guy and Secci, Stefano},
+  journal={IEEE Communications Surveys \& Tutorials},
+  volume={21},
+  number={4},
+  pages={3796--3838},
+  year={2019},
+  publisher={IEEE}
+}
 
 
 # Datasets
+@misc{2008_gisette,
+  author       = {Guyon,Isabelle and Gunn,Steve and Ben-Hur,Asa and Dror,Gideon},
+  title        = {{Gisette}},
+  year         = {2008},
+  howpublished = {UCI Machine Learning Repository},
+  note         = {{DOI}: https://doi.org/10.24432/C5HP5B}
+}
+
 @ARTICLE{mnist,
   author={Lecun, Y. and Bottou, L. and Bengio, Y. and Haffner, P.},
   journal={Proceedings of the IEEE}, 
@@ -1864,4 +2450,22 @@ archivePrefix = {arXiv},
   number={7},
   pages={3},
   year={2015}
+}
+
+@misc{vegetable_2021,
+	title={Vegetable Image Dataset},
+	url={https://www.kaggle.com/dsv/2965251},
+	DOI={10.34740/KAGGLE/DSV/2965251},
+	publisher={Kaggle},
+	author={M. Israk Ahmed and Shahriyar Mahmud Mamun},
+	year={2021}
+}
+
+@inproceedings{2009_imagenet,
+  title={Imagenet: A large-scale hierarchical image database},
+  author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
+  booktitle={2009 IEEE conference on computer vision and pattern recognition},
+  pages={248--255},
+  year={2009},
+  organization={Ieee}
 }

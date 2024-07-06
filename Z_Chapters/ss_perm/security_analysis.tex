@@ -1,5 +1,5 @@
 \section{安全性分析}
-本章提出的隐私保护神经网络的线性计算部分采用秘密分享进行设计，在半可信安全性设定下满足信息论安全。
+本章提出的隐私保护神经网络的线性计算部分采用秘密分享进行设计，在半可信安全性设定下满足信息论安全~\cite{demmler2015aby}。
 %
 因此，本节讨论基于随机排列的非线性激活函数计算的安全性。
 %
@@ -14,11 +14,11 @@
 \begin{definition}[距离相关性]
     对于两个随机向量$X \in \mathbb R^p, Y\in \mathbb R^q$，距离相关性的定义为
     \begin{equation}
-        \text{DCOR}(X, Y) = \dfrac{\text{DCOV}(X, Y)^2}{\sqrt{\text{DCOV}(X, X)^2\text{DCOV}(Y, Y)^2}},
+        \text{DCOR}(X, Y) = \dfrac{\mathcal{V}(X, Y)^2}{\sqrt{\mathcal{V}(X, X)^2\mathcal{V}(Y, Y)^2}},
     \end{equation}
-    其中$\text{DCOV}$表示距离协方差（Distance Covariance)，定义如下
+    其中$\mathcal{V}$表示距离协方差（Distance Covariance)，定义如下
     \begin{equation}
-        \text{DCOV}(X, Y)^2 = \dfrac{1}{c_pc_q} \int_{\mathbb R^{p + q}}
+        \mathcal{V}(X, Y)^2 = \dfrac{1}{c_pc_q} \int_{\mathbb R^{p + q}}
         \dfrac{|f_{X, Y}(t, s) - f_X(t)f_Y(s)|^2}{\Vert c_p \Vert^{p+1}\Vert c_q \Vert^{q+1}}dtds,
     \end{equation}
     其中，$c_p, c_q$为两个常数，$\Vert \cdot \Vert$表示欧几里得范数（Euclidean Norm）。
@@ -27,7 +27,7 @@
 除去上述的定义为，距离协方差还可以通过
 \begin{equation}
 \begin{split}
-    \text{DCOV}(X, Y)^2 = 
+    \mathcal{V}(X, Y)^2 = 
     & \quad \mathbb E \Vert X-X'\Vert \Vert Y -Y'\Vert +\mathbb E\Vert X -X' \Vert \mathbb E \Vert Y -Y' \Vert
     \\ & 
     - \mathbb E\Vert X-X'\Vert  \Vert Y -Y''\Vert - \mathbb E \Vert X -X''\Vert  \Vert Y -Y' \Vert
@@ -39,6 +39,7 @@
 
 \subsection{随机线性变换的距离相关性}
 现在我们研究随机线性变换后的向量与随机变换之前的向量的距离相关性。
+我们用$\angle[\cdot, \cdot]$表示两个向量之间的夹角。
 \begin{theorem}
 \label{thm:ss-perm:linear-dcov}
     令$X\in \mathbb R^n$是一个随机的$n$维随机向量，令$Y = AX$，
@@ -48,12 +49,12 @@
     则
     \begin{equation}
     \label{eq:ss-perm:linear-dcov1}
-            \mathop{\mathbb E}_A \text{DCOV}(X, AX)^2 = a\text{DCOV}(X, X)^2
+            \mathop{\mathbb E}_A \mathcal{V}(X, AX)^2 = a\mathcal{V}(X, X)^2
     \end{equation}
     以及    
     \begin{equation}
     \label{eq:ss-perm:linear-dcov2}
-        \mathop{\mathbb E}_A \text{DCOV}(AX, AX)^2 = {a^2S_1 + b^2S_2 - 2S_3'},
+        \mathop{\mathbb E}_A \mathcal{V}(AX, AX)^2 = {a^2S_1 + b^2S_2 - 2S_3'},
     \end{equation}
     其中 $S_1 = \mathbb \Vert X - X'\Vert^2, S_2 = \left( \mathbb E \Vert X - X'\Vert \right)^2, S_3 = \mathbb E \Vert X - X' \Vert \Vert X - X'' \Vert$，\\
     $S' = \mathbb E \left[ g(\angle [X - X', X - X'']) \cdot \Vert X - X'\Vert \Vert X - X'' \Vert \right]$，
@@ -87,7 +88,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
 且$\bvec x, \bvec y$和$\bvec x', \bvec y'$的夹角均为$\theta$。
 %
 令$\bvec e_1 = \bvec x/\Vert x \Vert, \bvec e_2 = (\bvec y - \bvec y \cdot \bvec x/\Vert \bvec x \Vert) / \Vert \bvec y - \bvec y \cdot \bvec x/\Vert \bvec x \Vert \Vert$，
-且$\bvec e_3, \cdots, \bvec e_n$是与$e_1, e_2$正交的任意$n-2$组单位正交向量组。
+且$\bvec e_3, \cdots, \bvec e_n$是与$\bvec e_1, \bvec e_2$正交的任意$n-2$组单位正交向量组。
 %
 此时，有$\bvec x = \bvec e_1, \bvec y = \cos \theta \bvec e_1 + \sin \theta \bvec e_2$。
 %
@@ -95,22 +96,22 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
 %
 此时$(\bvec e_1, \cdots, \bvec e_n)$与$(\bvec e'_1, \cdots, \bvec e'_n)$是$\mathbb R^n$的两组单位正交基，因此存在单位正交矩阵$T$使得$T\bvec e_i = \bvec e'_i$。
 %
-也就是$\dfrac{\Vert A\bvec x \Vert\Vert A\bvec y \Vert}{\Vert x\Vert \Vert y \Vert} = \dfrac{\Vert AT\bvec x' \Vert\Vert AT\bvec y' \Vert}{\Vert x'\Vert \Vert y' \Vert}$。
+也就是$\dfrac{\Vert A\bvec x \Vert\Vert A\bvec y \Vert}{\Vert \bvec x\Vert \Vert \bvec y \Vert} = \dfrac{\Vert AT\bvec x' \Vert\Vert AT\bvec y' \Vert}{\Vert \bvec x'\Vert \Vert \bvec y' \Vert}$。
 %
-注意到$P(A)=P(AT)$，因此$\mathbb E_A f(A) = \mathbb E_A f(AT)$，令$f(A) = \dfrac{\Vert A\bvec x \Vert\Vert A\bvec y \Vert}{\Vert x\Vert \Vert y \Vert}$ 可以得到$f(A)$仅仅和$\theta$有关。
+注意到$P(A)=P(AT)$，因此$\mathbb E_A f(A) = \mathbb E_A f(AT)$，令$f(A) = \dfrac{\Vert A\bvec x \Vert\Vert A\bvec y \Vert}{\Vert \bvec x\Vert \Vert \bvec y \Vert}$ 可以得到$f(A)$仅仅和$\theta$有关。
 %
-于是有$\mathbb E_A \text{DCOV}(AX, AX) = b^2 S_1 + a^2 S_2 - 2S_3'$，也就是\autoref{eq:ss-perm:linear-dcov2}。
+于是有$\mathbb E_A \mathcal{V}(AX, AX) = b^2 S_1 + a^2 S_2 - 2S_3'$，也就是\autoref{eq:ss-perm:linear-dcov2}。
 \end{proof}
 
-\autoref{thm:ss-perm:linear-dcov}显示出，当$A$是一个具有旋转不变性（Roatation Invariance）分布的随机线性变换时，$\text{DCOV}(X, AX)/\text{DCOV}(X, X)$只和$A$有关，而和$X$的具体分布无关。
+\autoref{thm:ss-perm:linear-dcov}显示出，当$A$是一个具有旋转不变性（Rotation Invariance）分布的随机线性变换时，$\mathcal{V}(X, AX)/\mathcal{V}(X, X)$的期望值只和$A$有关，而和$X$的具体分布无关。
 %
-同时，$\mathbb E_A \text{DCOV}(AX, AX)$随着$g_A(\theta)$的提升而降低。
+同时，$\mathbb E_A \mathcal{V}(AX, AX)$随着$g_A(\theta)$的提升而降低。
 %
 我们可以进一步证明，$g_A(\theta)$在$[0, \pi/2]$上是单调递减的。
 %
-\begin{corollary}
+\begin{proposition}
     $g_A(\theta)$在$[0, \pi/2]$上是单调递减的。
-\end{corollary}
+\end{proposition}
 %
 \begin{proof}
     由于$A$的分布具有旋转不变性，不妨令
@@ -125,7 +126,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
     我们可以对$A$在前两个维度构成的平面上进行旋转角度$\alpha$：
     \begin{equation}
         AT = A \begin{bmatrix}
-            \cos \alpha & sin \alpha & O \\
+            \cos \alpha & \sin \alpha & O \\
             -\sin \alpha &\cos \alpha & O \\
             O & O & E
         \end{bmatrix}
@@ -157,24 +158,24 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
     \end{equation}
     注意到积分号中的前两项积分后为0，整个式子为负数，因此我们可以得出$g(\theta)$在$[0, \pi/2]$中单调递减。
 \end{proof}
-%
+
 直观角度理解，$S'$项反应了分布$X$的“集中度”对距离方差带来的影响。
 %
-当$X$中的各个点分布在很接近的方向上时，$\angle[X - X', X - X'']$变小，因此$S'$变大，从而导致$\text{DCOV}(AX, AX)$变小，从而导致$\text{DCOR}(X, AX)$变大。
+当$X$中的各个点分布在很接近的方向上时，$\angle[X - X', X - X'']$变小，因此$S'$变大，从而导致$\mathcal{V}(AX, AX)$变小，从而导致$\text{DCOR}(X, AX)$变大。
 %
-也就是说，$X$的分布的方向越集中，则与其随机线性投影灯距离相关性有更大可能变大。
+也就是说，$X$的分布的方向越集中，则与其随机线性投影的距离相关性有更大可能变大。
 %
 在极端情况下，$X$分布在一条线上，则$S' = S_3$取得最大值。
 %
 同时，变换$A$若能尽可能保留数据点之间的距离，则也能提高变换前后的距离相关性。
 %
-如果$A$是保距变换（Distance-Preserving Transformation），则$\text{DCOR}(X, AX) = 1$。
+如果$A$是保距变换（Distance-Preserving Transformation），则显然$\text{DCOR}(X, AX) = 1$。
 
 
 %
 在神经网络中，我们一般采用$\mathcal N(0, \sigma^2)$来初始化全连接权重。
 %
-考虑$W \sim \mathcal N(0, \sigma^2)^{n \times d}$，此时考虑对向量$\bvec e_1$计算$\mathbf E_A \Vert W\bvec e_1 \Vert$与$\sqrt{\left[\mathbb E_A \Vert W\bvec e_1 \Vert^2 \right]}$，对应卡方分布（Chi-Square Distribution）的均值以及其平方根的均值。
+考虑$W \sim \mathcal N(0, \sigma^2)^{n \times d}$，此时考虑对向量$\bvec e_1$计算$\mathbb E_A \Vert W\bvec e_1 \Vert$与$\sqrt{\mathbb E_A \left[\Vert W\bvec e_1 \Vert^2 \right]}$，对应卡方分布（Chi-Square Distribution）的均值以及其平方根的均值。
 %
 因此可以得到
 $a = \mathbb E \sqrt{w_1^2 + \cdots + w_d^2} = \sigma \sqrt{2} \Gamma(d + 1/2) / \Gamma(d) \approx \sigma \sqrt{d - 1/2}$ 对于较大的 $d$，                    
@@ -190,15 +191,15 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 \begin{equation}
 \label{eq:ss-perm:linear-dcor-estimation}
 \begin{split}
-    \mathop{\mathbb E}_A \text{DCOR}(X, AX) & = \mathop{\mathbb E}_A \dfrac{\text{DCOV}(X, AX)^2}{\text{DCOV}(X, X)\text{DCOV}(AX, AX)}
+    \mathop{\mathbb E}_A \text{DCOR}(X, AX) & = \mathop{\mathbb E}_A \dfrac{\mathcal{V}(X, AX)^2}{\mathcal{V}(X, X)\mathcal{V}(AX, AX)}
     \\
-    &\approx \dfrac{\mathbb E_A \text{DCOV}(X, AX)^2}{\text{DCOV}(X, X) \mathbb E_A \text{DCOV}(AX, AX)}
+    &\approx \dfrac{\mathbb E_A \mathcal{V}(X, AX)^2}{\mathcal{V}(X, X) \mathbb E_A \mathcal{V}(AX, AX)}
     \\
     &= \sqrt{\dfrac{a^2(S_1 + S_2 - 2S_3)}{a^2S_1 + b^2S_2 - 2S_3'}}
 \end{split}
 \end{equation}
 %
-也就是我们可以用距离协方差的均值来估算距离相关性的均值（尽管一般情况下$\mathbb E x/y \ne \mathbb E x/\mathbb E y$），这给我们提供了新的估算距离相关性的手段。
+也就是我们可以用距离协方差的均值来估算距离相关性的均值（尽管一般情况下$\mathbb E X/Y \ne \mathbb E X/\mathbb E Y$），这给我们提供了新的估算距离相关性的手段。
 %
 
 
@@ -210,19 +211,19 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
     \item 对于任意排列$\pi'$，有$\Vert \pi'[\bvec x] - M(\bvec x)\Vert = \Vert \bvec x - M(\bvec x)\Vert$。
 \end{itemize}
 %
-通过以上特性可以归纳出，随机排列后的向量分布在以$M(\bvec x)$为中心，$\Vert \bvec x - \mathbb E_\pi \pi[\bvec x]\Vert$为半径的一个$d - 1$维超球面（Hypersphere）上，且该超球面所在的子空间为$\{\bvec x: \bvec x \in \mathbb R^d, \bvec 1^T\bvec x = 0\}$。
+通过以上特性可以归纳出，随机排列后的向量分布在以$M(\bvec x)$为中心，$\Vert \bvec x - \mathbb E_\pi \pi[\bvec x]\Vert$为半径的一个$d - 2$维超球面（Hypersphere）上，且该超球面所在的子空间为$\{\bvec x: \bvec x \in \mathbb R^d, \bvec 1^T\bvec x = 0\}$。
 %
 我们将$\pi[\bvec x] - M(\bvec x)$记为$r(\pi[\bvec x])$（误差向量），并考察其在子空间$\bvec 1^T \bvec y = 0$上面的投影。
 %
 
 \begin{theorem}
 \label{thm:ss-perm:perm-dist}
-    对于任何一个子子空间$\bvec 1^T \bvec y = 1$上的单位向量$\bvec y$，我们有：
-    $\mathbb E_\pi \left[r(\pi[\bvec x])\right] = 0$，以及$\text{Var}_\pi \left[ r(\pi[\bvec x])\cdot \bvec y \right] = \dfrac{1}{n - 1} \Vert r(\bvec x) \Vert^2$。
+    对于任何一个在子空间$\bvec 1^T \bvec y = 1$上的单位向量$\bvec y$，我们有：
+    $\mathbb E_\pi \left[r(\pi[\bvec x])  \cdot \bvec y\right] = 0$，以及$\textnormal{Var}_\pi \left[ r(\pi[\bvec x])\cdot \bvec y \right] = \dfrac{1}{n - 1} \Vert r(\bvec x) \Vert^2$。
 \end{theorem}
 %
 \begin{proof}
-首先，$\mathbb E_\pi  \left[r(\pi[\bvec x])\right] = \sum_{i}^n \mathbb E_\pi [x_{\pi[i]} - \mathbb E\bvec x] \bvec y = \sum_{i=1}^n 0 \cdot \bvec y = 0$。然后考虑方差，
+首先，$\mathbb E_\pi  \left[r(\pi[\bvec x])\right] = \sum_{i}^n \mathbb E_\pi [x_{\pi[i]} - \mathbb E\bvec x] y_i = \sum_{i=1}^d 0 \cdot \bvec y = 0$。然后考虑方差，
 我们有：
 \begin{equation}
 \begin{split}
@@ -254,28 +255,28 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
         -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d  \sum_{j = 1, j\ne i}^d y_i y_j = -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d -y_i^2 = \dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}
     \end{equation}
 \end{itemize}
-将上述两项相加，可以得到$\text{Var}_\pi \left[ r(\pi[\bvec x])\cdot \bvec y \right] = \dfrac{1}{n - 1} \Vert r(\bvec x) \Vert^2$。
+将上述两项相加，可以得到$\textnormal{Var}_\pi \left[ r(\pi[\bvec x])\cdot \bvec y \right] = \dfrac{1}{n - 1} \Vert r(\bvec x) \Vert^2$。
 \end{proof}
 
 \autoref{thm:ss-perm:perm-dist}表明，随机排列的误差向量几乎均匀地分布在超球面上，因为其没有对任何一个方向有偏好性（在任何一个方向上的投影的均值和标准差都是一样的）。
 %
 我们现在考虑随机投影$Y = AX, A \sim \mathcal N(0, 1)^{n\times d}$。
-由于$A$中的元素符合正态分布，因此我们可以得到：$\Vert M(Y) \Vert \approx  \dfrac{1}{n} \Vert Y \Vert^2$和$\Vert r(\pi[Y]) \Vert \approx \Vert Y \Vert$（因为$\pi[Y] = M(Y) + r(\pi[Y])$）。
+由于$A$中的元素符合正态分布，因此我们可以得到：$\Vert M(Y) \Vert^2 \approx  \dfrac{1}{n} \Vert Y \Vert^2$和$\Vert r(\pi[Y]) \Vert \approx \Vert Y \Vert$（因为$\pi[Y] = M(Y) + r(\pi[Y])$）。
 %
 这种情况下，$\pi[Y]$的误差向量的幅度显著高于其均值向量的维度。
 %
-由于误差向量的分布没有方向上的偏好性，我们可以假设$\text{DCOV}[X, r(Y)] = 0$以及$\text{DCOV}(M(Y), r(Y)) = 0$。
+由于误差向量的分布没有方向上的偏好性，我们可以假设$\mathcal{V}[X, r(Y)] = 0$以及$\mathcal{V}(M(Y), r(Y)) = 0$。
 %
 其次，由于误差向量的幅度远大于均值向量，我们可以假设
 \begin{equation}
-\text{DCOV}[\pi[Y], \pi[Y]] = \text{DCOV}[M(Y) + r(Y), M(Y) + r(Y)] > \text{DCOV}[M(Y), M(Y)]
+\mathcal{V}[\pi[Y], \pi[Y]] = \mathcal{V}[M(Y) + r(Y), M(Y) + r(Y)] > \mathcal{V}[M(Y), M(Y)]
 \end{equation}
 %
 综合上述两点假设以及距离协方差的性质，我们可以得到：
 \begin{equation}
 \begin{split}
-    \text{DCOR}(X, \pi[Y]) &= \text{DCOV}(X, \pi[Y]) / (\text{DCOV}[X, X] \text{DCOV}[\pi[Y], \pi[Y]]) \\
-    & < \text{DCOV}(X, M(Y)) / (\text{DCOV}[X, X] \text{DCOV}[M(Y), M(Y)]) \\
+    \text{DCOR}(X, \pi[Y]) &= \mathcal{V}(X, \pi[Y]) / (\mathcal{V}[X, X] \mathcal{V}[\pi[Y], \pi[Y]]) \\
+    & < \mathcal{V}(X, M(Y)) / (\mathcal{V}[X, X] \mathcal{V}[M(Y), M(Y)]) \\
     & = \text{DCOR}(X, M(Y))
 \end{split}
 \end{equation}
@@ -291,7 +292,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 
 
 \subsection{数值模拟}
-为了验证上述对于距离相关性的分析以及呈现随机排列与随机投影对距离相关性的影响，本节我们进行了数值模拟实验来测算符合一定分布的数据经过随机投影/随机排列后的距离相关性。
+为了验证上述对于距离相关性的分析以及呈现随机排列与随机投影对距离相关性的影响，本节我们进行了数值模拟实验来测算不同分布的数据经过随机投影/随机排列后的距离相关性。
 %
 
 我们令数据的原始维度均为100维，并且符合如下分布：
@@ -314,10 +315,11 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 
 对于每个分布，我们采样1万个点（记作$X$），然后使用高斯分布的矩阵投影得到$Y = WX$，最后对投影后的向量进行随机排列得到$\pi[Y]$。
 %
-我们采用文献~\cite{szekely2009brownian_dcor}中的方法对距离相关性进行数值计算（标记为“Brown”），同时也使用\autoref{eq:ss-perm:linear-dcor-estimation}对随机投影的距离相关性进行估算（标记为“估计值”），并一同呈现在\autoref{fig:ss-perm:dcor-estimation}中。
+我们采用文献~\cite{szekely2009brownian_dcor}中的基于布朗运动（Brownian Motion）的方法对距离相关性进行数值计算（标记为“Brown”），同时也使用\autoref{eq:ss-perm:linear-dcor-estimation}对随机投影的距离相关性进行估算（标记为“估计值”），并一同呈现在\autoref{fig:ss-perm:dcor-estimation}中。
 %
 
 
-上述数值模拟表明，随机投影后的数据与原始数据具有较大的距离相关性，且投影的维度越高，距离相关性越大。
+上述数值模拟表明，随机投影后的数据与原始数据具有较大的距离相关性，且投影后的维度越高，距离相关性越大。
 %
-进一步采用随机排列极大减少了距离相关性，且无论投影维度变化，其距离相关性一直小于一维投影的距离相关性，验证了本节的理论分析结论。
+而本文在投影后的数据上进一步采用随机排列，极大减少了距离相关性。
+且无论投影维度变化，其距离相关性一直小于一维投影的距离相关性，验证了本节的理论分析结论。

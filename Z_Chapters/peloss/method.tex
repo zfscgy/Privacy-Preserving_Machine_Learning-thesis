@@ -3,7 +3,6 @@
 %
 本节我们研究攻击者在泄露样本上学习得到的顶部模型的泛化误差。
 我们通过二分类例子表明当拆分层表征分布在决策边界附近时，攻击者的泛化误差较大。
-同时，数据分布在决策边界时，类间距离减小，类内距离加大，因此聚类攻击的效果也下降。
 %
 受到静电平衡理论以及库仑定律的启发，我们提出了势能损失，使得拆分层表征满足上述的分布，从而实现对于模型补全攻击的保护。
 %
@@ -18,8 +17,8 @@
 下面我们使用一个二分类的例子对其进行说明。
 %
 
-考虑表征空间为一个$d$维超球体（$d$-sphere）$\{ \bvec{x}: \sum_{i=1}^d h_i^2 = 1\}$，所有表征被划分为两个类别（正样本和负样本）。
-令假设集（Hypothesis Set, 即所有可能的分类函数的集合）为所有的半球面（表示正样本）集合：
+考虑表征空间为一个$d$维超球体（$d$-sphere）$\{ \bvec{x}: \sum_{i=1}^d x_i^2 = 1\}$，所有表征被划分为两个类别（正样本和负样本）。
+令假设集（Hypothesis Set，即所有可能的分类函数的集合）为所有的半球面（表示正样本）集合：
 \begin{equation}
     \mathcal H = \{ h: h(\bvec{x}) = \text{Sign}(\bvec{w} \cdot \bvec{x}), \Vert \bvec{w} \Vert_2 = 1\}.
 \end{equation}
@@ -34,7 +33,7 @@
     \end{equation}
 \end{itemize}
 
-考虑当学习到的参数$\bvec{w} = \sum_{i=1}^n \bvec{x}_i / \Vert \sum_{i=1}^n \bvec{x}_i \Vert_2$ 与目标分类模型的参数 $\bvec{e}_1$ 有一点偏差时的情况。
+考虑当学习到的参数$\bvec{w} = \sum_{i=1}^n \bvec{x}_i / \Vert \sum_{i=1}^n \bvec{x}_i \Vert_2$ 与目标分类模型的参数 $\bvec{e}_1$ 有一个很小的偏差时的情况。
 %
 由于我们假设表征的分布在$\bvec{e}_1$之外的维度时各向同性的，我们可以假设$\bvec{w}$位于前两维展开的超平面上，也就是
 \begin{equation}
@@ -59,8 +58,8 @@
 \end{equation}
 %
 从上式可以看出，当$\epsilon$很小时，泛化误差的上界与$p_1(0)$呈近似线性关系。
-因为$p_1(0)$就是正样本和负样本交界处的表征边缘概率密度，所以也可以说，此时泛化误差的大小与表征在决策边界附近的概率密度时成比例的。
-越多的表征分布在决策边界上，则分类函数的误差导致的泛化误差就越大。
+由于$p_1(0)$就是正样本和负样本交界处的表征边缘概率密度，因此也可以说，此时泛化误差的大小与表征在决策边界附近的概率密度是成比例的。
+越多的表征分布在决策边界上，则分类函数的（权重）误差导致的泛化误差就越大。
 
 在上面的讨论中，我们假设$\epsilon$是一个固定的小量。
 %
@@ -68,27 +67,27 @@
 %
 对于任何一个随机变量$X$，如果$X_1, \cdots, X_m$是$m$个独立的采样，则有：
 \begin{equation}
-    \mathbb E \left[ \left(\dfrac{1}{m}\sum_{i=1}^m h_i - \mathbb E[X] \right)^2 \right] = \dfrac{1}{m} \mathbb E\left[\left(X -\mathbb EX\right)^2 \right].
+    \mathbb E \left[ \left(\dfrac{1}{m}\sum_{i=1}^m X_i - \mathbb E[X] \right)^2 \right] = \dfrac{1}{m} \mathbb E\left[\left(X -\mathbb EX\right)^2 \right].
 \end{equation}
 %
 也就是说，如果随机变量的分布远离其均值，则多次采样后得到的采样均值相对于实际分布的均值的误差就越大。
 %
 虽然在先前的讨论中，我们假定表征空间是一个超球面，但是上述结论依然是近似成立的，也就是 $\mathbb E[\epsilon^2]\propto \mathbb E\left[(X - \mathbb EX)^2\right]$。
 为了使得决策区域误差 $\epsilon$ 尽可能变大，同一类别的表征应该尽量分布在远离其分布均值的区域。
-同时我们也可以注意到，离某一类别表征分布均值最远的区域也正是该类别的决策边界。
+同时我们也可以注意到，离某一类别表征可以达到的距离分布均值最远的区域也正是该类别的决策边界。
 %
-已有的从数据分布直接推导泛化误差上界的研究与上文的分析较为类似~\cite{jinpengzhan2020generalization}，该研究使用数据的类内距离和类间距离对泛化误差上界进行估计。
+上文的分析与从数据分布直接推导泛化误差上界的已有研究较为类似~\cite{jinpengzhan2020generalization}，该研究使用数据的类内距离和类间距离对泛化误差上界进行估计。
 
 
 %
 \subsubsection{聚类误差}
 当表征分布于决策边界附近时，对其进行聚类也将变得困难。
 %
-因为聚类的基本思想是把距离较近的一群数据点归入一个簇中，也就是说，聚类之后的每个类别里面的数据点应该彼此靠近~\cite{saxena2017cluster_review}。
+因为聚类的基本思想是把距离较近的一群数据点归入一个簇中~\cite{saxena2017cluster_review,murtagh_2012_cluster}，也就是说，聚类之后的每个类别里面的数据点应该彼此靠近。
 %
 但是通过让表征分布到决策边界上，与其分布均值远离，同类表征之间的距离变得更大了，而不同类表征之间的距离变得更小了。
 %
-这便与聚类的基本要求相违背，因此让表征分布于决策边界的做法很显然可以降低对其聚类的效果。
+这与聚类的基本要求相违背，因此让表征分布于决策边界的做法很显然可以降低对其聚类的效果。
 
 
 \subsubsection{总结}
@@ -109,7 +108,7 @@
 
 
 \subsection{势能损失函数定义}
-物理学中的静电平衡（Electrost Equilibrium）现象告诉我们，当一个导体建立静电平衡时，其所有净电荷（Net Charge）将会分布在导体表面~\cite{griffiths2005introduction}。
+物理学中的静电平衡（Electrostatic Equilibrium）现象告诉我们，当一个导体建立静电平衡时，其所有净电荷（Net Charge）将会分布在导体表面~\cite{griffiths2005introduction}。
 %
 这个现象的一部分原因时库仑定律（Coulomb's Law），即：同性电荷之间相互排斥，而异性电荷之间相互吸引。
 %
@@ -122,7 +121,7 @@
 \label{eq:peloss:columb}
     \bvec{F} =  k {q_1q_2(\bvec{r}_1 - \bvec{r}_2)}/{\Vert r_1 - r_2 \Vert_2^3},
 \end{equation}
-其中，$k$表示一个常数，$q_1, q_2$时带符号的电荷大小（正电荷为正号，负电荷为负号），$\bvec{r}_1, \bvec{r}_2$表示两个电荷的位置，$\Vert \cdot \Vert$表示欧几里得范数，$\bvec{F}$则表示第二个电荷对第一个电荷产生的力（库仑力）的大小。
+其中，$k$表示一个常数，$q_1, q_2$是带符号的电荷大小（正电荷为正号，负电荷为负号），$\bvec{r}_1, \bvec{r}_2$表示两个电荷的位置，$\Vert \cdot \Vert$表示欧几里得范数，$\bvec{F}$则表示第二个电荷对第一个电荷产生的力（库仑力）的大小。
 %
 我们忽略常数以及电荷的大小，只考虑同性电荷，则可以把\autoref{eq:peloss:columb}化为$\bvec{F} = (\bvec{r}_1 - \bvec{r}_2) / \Vert\bvec{r}_1 - \bvec{r}_2 \Vert_2^3$。
 %
@@ -139,7 +138,7 @@
 
 通过把$L_{pe}$加入损失函数中，在拆分模型的训练过程中，同类别的表征互相之间会排斥并且逐渐移动到该类别的决策区域边界处。
 %
-在三维的情况下，汤姆森定理（Thomson's Theorem）证明电势能最小的情况对应于电荷全部分布在导体的表面，也就是表征的概率质量全部在决策边界~\cite{griffiths2005introduction}。
+在三维的情况下，汤姆森定理（Thomson's Theorem）证明电势能最小的情况对应于电荷全部分布在导体的表面~\cite{thomson_1913_atom,bakhoum_2008_thomson_proof}，也就是此时表征的概率质量全部在决策边界。
 %
 但是考虑到拆分层的表征空间的维度一般远大于3维，因此其概率质量并不能完全集中在决策边界。
 但是我们依然能证明，在势能损失函数最小的情况下，决策边界处必然有概率质量分布。
@@ -155,7 +154,7 @@
     令$\Delta_\epsilon \Omega = \{\bvec{x}: \bvec{x} + \epsilon \bvec{r} \not\in \Omega, \bvec{x} \in \Omega, \Vert \bvec{r} \Vert_2 = 1 \}$ 表示距离$\Omega$边界距离小于$\epsilon$的区域，那么$f^*$满足对于任意$\epsilon > 0$，有$\int_{\bvec{x}\in\Delta_\epsilon \Omega} f^*(\bvec{x})dV > 0$。
 \end{theorem}
 \begin{proof}
-    为了证明的方便，此处我们用$|\cdot |$来表示欧几里得范数。
+    为了让证明过程更加清晰，此处我们用$|\cdot |$来表示欧几里得范数。
     %
     首先考虑中心在$\bvec{x}_0$，半径为$r$的球$B_r(\bvec{x}_0)$。
     令
@@ -181,7 +180,7 @@
             f(t)            & \quad \text{其他}.
         \end{cases}
     \end{equation}
-    此时我们计算$f'$和$f$的势能差异（把$\Omega - B_1 - B_2$记作$\Omega'$）：
+    此时我们计算$f'$和$f$的势能差异（把$\Omega - B_1 - B_2$记作$\Omega'$，并注意到$f'$和$f$在$\Omega'$内部的概率质量产生的势能差异为零）：
     \begin{equation}
     \label{eq:peloss:diff0}
     \small
@@ -218,7 +217,7 @@
 \label{eq:peloss:diff2}
     \int_{\bvec x \in B_{\epsilon/4}(0)}\int_{\bvec y \in \Omega'} g(\bvec x)f(\bvec y) \left[ \dfrac{1}{|\bvec x + \bvec r' - \bvec y|} - \dfrac{1}{|\bvec x + \bvec r'' - \bvec y|} \right]dUdV.
 \end{equation}
-由于$\bvec r'$ 和 $\bvec r''$ 方向一致（我们将其对应的单位向量记作$\bvec e_r$），因此我们可以将$bvec x$和$\bvec y$分解为与$\bvec e_r$相同的方向和与其正交的方向：
+由于$\bvec r'$ 和 $\bvec r''$ 方向一致（我们将其对应的单位向量记作$\bvec e_r$），因此我们可以将$\bvec x$和$\bvec y$分解为与$\bvec e_r$相同的方向和与其正交的方向：
 \begin{equation}
     \begin{cases}
         \bvec x_r = (\bvec x \cdot \bvec e_r) \bvec e_r \\
@@ -270,20 +269,21 @@
 %
 这要求表征空间是一个有界（Bounded）并且无边界（Borderless）的流形。
 %
-我们简单地通过层归一化（Layer Normalization）来实现该要求。
+我们简单地通过层归一化（Layer Normalization）~\cite{hinton_2016_layernorm}来实现该要求。
 %
 经过层归一化后，拆分层的表征被投影到$d$维超球体上。
 %
 为了保持一致性，我们也需要改变其距离的计算方式，将欧氏距离（Euclidean Distance）转化为超球面上的测地距离（Geodesic Distance），此时势能损失函数被修改为：
 \begin{equation}
-    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} \dfrac{1}{\arccos \langle \bvec{h}, \bvec{h'} \rangle}.
+    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} {1}/{\arccos \left({\bvec h \cdot \bvec h'} \over {\Vert \bvec h \Vert_2 \cdot \Vert \bvec h' \Vert_2}\right)}.
 \end{equation}
+%
 
 最终，在模型的训练过程中，我们把势能损失加入到原有的损失函数（如交叉熵分类损失）中，并设置权重为$\alpha$。
 总的损失函数为$L' = L + \alpha L_{pe}$。
 
 \subsection{与距离相关性的关系}
-已有研究采用了距离相关性将拆分层表征对输入特征~\cite{vepakomma2020nopeek}或预测标签~\cite{sunjiankai2022forward_embedding_protect}进行解耦，从而实现中拆分学习中保护数据输入特征或标签的目的。
+已有研究采用了距离相关性将拆分层表征对输入特征~\cite{vepakomma2020nopeek}或预测标签~\cite{sunjiankai2022forward_embedding_protect}进行解耦，从而保护输入特征或标签。
 %
 我们在这里讨论对标签进行保护的情况，此时距离相关性损失可以表示为
 \begin{equation}
@@ -295,8 +295,8 @@
 \begin{equation}
     d_{i, j} = \Vert \bvec h_i - \bvec h_j \Vert_2 - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h_i - \bvec h' \Vert_2 - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h' - \bvec h_j \Vert_2 + \mathop{\mathbb E}_{\bvec h', \bvec h'' \in H}\Vert \bvec h' - \bvec h'' \Vert_2.
 \end{equation}
-
-类似地，$d'_{i,j}$则是样本$i$和样本$j$的标签的双中心距离，以独热（One-Hot）标签为例，则$d_{i,i} = 0, d_{i,j\ne i} = \sqrt 2$。
+%
+类似地，$d'_{i,j}$则是样本$i$和样本$j$的标签的双中心距离，以独热（One-Hot）标签为例，当$i,j$标签不同时$d_{i,j} = \sqrt 2$。
 将其带入\autoref{eq:peloss:dcorloss}，提取出其分母，得到
 \begin{equation}
     \sum_{\substack{c,c'\in \mathcal C \\ c\ne c'}} \sum_{\substack{\bvec h\in H_c \\ \bvec h' \in H_c'}} \sqrt2 
@@ -304,23 +304,23 @@
         \Vert \bvec h - \bvec h'\Vert_2 - \overline{\Vert \bvec h - \cdot \Vert_2} - \overline{\Vert \bvec \cdot - \bvec h' \Vert_2} + \overline{\Vert \cdot - \cdot\Vert_2}, 
     \right)
 \end{equation}
-其中，我们用 $\overline{\Vert \bvec h - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$\overline{\Vert \cdot - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h, \bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$H$表示当前批样本表征集合，$H_c$表示当前批样本中类别为$c$的表征集合。
+其中，我们用 $\overline{\Vert \bvec h - \cdot \Vert_2}$ 表示 $\mathbb E_{\bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$\overline{\Vert \cdot - \cdot \Vert_2}$ 表示 $\mathbb E_{\bvec h, \bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$H$表示当前批样本表征集合，$H_c$表示当前批样本中类别为$c$的表征集合。
 %
 可以看出最小化距离相关性损失类似于最小化表征的类间距离，而本文提出的势能损失则旨在最大化类内距离，两者之间有一定的相似性。
 %
 然而直观地来讲，不同类别的决策边界分布在不同的方向上，导致距离相关性的计算有更高的误差且难以优化。
 %
-\autoref{}中的实验结果也表明势能损失相比于距离相关性更加优越。
+后续的实验结果也表明势能损失相比于距离相关性更加优越。
 
 
 \subsection{输入特征的隐私保护}
-尽管势能损失并未直接保护输入特征的隐私，但是间接地对其进行了保护。
+势能损失虽然没有直接保护输入特征的隐私，但是间接地对其进行了保护。
 %
-这是因为在拆分学习中，可以通过拆分层的选择来调节输入特征和标签的隐私泄露程度。
+这是因为在拆分学习中，可以通过拆分层位置的选择来调节输入特征和标签的隐私泄露程度。
 具体而言，拆分层靠近模型输入，则输入特征隐私泄露加大；而拆分层靠近模型输出，则输出特征隐私泄露加大~\cite{abuadbba2020can_split}。
 %
-而通过势能损失函数，我们可以将拆分层设置到更靠近输出的位置，此时特征的隐私泄露自然也就减少了。
+而通过势能损失函数，我们可以将拆分层设置到更靠近输出的位置，此时输入特征的隐私泄露自然也就减少了。
 %
-对于类似卷积神经网络的模型，其中间层会保留大量的输入数据的信息，因此通过势能损失，把拆分层设置为最后一层，可以极大提高对于输入特征的保护，
-同时也保护标签的隐私。
+尤其是对于基于卷积神经网络或Transformer的模型，在无保护的情况下，其中间层会保留大量的输入数据的信息。
+通过势能损失，可以把拆分层设置为最后一层，极大提高对于输入特征的保护，同时也保护标签的隐私。
 %

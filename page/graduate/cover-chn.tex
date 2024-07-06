@@ -58,7 +58,7 @@
         \ifthenelse{\equal{\TitleLines}{1}}
         {
             % TitleLines == 1
-            中文论文题目：&  \uline{\hfill \fangsong \Title{} \hfill} \\
+            中文论文题目：&  \uline{\fangsong \Title{}} \\
             ~ & \uline{\hfill} \\
         }
         {
@@ -75,8 +75,8 @@
         }
         {
             % TitleEngLines == 2
-            英文论文题目：& \zihao{3} \uline{\TitleEngLineOne{}} \\
-            ~          & \zihao{3} \uline{\TitleEngLineTwo{}} \\
+            英文论文题目：& \zihao{3} \uline{\hfill \TitleEngLineOne{} \hfill} \\
+            ~          & \zihao{3} \uline{\hfill \TitleEngLineTwo{} \hfill} \\
         }
     \end{tabularx}
 \end{center}

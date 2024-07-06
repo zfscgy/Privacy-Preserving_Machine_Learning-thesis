@@ -29,8 +29,8 @@
     MajorFormat     = general,
     Degree          = graduate,   % 'undergraduate' or 'graduate'
     Type            = thesis,          % 'thesis'   or 'design'
-    Period          = final,           % 'proposal' or 'paper' or 'final'
-    BlindReview     = false,           % 'false'    or 'true'
+    Period          = paper,           % 'proposal' or 'paper' or 'final'
+    BlindReview     = true,           % 'false'    or 'true'
     Language        = chinese,         % 'chinese'  or 'english'
     % Graduate Thesis Info
     GradLevel       = doctor,          % 'master' or 'doctor'
@@ -42,16 +42,16 @@
     ListOfTables    = false,
     ListOfAlgorithms= false,
     % Title
-    %Title           = {隐私保护机器学习的}{效率和隐私研究},
+    Title           = {{高效安全的隐私保护机器学习研究}},
     %TitleEng        = {{Research on the Efficiency and Privacy in Vertical Federated Learning}}
 ]{zjuthesis}
 
-\usepackage{amsmath}
+
 
 
 %% Uncomment the following lines if you need multi line titles on cover pages
-\titletwolines{隐私保护机器学习中的}{效率和隐私研究}
-\titleengtwolines{Research on the Efficiency and Privacy}{in Privacy-Preserving Machine Learning}
+% \titletwolines{}
+\titleengtwolines{Research on Efficient and Secure}{Privacy-Preserving Machine Learning}
 
 %% Uncomment the following lines if you need multi line major names on cover pages
 % \majortwolines{专业名第一行}{专业名第二行}
@@ -189,10 +189,13 @@
     \inputbody{post}
 }
 
+
 \newtheorem{definition}{定义}[section]
 \newtheorem{theorem}{定理}[section]
-\newtheorem{corollary}{引理}[section]
+\newtheorem{corollary}[theorem]{引理}
+\newtheorem{proposition}[theorem]{推论}
 \newtheorem{proof}{证明}[section]
+
 \algrenewcommand\algorithmicrequire{\textbf{输入:}}
 \algrenewcommand\algorithmicensure{\textbf{输出:}}
 \newcommand{\LineComment}[1]{\hfill // \textnormal{#1}}

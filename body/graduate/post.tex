@@ -2,11 +2,13 @@
 \inputbody{post/appendix}
 \ifthenelse{\equal{\BlindReview}{true}}
 {
+    \inputbody{post/cv}
 }
 {
     \ifthenelse{\equal{\Period}{proposal}}
     {}
     {
         \inputbody{post/cv}
+        \inputpage{acknowledgement}
     }
 }
