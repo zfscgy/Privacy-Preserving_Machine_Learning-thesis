@@ -1,6 +1,8 @@
 \section{实验分析}
 为了验证所提出的PermLLM方法，我们在不同的设定下进行了实验，包括了不同的网络环境以及不同的Transformer模型大小。
 %
+我们采用Pyfhel库~\cite{ibarrondo_2021_pyfhel}实现BFV同态加密，使用Pytorch~\cite{2019_pytorch}进行浮点运算，并采用Python原生套接字进行各方的网络通信。
+%
 我们的当前最新的基于密码学的大语言模型或Transformer模型隐私推断框架进行了对比，包括MPCFormer~\cite{li2022mpcformer}和Puma~\cite{dong2023puma}。
 %
 这些实验在搭载4张NVIDIA RTX 3090 (24G)显卡的服务器上进行。
@@ -20,11 +22,11 @@
 我们首先对非线性函数计算和单层的Transformer推断进行了基准测试，并且测量了通信量、通信轮数和总的执行时间。
 我们将非线性函数的结果汇报在\autoref{tab:perm-llm:nonlinear}中，将单层Transformer结果汇报在\autoref{tab:perm-llm:layer}中。
 %
-
+表中LN表示层归一化，Any表示任意非线性函数。
 %
 \begin{table}[h!]
     \small
-    \caption{非线性函数的基准测试（注：LN表示层归一化，any表示任意非线性函数）}
+    \caption{非线性函数的基准测试}
     \label{tab:perm-llm:nonlinear}
     \begin{tabular}{@{}cccrrrrr@{}}
     \toprule
@@ -37,10 +39,10 @@
      &  & \textbf{PermLLM} & \textbf{4.02} & \textbf{4} & \textbf{0.12 ± 0.01} & \textbf{0.17 ± 0.01} & \textbf{0.2 ± 0.00} \\ \midrule
     \multirow{6}{*}{\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{Element-wise}}}} & \multirow{3}{*}{1K} & Puma: GeLU & $\approx$1.7 & $\approx$200 & 0.04 ± 0.02 & 0.38 ± 0.02 & 0.71 ± 0.01 \\ \cmidrule(l){3-8} 
      &  & Puma: LN & $\approx$0.20 & $\approx$200 & 0.02 ± 0.00 & 0.35 ± 0.01 & 0.67 ± 0.01 \\ \cmidrule(l){3-8} 
-     &  & \textbf{PermLLM: any} & \textbf{0.01} & \textbf{3} & \textbf{0.00 ± 0.00} & \textbf{0.02 ± 0.00} & \textbf{0.04 ± 0.01} \\ \cmidrule(l){2-8} 
+     &  & \textbf{PermLLM: Any} & \textbf{0.01} & \textbf{3} & \textbf{0.00 ± 0.00} & \textbf{0.02 ± 0.00} & \textbf{0.04 ± 0.01} \\ \cmidrule(l){2-8} 
      & \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}100K\\100$\times$1K\end{tabular}} & Puma: GeLU & $\approx$170 & $\approx$200 & 1.32 ± 0.11 & 1.69 ± 0.23 & 12.37 ± 0.08 \\ \cmidrule(l){3-8} 
      &  & Puma: LN & $\approx$20 & $\approx$200 & 0.13 ± 0.03 & 0.15 ± 0.02 & 0.83 ± 0.03 \\ \cmidrule(l){3-8} 
-     &  & \textbf{PermLLM: any} & \textbf{1.15} & \textbf{3} & \textbf{0.01 ± 0.00} & \textbf{0.03 ± 0.01} & \textbf{0.05 ± 0.00} \\ \bottomrule
+     &  & \textbf{PermLLM: Any} & \textbf{1.15} & \textbf{3} & \textbf{0.01 ± 0.00} & \textbf{0.03 ± 0.01} & \textbf{0.05 ± 0.00} \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -53,12 +55,12 @@
 \begin{tabular}{@{}ccrrrrr@{}}
 \toprule
 模型大小 & 方法           & 通信（Mb）   & 轮数        & LAN                   & 1Gbps/10ms            & 100Mbps/20ms         \\ \midrule
-\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}Large\\ ($d=4096$)\end{tabular}} & MPCFormer & 3073.79 & 53 & 1.37 ± 0.01 & 26.15 ± 0.35 & 259.65 ± 0.36 \\ \cmidrule(l){2-7} 
+\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}} 大 \\ ($d=4096$)\end{tabular}} & MPCFormer & 3073.79 & 53 & 1.37 ± 0.01 & 26.15 ± 0.35 & 259.65 ± 0.36 \\ \cmidrule(l){2-7} 
             & Puma        & $\approx$33   & $\approx$1500 & 8.82 ± 0.09           & 11.45 ± 0.42         & 14.40 ± 0.65         \\ \cmidrule(l){2-7} 
             & \textbf{PermLLM} & \textbf{0.49} & \textbf{20}   & \textbf{0.04 ± 0.01}  & \textbf{0.12 ± 0.01} & \textbf{0.24 ± 0.00} \\ \midrule
-\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}Small\\ ($d=768$)\end{tabular}}  & MPCFormer & 108.32  & 53 & 1.29 ± 0.19 & 1.71 ± 0.01  & 10.29 ± 0.20  \\ \cmidrule(l){2-7} 
+\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}} 小 \\ ($d=768$)\end{tabular}}  & MPCFormer & 108.32  & 53 & 1.29 ± 0.19 & 1.71 ± 0.01  & 10.29 ± 0.20  \\ \cmidrule(l){2-7} 
             & Puma         & $\approx$6    & $\approx$1000 & 0.46 ± 0.03           & 2.24 ± 0.03          & 3.97 ± 0.04          \\ \cmidrule(l){2-7} 
-            & \textbf{PermLLM} & \textbf{0.1}  & \textbf{20}   & \textbf{0.034 ± 0.00} & \textbf{0.15 ± 0.01} & \textbf{0.23 ± 0.02} \\ \bottomrule
+            & \textbf{PermLLM} & \textbf{0.1}  & \textbf{20}   & \textbf{0.03 ± 0.00} & \textbf{0.15 ± 0.01} & \textbf{0.23 ± 0.02} \\ \bottomrule
 \end{tabular}
 \end{table}
 

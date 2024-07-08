@@ -14,7 +14,7 @@
 \begin{definition}[距离相关性]
     对于两个随机向量$X \in \mathbb R^p, Y\in \mathbb R^q$，距离相关性的定义为
     \begin{equation}
-        \text{DCOR}(X, Y) = \dfrac{\mathcal{V}(X, Y)^2}{\sqrt{\mathcal{V}(X, X)^2\mathcal{V}(Y, Y)^2}},
+        \textnormal{DCOR}(X, Y) = \dfrac{\mathcal{V}(X, Y)^2}{\sqrt{\mathcal{V}(X, X)^2\mathcal{V}(Y, Y)^2}},
     \end{equation}
     其中$\mathcal{V}$表示距离协方差（Distance Covariance)，定义如下
     \begin{equation}
@@ -49,7 +49,7 @@
     则
     \begin{equation}
     \label{eq:ss-perm:linear-dcov1}
-            \mathop{\mathbb E}_A \mathcal{V}(X, AX)^2 = a\mathcal{V}(X, X)^2
+            \mathop{\mathbb E}_A \mathcal{V}(X, AX)^2 = a\mathcal{V}(X, X)^2,
     \end{equation}
     以及    
     \begin{equation}
@@ -84,7 +84,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
 
 下面我们证明$\mathbb E_A \dfrac{\Vert A\bvec x\Vert \Vert A \bvec y\Vert }{\Vert \bvec x \Vert \Vert \bvec y \Vert}$只和$\bvec x, \bvec y$之间的夹角有关。
 %
-考虑两对$n$维向量$\bvec x, \bvec y$与$\bvec x', \bvec y'$满足$\Vert \bvec x \Vert = \Vert \bvec x' \Vert = \Vert \bvec y \Vert = \Vert \bvec y' \Vert = 1$，
+由于对$\bvec x, \bvec y$放缩不影响结果，我们考虑两对$n$维向量$\bvec x, \bvec y$与$\bvec x', \bvec y'$满足$\Vert \bvec x \Vert = \Vert \bvec x' \Vert = \Vert \bvec y \Vert = \Vert \bvec y' \Vert = 1$，
 且$\bvec x, \bvec y$和$\bvec x', \bvec y'$的夹角均为$\theta$。
 %
 令$\bvec e_1 = \bvec x/\Vert x \Vert, \bvec e_2 = (\bvec y - \bvec y \cdot \bvec x/\Vert \bvec x \Vert) / \Vert \bvec y - \bvec y \cdot \bvec x/\Vert \bvec x \Vert \Vert$，
@@ -129,8 +129,8 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
             \cos \alpha & \sin \alpha & O \\
             -\sin \alpha &\cos \alpha & O \\
             O & O & E
-        \end{bmatrix}
-    \end{equation}，
+        \end{bmatrix}.
+    \end{equation}
     此时有：
     \begin{equation}
     \begin{split}
@@ -153,7 +153,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
             & \int_{\alpha=0}^{2\pi} 
                 \text{Sign}[(\Vert \bvec a_0 \Vert^2 - \Vert\bvec a_1\Vert^2)\cos 2 \alpha] - 
                 (\bvec a_0 \cdot \bvec a_1) \sin 2\alpha + 
-                (\Vert \bvec a_0 \Vert^2 + \Vert\bvec a_1\Vert^2) \cos \theta d\alpha
+                (\Vert \bvec a_0 \Vert^2 + \Vert\bvec a_1\Vert^2) \cos \theta d\alpha.
         \end{split}
     \end{equation}
     注意到积分号中的前两项积分后为0，整个式子为负数，因此我们可以得出$g(\theta)$在$[0, \pi/2]$中单调递减。
@@ -161,7 +161,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
 
 直观角度理解，$S'$项反应了分布$X$的“集中度”对距离方差带来的影响。
 %
-当$X$中的各个点分布在很接近的方向上时，$\angle[X - X', X - X'']$变小，因此$S'$变大，从而导致$\mathcal{V}(AX, AX)$变小，从而导致$\text{DCOR}(X, AX)$变大。
+当$X$中的各个点分布在很接近的方向上时，$\angle[X - X', X - X'']$变小，因此$S'$变大，从而导致$\mathcal{V}(AX, AX)$变小，随之$\text{DCOR}(X, AX)$变大。
 %
 也就是说，$X$的分布的方向越集中，则与其随机线性投影的距离相关性有更大可能变大。
 %
@@ -178,7 +178,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
 考虑$W \sim \mathcal N(0, \sigma^2)^{n \times d}$，此时考虑对向量$\bvec e_1$计算$\mathbb E_A \Vert W\bvec e_1 \Vert$与$\sqrt{\mathbb E_A \left[\Vert W\bvec e_1 \Vert^2 \right]}$，对应卡方分布（Chi-Square Distribution）的均值以及其平方根的均值。
 %
 因此可以得到
-$a = \mathbb E \sqrt{w_1^2 + \cdots + w_d^2} = \sigma \sqrt{2} \Gamma(d + 1/2) / \Gamma(d) \approx \sigma \sqrt{d - 1/2}$ 对于较大的 $d$，                    
+$a = \mathbb E \sqrt{w_1^2 + \cdots + w_d^2} = \sigma \sqrt{2} \Gamma(d + 1/2) / \Gamma(d) \approx \sigma \sqrt{d - 1/2}$（对于较大的 $d$），
 $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 %
 再考虑$\bvec x = \bvec e_1, \bvec y = \cos \theta \bvec e_1 + \sin \theta \bvec e_2$，可以得到
@@ -207,7 +207,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 我们首先注意到，对于$\bvec x \in \mathbb R^d$和随机排列$\pi$，可以得到如下特性：
 \begin{itemize}
     \item $\mathbb E_\pi \pi[\bvec x] = [\mathbb E\bvec x, \cdots, \mathbb E\bvec x] = M(\bvec x)$，其中我们定义$\mathbb E\bvec x = 1/d \cdot \sum_{i=1}^d x_i$。
-    \item 对于任意排列$\pi'$，有$\pi'[\bvec x] - \mathbb E_{\pi}\pi[\bvec x]^T \bvec 1 = 0$。
+    \item 对于任意排列$\pi'$，有$(\pi'[\bvec x] - \mathbb E_{\pi}\pi[\bvec x])^T \bvec 1 = 0$。
     \item 对于任意排列$\pi'$，有$\Vert \pi'[\bvec x] - M(\bvec x)\Vert = \Vert \bvec x - M(\bvec x)\Vert$。
 \end{itemize}
 %
@@ -223,11 +223,11 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 \end{theorem}
 %
 \begin{proof}
-首先，$\mathbb E_\pi  \left[r(\pi[\bvec x])\right] = \sum_{i}^n \mathbb E_\pi [x_{\pi[i]} - \mathbb E\bvec x] y_i = \sum_{i=1}^d 0 \cdot \bvec y = 0$。然后考虑方差，
+首先，$\mathbb E_\pi  \left[r(\pi[\bvec x]) \cdot \bvec y\right] = \sum_{i}^n \mathbb E_\pi [x_{\pi[i]} - \mathbb E\bvec x] y_i = \sum_{i=1}^d 0 \cdot \bvec y = 0$。然后考虑方差，
 我们有：
 \begin{equation}
 \begin{split}
-    \text{Var}\left[ r(\pi[\bvec x])\cdot \bvec y \right] = \mathbb E_\pi \left[\sum_{i,j=1}^n  r(\pi[\bvec x])_i\cdot y_i r(\pi[\bvec x])_j\cdot y_j \right]
+    \text{Var}\left[ r(\pi[\bvec x])\cdot \bvec y \right] = \mathbb E_\pi \left[\sum_{i,j=1}^n  r(\pi[\bvec x])_i y_i r(\pi[\bvec x])_j y_j \right]
 \end{split}
 \end{equation}
 我们分为$i = j$和$i \ne j$两种情况进行讨论。
@@ -297,11 +297,12 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 
 我们令数据的原始维度均为100维，并且符合如下分布：
 \begin{itemize}
-    \item \textbf{正态分布}：数据从$\mathcal N(0, 1)^{100}$中抽取。
+    \item \textbf{正态分布}：数据从$\mathcal N(0, 1)^{100}$中抽取
+    （注：我们用$\mathcal D^{n}$表示长度为$n$的随机向量，其中每个元素的分布都为$\mathcal D$且相互独立）。
     \item \textbf{均匀分布}：数据从$\mathcal U(0, 1)^{100}$中抽取。
     \item \textbf{稀疏分布}：数据中每个点有0.1的概率为1，否则则为0。
     \item \textbf{子空间分布}：数据分布在一个20维的子空间附近。
-    具体而言，数据表示为$X = AH + E$，其中$H \sim \mathcal N(0, 1)^{20}, A \sim \mathcal N(0, 1/{20^2}), E \sim \mathcal N(0, 0.1)$。
+    具体而言，数据表示为$X = AH + E$，其中$H \sim \mathcal N(0, 1)^{20}, A \sim \mathcal N(0, 1/{20^2})^{20\times 100}, E \sim \mathcal N(0, 0.1)^{100}$。
 \end{itemize}
 
 

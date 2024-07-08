@@ -43,6 +43,9 @@
 本文首先证明大模型中间结果几乎完全保留了输入信息，因此传统的拆分学习方法无法应用于大语言模型。
 考虑到密码学方法在处理非线性函数时的高开销的问题，本文提出混合随机排列、秘密分享以及同态加密三种技术，针对大模型推断过程进行深度优化，建立高效的大模型隐私推断框架，并在开源大模型的基础上实现了秒级别的大模型隐私推断。
 
+\noindent \textbf{关键词}: 隐私保护机器学习，拆分学习，纵向联邦学习
+
+
 \cleardoublepage
 \chapternonum{Abstract}
 With the widespread application of machine learning, privacy concerns have become increasingly prominent.
@@ -53,7 +56,7 @@ Among these, two mainstream approaches are cryptographic methods and split learn
 Cryptographic methods achieve high security level, at the price of heavy computation and communication costs.
 %
 Split learning only requires the exchange of intermediate results, instead of cryptographic operations.
-Thus, it is relatively more efficient compared with cryptographic methods, although still costs more communication than centralized training.
+Thus, it is relatively more efficient compared with cryptographic methods, although still costing more communication than centralized training.
 Moreover, the intermediate results and the partial models exposed in split learning could leak privacy, raising multiple security concerns.
 
 The aforementioned efficiency and security issues present great challenge to the real-world applications of privacy-preserving machine learning.
@@ -88,22 +91,24 @@ Inspired by the phenomenon of electrostatic equilibrium , we propose the potenti
 Compared with existing measures, potential energy loss significantly reduces the performance of the model completion attack, and minimizes the accuracy loss of the original task.
 
 
-\textbf{(3) Accelerating the non-linear function evaluation based on combining secret sharing and random permutation.}
+\textbf{(3) Accelerating the nonlinear function evaluation in privacy-preserving neural network based on combining secret sharing and random permutation.}
 Cryptographic privacy-preserving neural network frameworks exhibit heavy overheads on nonlinear activation functions.
 On the other side, split learning and other hybrid methods have privacy concerns since they directly reveal the intermediate results.
 %
-This article proposes the privacy-preserving nonlinear element-wise function evaluation based on random permutation and semi-honest third-party.
+This article proposes the privacy-preserving nonlinear element-wise function evaluation based on random permutation and a semi-honest third-party.
 %
 Combining it with secret sharing, we realize efficient privacy-preserving neural network training and inference.
 %
 Moreover, we conduct extensive quantitative analysis on the privacy leakage of random permutation based on the distance correlation metric, demonstrating the privacy leakage is negligible.
 
-\textbf{(4) Achieving secure large language model inference within seconds.}
+\textbf{(4) Achieving secure large language model inference within seconds based on improved secret sharing, random permutation, and homomorphic encryption.}
 Large language models contain a large amount of parameters and require heavy computation, which presents new challenges to privacy preserving machine learning.
 %
 In this article, we first show that the intermediate embeddings in large language models almost fully preserve the input text, so classic split learning approach is not applicable.
 %
 Then we focus on the nonlinear evaluation bottleneck in cryptographic methods, and propose an efficient large language model private inference framework based on secret sharing, random permutation, and homomorphic encryption.
 %
-We also implement the open-source large lanugage model based on our framework and realize private inference within seconds.
+We also implement a open-source large language model based on our framework and realize private inference within seconds.
 %
+
+\noindent \textbf{keywords}: Privacy-Preserving Machine Learning, Split Learning, Vertical Federated Learning

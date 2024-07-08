@@ -20,7 +20,7 @@
 考虑表征空间为一个$d$维超球体（$d$-sphere）$\{ \bvec{x}: \sum_{i=1}^d x_i^2 = 1\}$，所有表征被划分为两个类别（正样本和负样本）。
 令假设集（Hypothesis Set，即所有可能的分类函数的集合）为所有的半球面（表示正样本）集合：
 \begin{equation}
-    \mathcal H = \{ h: h(\bvec{x}) = \text{Sign}(\bvec{w} \cdot \bvec{x}), \Vert \bvec{w} \Vert_2 = 1\}.
+    \mathcal H = \{ h: h(\bvec{x}) = \text{Sign}(\bvec{w} \cdot \bvec{x}), \Vert \bvec{w} \Vert = 1\}.
 \end{equation}
 不失一般性，我们假设目标分类函数为$f(\bvec{x}) = \text{Sign}(x_1)$。
 同时，我们对表征的分布做出如下假设：
@@ -29,11 +29,11 @@
     \item 给定一批正样本数据$S = \{\bvec{x}_1, \cdots, \bvec{x}_n\}$，学习算法简单地产生其归一化（Normalized）的平均值作为学到的分类模型的权重$\bvec{w}$。
     即：
     \begin{equation}
-        f^{(S)}(\bvec{x}) = \text{Sign}\left[ \bvec{x} \cdot \sum_{i=1}^n {\bvec{x}_i} / \Vert \sum_{i=1}^n {\bvec{x}_i}\Vert_2 \right].
+        f^{(S)}(\bvec{x}) = \text{Sign}\left[ \bvec{x} \cdot \sum_{i=1}^n {\bvec{x}_i} / \Vert \sum_{i=1}^n {\bvec{x}_i}\Vert \right].
     \end{equation}
 \end{itemize}
 
-考虑当学习到的参数$\bvec{w} = \sum_{i=1}^n \bvec{x}_i / \Vert \sum_{i=1}^n \bvec{x}_i \Vert_2$ 与目标分类模型的参数 $\bvec{e}_1$ 有一个很小的偏差时的情况。
+考虑当学习到的参数$\bvec{w} = \sum_{i=1}^n \bvec{x}_i / \Vert \sum_{i=1}^n \bvec{x}_i \Vert$ 与目标分类模型的参数 $\bvec{e}_1$ 有一个很小的偏差时的情况。
 %
 由于我们假设表征的分布在$\bvec{e}_1$之外的维度时各向同性的，我们可以假设$\bvec{w}$位于前两维展开的超平面上，也就是
 \begin{equation}
@@ -76,7 +76,7 @@
 为了使得决策区域误差 $\epsilon$ 尽可能变大，同一类别的表征应该尽量分布在远离其分布均值的区域。
 同时我们也可以注意到，离某一类别表征可以达到的距离分布均值最远的区域也正是该类别的决策边界。
 %
-上文的分析与从数据分布直接推导泛化误差上界的已有研究较为类似~\cite{jinpengzhan2020generalization}，该研究使用数据的类内距离和类间距离对泛化误差上界进行估计。
+上文的分析与从数据分布直接推导泛化误差上界的已有研究~\cite{jinpengzhan2020generalization}较为类似，该研究使用数据的类内距离和类间距离对泛化误差上界进行估计。
 
 
 %
@@ -119,19 +119,19 @@
 库仑定律的公式为
 \begin{equation}
 \label{eq:peloss:columb}
-    \bvec{F} =  k {q_1q_2(\bvec{r}_1 - \bvec{r}_2)}/{\Vert r_1 - r_2 \Vert_2^3},
+    \bvec{F} =  k {q_1q_2(\bvec{r}_1 - \bvec{r}_2)}/{\Vert r_1 - r_2 \Vert^3},
 \end{equation}
 其中，$k$表示一个常数，$q_1, q_2$是带符号的电荷大小（正电荷为正号，负电荷为负号），$\bvec{r}_1, \bvec{r}_2$表示两个电荷的位置，$\Vert \cdot \Vert$表示欧几里得范数，$\bvec{F}$则表示第二个电荷对第一个电荷产生的力（库仑力）的大小。
 %
-我们忽略常数以及电荷的大小，只考虑同性电荷，则可以把\autoref{eq:peloss:columb}化为$\bvec{F} = (\bvec{r}_1 - \bvec{r}_2) / \Vert\bvec{r}_1 - \bvec{r}_2 \Vert_2^3$。
+我们忽略常数以及电荷的大小，只考虑同性电荷，则可以把\autoref{eq:peloss:columb}化为$\bvec{F} = (\bvec{r}_1 - \bvec{r}_2) / \Vert\bvec{r}_1 - \bvec{r}_2 \Vert^3$。
 %
-由于库仑力也可以表示为电势能的梯度，我们可以进一步将其表示为梯度的形式$F = \nabla_{\bvec{r}_1} 1/\Vert \bvec{r}_1 - \bvec{r}_2 \Vert_2$。
+由于库仑力也可以表示为电势能的梯度，我们可以进一步将其表示为梯度的形式$F = \nabla_{\bvec{r}_1} 1/\Vert \bvec{r}_1 - \bvec{r}_2 \Vert$。
 %
 这种表示方法与深度学习中所使用的梯度下降方法不谋而合。
 %
 基于以上分析，我们定义势能损失函数为：
 \begin{equation}
-    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} \dfrac{1}{\Vert \bvec{h} - \bvec{h'} \Vert_2},
+    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} \dfrac{1}{\Vert \bvec{h} - \bvec{h'} \Vert},
 \end{equation}
 其中$\mathcal C$表示标签的集合，$H_c$表示类别为$c$的表征集合。
 
@@ -148,10 +148,10 @@
     考虑一个$d$维有界区域$\Omega \subset \mathbb R^d$以及定义在$\Omega$内部的概率密度泛函$f^*$为最小化势能损失的概率密度：
     \begin{equation}
         \label{eq:peloss:potential-min}
-        f^* = \mathop\textnormal{argmin}_f \textnormal{PE}(f) = \mathop\textnormal{argmin}_{f} \int_{\bvec{x} \in \Omega} \int_{y \in \Omega} \dfrac{f(\bvec{x})f(\bvec{y})}{\Vert \bvec{x} - \bvec{y} \Vert_2} dUdV,
+        f^* = \mathop\textnormal{argmin}_f \textnormal{PE}(f) = \mathop\textnormal{argmin}_{f} \int_{\bvec{x} \in \Omega} \int_{y \in \Omega} \dfrac{f(\bvec{x})f(\bvec{y})}{\Vert \bvec{x} - \bvec{y} \Vert} dUdV,
     \end{equation}
     其中，$f$表示概率密度函数且满足$f \ge 0$（非负性） 以及 $\int_{\Omega} f(\bvec{x})dV = 1$（归一性）。
-    令$\Delta_\epsilon \Omega = \{\bvec{x}: \bvec{x} + \epsilon \bvec{r} \not\in \Omega, \bvec{x} \in \Omega, \Vert \bvec{r} \Vert_2 = 1 \}$ 表示距离$\Omega$边界距离小于$\epsilon$的区域，那么$f^*$满足对于任意$\epsilon > 0$，有$\int_{\bvec{x}\in\Delta_\epsilon \Omega} f^*(\bvec{x})dV > 0$。
+    令$\Delta_\epsilon \Omega = \{\bvec{x}: \bvec{x} + \epsilon \bvec{r} \not\in \Omega, \bvec{x} \in \Omega, \Vert \bvec{r} \Vert = 1 \}$ 表示距离$\Omega$边界距离小于$\epsilon$的区域，那么$f^*$满足对于任意$\epsilon > 0$，有$\int_{\bvec{x}\in\Delta_\epsilon \Omega} f^*(\bvec{x})dV > 0$。
 \end{theorem}
 \begin{proof}
     为了让证明过程更加清晰，此处我们用$|\cdot |$来表示欧几里得范数。
@@ -275,7 +275,7 @@
 %
 为了保持一致性，我们也需要改变其距离的计算方式，将欧氏距离（Euclidean Distance）转化为超球面上的测地距离（Geodesic Distance），此时势能损失函数被修改为：
 \begin{equation}
-    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} {1}/{\arccos \left({\bvec h \cdot \bvec h'} \over {\Vert \bvec h \Vert_2 \cdot \Vert \bvec h' \Vert_2}\right)}.
+    L_\text{pe} = \sum\limits_{c\in\mathcal C}\sum\limits_{\bvec{h} \in H_c}\sum\limits_{\bvec{h}' \in H_c, \bvec{h}' \ne \bvec{h}} {1}/{\arccos \left({\bvec h \cdot \bvec h'} \over {\Vert \bvec h \Vert \cdot \Vert \bvec h' \Vert}\right)}.
 \end{equation}
 %
 
@@ -291,9 +291,9 @@
     L_\text{dcor} = \sum_{i=1}^n d_{i,j} d'_{i, j} \Big/ \sqrt{\sum_{i,j=1}^n d_{i, j}^2 \sum_{i,j=1}^n {d'}_{i, j}^2},
 \end{equation}
 %
-其中，$d_{i,j}$表示样本$i$和样本$j$的表征之间的双中心（Doubly-Centered）距离，即：
+其中，$d_{i,j}$表示样本$i$和样本$j$的表征之间的双中心（Doubly Centered）距离，即：
 \begin{equation}
-    d_{i, j} = \Vert \bvec h_i - \bvec h_j \Vert_2 - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h_i - \bvec h' \Vert_2 - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h' - \bvec h_j \Vert_2 + \mathop{\mathbb E}_{\bvec h', \bvec h'' \in H}\Vert \bvec h' - \bvec h'' \Vert_2.
+    d_{i, j} = \Vert \bvec h_i - \bvec h_j \Vert - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h_i - \bvec h' \Vert - \mathop{\mathbb E}_{\bvec h'\in H}\Vert \bvec h' - \bvec h_j \Vert + \mathop{\mathbb E}_{\bvec h', \bvec h'' \in H}\Vert \bvec h' - \bvec h'' \Vert.
 \end{equation}
 %
 类似地，$d'_{i,j}$则是样本$i$和样本$j$的标签的双中心距离，以独热（One-Hot）标签为例，当$i,j$标签不同时$d_{i,j} = \sqrt 2$。
@@ -301,10 +301,10 @@
 \begin{equation}
     \sum_{\substack{c,c'\in \mathcal C \\ c\ne c'}} \sum_{\substack{\bvec h\in H_c \\ \bvec h' \in H_c'}} \sqrt2 
     \left( 
-        \Vert \bvec h - \bvec h'\Vert_2 - \overline{\Vert \bvec h - \cdot \Vert_2} - \overline{\Vert \bvec \cdot - \bvec h' \Vert_2} + \overline{\Vert \cdot - \cdot\Vert_2}, 
+        \Vert \bvec h - \bvec h'\Vert - \overline{\Vert \bvec h - \cdot \Vert} - \overline{\Vert \bvec \cdot - \bvec h' \Vert} + \overline{\Vert \cdot - \cdot\Vert}, 
     \right)
 \end{equation}
-其中，我们用 $\overline{\Vert \bvec h - \cdot \Vert_2}$ 表示 $\mathbb E_{\bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$\overline{\Vert \cdot - \cdot \Vert_2}$ 表示 $\mathbb E_{\bvec h, \bvec h'\in H} \Vert \bvec h - \bvec h'\Vert_2$，$H$表示当前批样本表征集合，$H_c$表示当前批样本中类别为$c$的表征集合。
+其中，我们用 $\overline{\Vert \bvec h - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h'\in H} \Vert \bvec h - \bvec h'\Vert$，$\overline{\Vert \cdot - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h, \bvec h'\in H} \Vert \bvec h - \bvec h'\Vert$，$H$表示当前批样本表征集合，$H_c$表示当前批样本中类别为$c$的表征集合。
 %
 可以看出最小化距离相关性损失类似于最小化表征的类间距离，而本文提出的势能损失则旨在最大化类内距离，两者之间有一定的相似性。
 %

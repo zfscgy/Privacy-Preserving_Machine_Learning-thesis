@@ -68,12 +68,12 @@
     \begin{equation}
         Adv(M_b; \mathcal A) = \mathbb E_D \{ R[\mathcal A(D; null)] - R[\mathcal A(D; M_b)]\},
     \end{equation}
-    其中，$R[\cdot]$ 表示攻击者产生的完全模型在测试集上的误差，$\mathcal A(D; null)$ 表示攻击者在没有底部模型时的产生的完整模型。
+    其中，$R[\cdot]$ 表示攻击者产生的完整模型在测试集上的误差，$\mathcal A(D; null)$ 表示攻击者在没有底部模型时的产生的完整模型。
 \end{definition}
 %
 例如，在微调攻击时，$D = (\cdots, (X_i, Y_i), \cdots)$ 是泄露的带标签的样本；而在聚类攻击时，$D = (\cdots, X_i, \cdots)$是泄露的无标签的样本。
 %
-而$\mathcal A(D; null)$相当于攻击者在没有任何底部模型信息，仅有泄露数据的情况下产生的完全模型，即使用带标签数据/无标签数据从零开始训练模型（Train from Scratch）。
+而$\mathcal A(D; null)$相当于攻击者在没有任何底部模型信息，仅有泄露数据的情况下产生的完整模型，即使用带标签数据/无标签数据从零开始训练模型（Train from Scratch）。
 
 \begin{definition}[完美保护]
     对于某种攻击$\mathcal A$，如果底部模型$M_b$满足底部模型优势$Adv(M_b, \mathcal A) \le 0$，则称$M_b$对$\mathcal A$产生了完美保护，因为$M_b$的存在对攻击效果的提升没有任何作用。
