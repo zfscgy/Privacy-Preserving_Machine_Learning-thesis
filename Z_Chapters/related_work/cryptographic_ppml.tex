@@ -52,7 +52,7 @@ $(t,n)$-秘密分享指的是将一个值$x$分享给$n$方$P_0, \cdots, P_{n-1}
 %
 如果对于某个定义在明文上的运算符$\mathsf{OP}_P$，存在密文上的运算符$\mathsf{OP}_C$，使得对于任意明文$X, Y$都满足：
 \begin{equation}
-    \textsf{OP}_P(X, Y) = \mathsf{Dec}[\mathsf{OP}_C (\mathsf{Enc}[X], \mathsf{Enc}[Y])]，
+    \textsf{OP}_P(X, Y) = \mathsf{Dec}[\mathsf{OP}_C (\mathsf{Enc}[X], \mathsf{Enc}[Y])],
 \end{equation}
 %
 则称该加密系统可以同态地计算$\mathsf{OP}_P$的运算。

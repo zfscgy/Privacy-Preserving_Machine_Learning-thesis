@@ -43,13 +43,15 @@
 本文首先证明大模型中间结果几乎完全保留了输入信息，因此传统的拆分学习方法无法应用于大语言模型。
 考虑到密码学方法在处理非线性函数时的高开销的问题，本文提出混合随机排列、秘密分享以及同态加密三种技术，针对大模型推断过程进行深度优化，建立高效的大模型隐私推断框架，并在开源大模型的基础上实现了秒级别的大模型隐私推断。
 
+~
+
 \noindent \textbf{关键词}: 隐私保护机器学习，拆分学习，纵向联邦学习
 
 
 \cleardoublepage
 \chapternonum{Abstract}
 With the widespread application of machine learning, privacy concerns have become increasingly prominent.
-In order to preserve the data privacy, model privacy, and computation efficiency during the inference and training phases of machine learning models, many privacy-preserving machine learning methods have been proposed.
+In order to preserve the data privacy, model privacy, and computation efficiency during the inference and training phases of machine learning models, many \textbf{privacy-preserving machine learning} methods have been proposed.
 %
 Among these, two mainstream approaches are cryptographic methods and split learning.
 %
@@ -110,5 +112,7 @@ Then we focus on the nonlinear evaluation bottleneck in cryptographic methods, a
 %
 We also implement a open-source large language model based on our framework and realize private inference within seconds.
 %
+
+~
 
 \noindent \textbf{keywords}: Privacy-Preserving Machine Learning, Split Learning, Vertical Federated Learning

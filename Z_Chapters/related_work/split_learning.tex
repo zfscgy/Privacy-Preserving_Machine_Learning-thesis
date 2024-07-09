@@ -42,7 +42,7 @@ $P_3$接收到$\bvec h_1, \bvec h_2$之后，将其输入到顶部模型，计�
 %
 注意，上式中的${\partial \bvec h_1}/{\partial \Theta_{b1}}$是雅可比矩阵，链式法则中的乘法也是对应的矩阵乘法运算。
 
-拆分学习具有原理简单、实现方便、计算和通信开销小、可以适用于不同的深度学习模型等优势，因此其已经被应用于很多需要考虑数据隐私的领域，如：医疗影像分割\cite{roth2022split_unet}、边缘设备中的图像分类\cite{fagbohungbe2022split_edge_image,palanisamy2021spliteasy}、毫米波接收功率预测\cite{koda2020split_mmwave}等。
+拆分学习具有原理简单、实现方便、计算和通信开销小、可以适用于不同的深度学习模型等优势，因此其已经被应用于很多有隐私保护需求的领域，如：医疗影像分割\cite{roth2022split_unet}、边缘设备中的图像分类\cite{fagbohungbe2022split_edge_image,palanisamy2021spliteasy}、毫米波接收功率预测\cite{koda2020split_mmwave}等。
 
 \subsection{拆分学习中的隐私问题}
 虽然拆分学习具有实现简单、效率高等诸多优势，但是在训练和推断过程中，各方直接交换了中间结果和中间梯度的明文，从而存在一定的隐私泄漏风险。
@@ -266,7 +266,7 @@ Castiglia等人~\cite{castiglia2022compressed_vfl}研究了基本的Top-$k$稀�
 具体而言，拆分学习训练时的前向传播过程被更改为
 \begin{equation}
 \label{eq:split-compress}
-    Y = M_t(\mathsf{Compress}[M_b(X)])，
+    Y = M_t(\mathsf{Compress}[M_b(X)]),
 \end{equation}
 %
 其中，$M_t$表示顶部模型，$M_b$表示底部模型，$X, Y$ 表示输入特征和模型预测值，$\mathsf{Compress}$表示压缩操作（如稀疏、量化）。

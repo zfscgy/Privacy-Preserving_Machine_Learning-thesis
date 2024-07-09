@@ -47,7 +47,7 @@
     1/2\cdot R[\bvec{w}] &= \mathop{\mathbb E}_{\bvec{x} \sim \mathcal S} \text{Sign}(x_1) \cdot I[x_1 \cos \epsilon + x_2 \sin \epsilon \le 0]
     \\
     & = \int_{\substack{x_1 > 0 \\ x_1 \cos \epsilon + x_2 \sin \epsilon \le 0 \\ x_1^2 + \cdots + x_d^2 = 1}} p(x_1, \cdots, x_d)dS
-      \le \int_{\substack{x_1^2 + ... + x_d^2 = 1 \\0 < x_1 \le \tan\epsilon}}p(x_1, x_2, ...,x_d)dS
+      \le \int_{\substack{x_1^2 + ... + x_d^2 = 1 \\0 < x_1 \le \tan\epsilon}}p(x_1, x_2, ...,x_d)dS.
 \end{split}
 \end{equation}
 注意到当$\epsilon \to 0$时，$\tan \epsilon \to \epsilon$，并且令$p_1$为表征在$\bvec{e}_1$上的边缘概率密度，即$p_1(x_1) = \int_{x_1^2 + \cdots + x_d^2} p(x_1, \cdots, x_d) dx_2\cdots dx_d$，
@@ -74,7 +74,7 @@
 %
 虽然在先前的讨论中，我们假定表征空间是一个超球面，但是上述结论依然是近似成立的，也就是 $\mathbb E[\epsilon^2]\propto \mathbb E\left[(X - \mathbb EX)^2\right]$。
 为了使得决策区域误差 $\epsilon$ 尽可能变大，同一类别的表征应该尽量分布在远离其分布均值的区域。
-同时我们也可以注意到，离某一类别表征可以达到的距离分布均值最远的区域也正是该类别的决策边界。
+同时我们也可以注意到，某一类别表征可以达到的距离该类别分布均值最远的区域也正是该类别的决策边界。
 %
 上文的分析与从数据分布直接推导泛化误差上界的已有研究~\cite{jinpengzhan2020generalization}较为类似，该研究使用数据的类内距离和类间距离对泛化误差上界进行估计。
 
@@ -301,8 +301,8 @@
 \begin{equation}
     \sum_{\substack{c,c'\in \mathcal C \\ c\ne c'}} \sum_{\substack{\bvec h\in H_c \\ \bvec h' \in H_c'}} \sqrt2 
     \left( 
-        \Vert \bvec h - \bvec h'\Vert - \overline{\Vert \bvec h - \cdot \Vert} - \overline{\Vert \bvec \cdot - \bvec h' \Vert} + \overline{\Vert \cdot - \cdot\Vert}, 
-    \right)
+        \Vert \bvec h - \bvec h'\Vert - \overline{\Vert \bvec h - \cdot \Vert} - \overline{\Vert \bvec \cdot - \bvec h' \Vert} + \overline{\Vert \cdot - \cdot\Vert}
+    \right),
 \end{equation}
 其中，我们用 $\overline{\Vert \bvec h - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h'\in H} \Vert \bvec h - \bvec h'\Vert$，$\overline{\Vert \cdot - \cdot \Vert}$ 表示 $\mathbb E_{\bvec h, \bvec h'\in H} \Vert \bvec h - \bvec h'\Vert$，$H$表示当前批样本表征集合，$H_c$表示当前批样本中类别为$c$的表征集合。
 %

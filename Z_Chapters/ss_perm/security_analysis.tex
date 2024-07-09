@@ -9,8 +9,10 @@
 
 \subsection{距离相关性}
 距离相关性（Distance Correlation）~\cite{szekely2007dcor,szekely2009brownian_dcor}是一种统计学上的相关性度量，可以度量任意两个高维向量之间的相关性。
-相对于常用的皮尔逊相关性系数，距离相关性可以对任意两个不同维度的高维随机向量进行建模，并且可以捕获非线性的相关性，只有在两个随机向量完全无关时才会为0。
+相对于常用的皮尔逊相关性系数（Pearson Correlation Coefficient），距离相关性可以对任意两个不同维度的高维随机向量进行建模，并且可以捕获非线性的相关性，只有在两个随机向量完全无关时才会为0。
 %
+因此，距离相关性适合用来分析高维向量之间的关联性。
+
 \begin{definition}[距离相关性]
     对于两个随机向量$X \in \mathbb R^p, Y\in \mathbb R^q$，距离相关性的定义为
     \begin{equation}
@@ -140,7 +142,7 @@ $\mathbb E \Vert X - X'\Vert^2 \cdot \mathbb E_A \left[ \dfrac{\Vert A(X - X') \
         \Vert \cos(\alpha - \theta/2)\bvec a_0 - \sin (\alpha - \theta/2) \bvec a_1\Vert 
         \cdot
         \Vert \cos(\alpha + \theta/2)\bvec a_0 - \sin (\alpha + \theta/2) \bvec a_1\Vert
-        \right]
+        \right],
     \end{split}   
     \end{equation}
     其中，$\bvec a_0, \bvec a_1$是$A$的前两列。
@@ -195,7 +197,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
     \\
     &\approx \dfrac{\mathbb E_A \mathcal{V}(X, AX)^2}{\mathcal{V}(X, X) \mathbb E_A \mathcal{V}(AX, AX)}
     \\
-    &= \sqrt{\dfrac{a^2(S_1 + S_2 - 2S_3)}{a^2S_1 + b^2S_2 - 2S_3'}}
+    &= \sqrt{\dfrac{a^2(S_1 + S_2 - 2S_3)}{a^2S_1 + b^2S_2 - 2S_3'}}.
 \end{split}
 \end{equation}
 %
@@ -227,32 +229,32 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 我们有：
 \begin{equation}
 \begin{split}
-    \text{Var}\left[ r(\pi[\bvec x])\cdot \bvec y \right] = \mathbb E_\pi \left[\sum_{i,j=1}^n  r(\pi[\bvec x])_i y_i r(\pi[\bvec x])_j y_j \right]
+    \text{Var}\left[ r(\pi[\bvec x])\cdot \bvec y \right] = \mathbb E_\pi \left[\sum_{i,j=1}^n  r(\pi[\bvec x])_i y_i r(\pi[\bvec x])_j y_j \right].
 \end{split}
 \end{equation}
 我们分为$i = j$和$i \ne j$两种情况进行讨论。
 \begin{itemize}
     \item $i = j$：
     \begin{equation}
-        \mathbb E_\pi \sum_{i = 1}^d r(\pi[\bvec x])_i^2 y_i^2 = \sum_{i=1}^d \mathbb E_\pi \left[ \Vert r(\pi[x])_i\Vert^2 \right] y_i^2 = \sum_{i=1}^d \dfrac{1}{d} \Vert r(\bvec x) \Vert^2 y_i^2 = \dfrac{\Vert r(\bvec x)\Vert^2}d
+        \mathbb E_\pi \sum_{i = 1}^d r(\pi[\bvec x])_i^2 y_i^2 = \sum_{i=1}^d \mathbb E_\pi \left[ \Vert r(\pi[x])_i\Vert^2 \right] y_i^2 = \sum_{i=1}^d \dfrac{1}{d} \Vert r(\bvec x) \Vert^2 y_i^2 = \dfrac{\Vert r(\bvec x)\Vert^2}d.
     \end{equation}
     
     \item $i \ne j$：此时我们注意到$\sum_{i=1}^d r(\pi[\bvec x])_i = 0$和$\sum_{i=1}^d y_i = 0$两个等式，代入可得：
     \begin{equation}
     \label{eq:ss-perm:dcor-perm0}
-        \mathbb E_\pi \sum_{i=1}^d  \sum_{j = 1, j\ne i}^d r(\pi[\bvec x])_i r(\pi[\bvec x])_j y_i y_j = \sum_{i=1}^d  \sum_{j = 1, j\ne i}^d \mathbb E_\pi \left[ r(\pi[\bvec x])_i r(\pi[\bvec x])_j \right] y_i y_j
+        \mathbb E_\pi \sum_{i=1}^d  \sum_{j = 1, j\ne i}^d r(\pi[\bvec x])_i r(\pi[\bvec x])_j y_i y_j = \sum_{i=1}^d  \sum_{j = 1, j\ne i}^d \mathbb E_\pi \left[ r(\pi[\bvec x])_i r(\pi[\bvec x])_j \right] y_i y_j.
     \end{equation}
     %
     注意到，对于任意$i, i'$，$\pi[i] = i'$ 都是等概率的，因此，我们可以进一步得到：
     \begin{equation}
     \begin{split}
         \mathbb E_\pi \left[ r(\pi[\bvec x])_i r(\pi[\bvec x])_j \right] = \dfrac{1}{d(d-1)}\sum_{\substack{i',j'=1\\i'\ne j'}}^d r(\bvec x)_{i'} r(\bvec y)_{j'} \\
-        = \dfrac{1}{d(d-1)}\sum_{i'=1}^d -r(\bvec x)_{i'}^2  = -\dfrac{1}{d(d-1)}\Vert r(\bvec x) \Vert^2
+        = \dfrac{1}{d(d-1)}\sum_{i'=1}^d -r(\bvec x)_{i'}^2  = -\dfrac{1}{d(d-1)}\Vert r(\bvec x) \Vert^2.
     \end{split}
     \end{equation}
     代入\autoref{eq:ss-perm:dcor-perm0}中，得到
     \begin{equation}
-        -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d  \sum_{j = 1, j\ne i}^d y_i y_j = -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d -y_i^2 = \dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}
+        -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d  \sum_{j = 1, j\ne i}^d y_i y_j = -\dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}\sum_{i=1}^d -y_i^2 = \dfrac{\Vert r(\bvec x) \Vert^2 }{d(d-1)}.
     \end{equation}
 \end{itemize}
 将上述两项相加，可以得到$\textnormal{Var}_\pi \left[ r(\pi[\bvec x])\cdot \bvec y \right] = \dfrac{1}{n - 1} \Vert r(\bvec x) \Vert^2$。
@@ -269,7 +271,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 %
 其次，由于误差向量的幅度远大于均值向量，我们可以假设
 \begin{equation}
-\mathcal{V}[\pi[Y], \pi[Y]] = \mathcal{V}[M(Y) + r(Y), M(Y) + r(Y)] > \mathcal{V}[M(Y), M(Y)]
+\mathcal{V}[\pi[Y], \pi[Y]] = \mathcal{V}[M(Y) + r(Y), M(Y) + r(Y)] > \mathcal{V}[M(Y), M(Y)].
 \end{equation}
 %
 综合上述两点假设以及距离协方差的性质，我们可以得到：
@@ -277,7 +279,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 \begin{split}
     \text{DCOR}(X, \pi[Y]) &= \mathcal{V}(X, \pi[Y]) / (\mathcal{V}[X, X] \mathcal{V}[\pi[Y], \pi[Y]]) \\
     & < \mathcal{V}(X, M(Y)) / (\mathcal{V}[X, X] \mathcal{V}[M(Y), M(Y)]) \\
-    & = \text{DCOR}(X, M(Y))
+    & = \text{DCOR}(X, M(Y)).
 \end{split}
 \end{equation}
 注意到$M(Y)$是$X$的一维随机投影，可以进一步得到：

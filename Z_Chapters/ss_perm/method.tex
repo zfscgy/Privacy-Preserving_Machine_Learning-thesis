@@ -54,9 +54,9 @@ $\mathbb Z_N$表示模$N$的整数环，其元素为$\{0, 1, \cdots, N - 1\}$。
 %
 因此，使用上述方法计算两个分享状态的数的乘法并不会暴露任何隐私信息。
 %
-事实上，上述秘密分享的运算均满足信息论安全性（Information-Theoretic Security），也就是在各个参与方不共谋的情况下，即使攻击者拥有无穷的计算机，他依然无法获得任何原始数据的信息\cite{beaver1992efficient}。
+事实上，上述秘密分享的运算均满足信息论安全性（Information-Theoretic Security），也就是在各个参与方不共谋的情况下，即使攻击者拥有无穷的计算力，他依然无法获得任何原始数据的信息\cite{beaver1992efficient}。
 
-尽管上述的秘密分享运算只定义在单独一个整数上，很容易可以看出我们也可以将其定义到任何向量、矩阵，乃至张量（Tensor）的运算上，乘法也可以拓展为矩阵乘法、张量乘法等一切满足乘法分配律的运算上，且安全性得到完全保留。
+尽管上述的秘密分享运算只定义在单独一个整数上，很容易可以看出我们也可以将其定义到任何向量、矩阵，乃至张量（Tensor）的运算上，乘法也可以拓展为矩阵乘法、张量乘法等一切满足乘法分配律的运算，且安全性得到完全保留。
 
 \subsubsection{定点数编码}
 一般的神经网络的计算都定义在实数上，并且以浮点数的格式进行实际的计算。
@@ -79,12 +79,11 @@ $\mathbb Z_N$表示模$N$的整数环，其元素为$\{0, 1, \cdots, N - 1\}$。
 相应的解码函数为：
 \begin{equation}
     x := \mathsf{Decode}(x_Z) = \begin{cases}
-        x_Z / P         & \text{如果 $x < N/2$ ($x$是正数)} \\
-        (N - x_Z) / P     & \text{否则 ($x$ 是负数)}
+        x_Z / P         & \text{如果 $x < N/2$ （$x$是正数）}, \\
+        (N - x_Z) / P     & \text{否则 （$x$ 是负数）}.
     \end{cases}
 \end{equation}
 %
-
 同时，为了保证编码和解码的准确性，实数$x$必须处于区间$\big[ -\dfrac{N}{2P}, \dfrac{N}{2P} \big)$中。
 
 
@@ -131,11 +130,11 @@ SecureML~\cite{mohassel2017secureml}论文的作者采用了两方直接本地�
     %
     \begin{equation}
     \begin{cases}
-        0 \le \langle x \rangle_0 < N/2 \\
-        0 \le x - \langle x \rangle_0 < N/2
+        0 \le \langle x \rangle_0 < N/2, \\
+        0 \le x - \langle x \rangle_0 < N/2.
     \end{cases}
     \end{equation}
-    第二行可以改为$N/2 < \langle x \rangle_0 - x \le N$，只有$\langle x \rangle_0 \in (N/2 - x, N/2)$时，上述条件成立。
+    第二行可以改为$N/2 < \langle x \rangle_0 - x \le N$，只有$\langle x \rangle_0 \in (N/2 + x, N/2)$时，上述条件成立。
     再考虑$-x_\text{max} \le x \le 0$，得到其概率小于 $2x_\text{max}/N$。
     对于$0 \le x \le x_\text{max}$的情况，我们也可以得到类似结果$\langle x \rangle_0 \in [N/2, N/2 + x)$，证明完毕。
 \end{proof}
@@ -331,8 +330,8 @@ $P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
 在神经网络中有如下的操作：
 \begin{itemize}
     \item 线性运算：加法、减法、乘法（包含矩阵乘法和逐元素相乘）；
-    \item 激活函数运算：比如ReLU, Sigmoid, Tanh等；
-    \item 本地计算，包括了矩阵转置（Transpose）等。
+    \item 激活函数运算：比如ReLU、Sigmoid、Tanh等；
+    \item 本地计算：包括了矩阵转置（Transpose）等。
 \end{itemize}
 %
 对于加法和乘法，我们采用秘密分享以及本章提出的\autoref{alg:ss-perm:ss-mul}来实现。
@@ -351,7 +350,7 @@ $P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
         %
         \State $\langle H \rangle_0 \gets \langle X \rangle$
         \For{$i = 0$ to $L -1$} \LineComment{$L$为总层数}
-            \State $\langle Z_{i + 1} \rangle = \mathsf{SSMul}(\langle H_i \rangle, \langle W_i \rangle, \text{矩阵乘}) + \langle \bvec b_i \rangle$
+            \State $\langle Z_{i + 1} \rangle = \mathsf{SSMul}(\langle H_i \rangle, \langle W_i \rangle^T, \text{矩阵乘}) + \langle \bvec b_i \rangle$
             \State $\langle H_{i + 1} \rangle = \mathsf{PermNonlinear}(\langle Z \rangle_{i+1}, f_i)$
         \EndFor
         \State \Return $\langle H_L\rangle$
@@ -372,10 +371,11 @@ $P_0$和$P_1$可以通过逆向排列，恢复出最终结果的分享值。
     \State $\langle G_L \rangle \gets 2 \cdot (\langle Y \rangle - \langle Y' \rangle)$
     %
     \For{$i = L - 1$ to $0$} \LineComment{$L$为总层数}
-        \State $\langle G_{i + 1} \rangle \gets \mathsf{PermNonlinear}(\langle Z_{i+1} \rangle, \dfrac{df_i}{dx})$ \LineComment{$\dfrac{df_i}{dx}$也是逐元素函数}
-        \State $\langle G_{i + 1} \rangle = \mathsf{SSMul}(\langle G_{i+1} \rangle, \langle W_i \rangle^T, \text{矩阵乘})$ \LineComment{对权重进行了转置}
+        \State $\langle G'_{i + 1} \rangle \gets \mathsf{PermNonlinear}(\langle Z_{i+1} \rangle, \dfrac{df_i}{dx})$ \LineComment{$\dfrac{df_i}{dx}$也是逐元素函数}
+        \State $\langle G_{i + 1} \rangle \gets \mathsf{SSMul}(\langle G'_{i+1} \rangle, \langle G_{i+1} \rangle, \text{元素乘})$
+        \State $\langle G_{i} \rangle \gets \mathsf{SSMul}(\langle G_{i+1} \rangle, \langle W_i \rangle, \text{矩阵乘})$ \LineComment{对权重进行了转置}
         \State $\langle \bvec b_i \rangle \gets \langle \bvec b_i \rangle - \alpha \cdot \mathsf{sum}(\langle G_i \rangle, \mathsf{axis}=0)$ \LineComment{\textsf{sum}可以表示为秘密分享的加法}
-        \State $\langle W_i \rangle \gets \langle W_i \rangle - \alpha \cdot \mathsf{SSMul}(\langle H_i \rangle^T, \langle G_i \rangle)$
+        \State $\langle W_i \rangle \gets \langle W_i \rangle - \alpha \cdot \mathsf{SSMul}(\langle G_i \rangle^T, \langle H_i \rangle, \text{矩阵乘})$
     \EndFor
 \end{algorithmic}
 \end{algorithm}

@@ -21,7 +21,7 @@
 考虑拆分层在最后一层，激活函数是Softmax的情况。
 此时模型的输出值可以写成：
 \begin{equation}
-    \bvec{y} = \text{Softmax}(\bvec{h}\cdot \bvec{w}_1, \cdots, \bvec{h} \cdot \bvec{w}_n)
+    \bvec{y} = \text{Softmax}(\bvec{h}\cdot \bvec{w}_1, \cdots, \bvec{h} \cdot \bvec{w}_n),
 \end{equation}
 其中，$\bvec{h}$表示拆分层的隐层表征，$\bvec{w}_i$ 表示最后一层权重矩阵的第$i$行，$n$是类别个数。
 %
@@ -51,7 +51,7 @@
 此时整个表征空间可以划分为$n$个类别的决策区域（Decision Region）。
 假设第$i$个类别与其他所有类别的最短类间距离$d_i$和该类别的决策区域大小$s_i$呈现单调递增关系，则很显然得到最短类间距离最大时，各个类别应该有相同的决策区域大小，因为：
 \begin{equation}
-    \min (s_1, \cdots, s_n) \quad \text{s.t. } {\sum_{i=1}^n s_i = S, s_i > 0}
+    \min (s_1, \cdots, s_n), \quad \text{s.t. } {\sum_{i=1}^n s_i = S, s_i > 0}.
 \end{equation}
 在$s_1 = \cdots = s_n$时取得最小值 $S/n$。
 其中，$S$表示表征空间的总面积。
@@ -108,7 +108,7 @@
 \begin{equation}
 \label{eq:randomized_topk_r_ratio}
     \dfrac{r'}{r} = \dfrac{d'_W}{d_W} \approx \tilde c := {d \choose k'} \left( \dfrac2n \sqrt{\dfrac{k\pi}{2}} \right)^
-    {1/(k'-1) - 1/(k-1)} \left(\dfrac{k'}{k}\right)^{1/(k' - 1)}.
+    {1/(k'-1) - 1/(k-1)} \sqrt{\dfrac{k'}{k}}^{1/(k' - 1)}.
 \end{equation}
 %
 其中，我们用$\tilde c$表示估计的决策区域半径（类间距离的一半）比值。
@@ -127,12 +127,12 @@ $k' +  k'/2 \le k$，其中$k'$表示$k'$个元素的值自身需要$k'$个浮�
 %
 对$k$求导得到：
 \begin{equation}
-    f'(k) = \dfrac{1}{(k - 1)^2} - \dfrac{1}{(3/2)(2/3 \cdot k - 1)^2}
+    f'(k) = \dfrac{1}{(k - 1)^2} - \dfrac{1}{(3/2)(2/3 \cdot k - 1)^2}.
 \end{equation}
 %
 注意到在$k \ge 3$时有：
 \begin{equation}
-    (k - 1)^2 = k^2 - 2k + 1 > 3/2 \cdot (2/3\cdot k - 1)^2 = 2/3 \cdot k^2 -2k + 3/2
+    (k - 1)^2 = k^2 - 2k + 1 > 3/2 \cdot (2/3\cdot k - 1)^2 = 2/3 \cdot k^2 -2k + 3/2.
 \end{equation}
 %
 于是，$f'(k) \le 0$ 对$k \ge 3$都成立，同理得到$k \ge 3$时，$f(3) = 1/2 \ge f(k)$。
@@ -170,12 +170,12 @@ $k' +  k'/2 \le k$，其中$k'$表示$k'$个元素的值自身需要$k'$个浮�
 
 考虑如下的目标函数：
 \begin{equation}
-    f: (x_1, x_2) \to \text{Sign}(x_1 - x_2)
+    f: (x_1, x_2) \to \text{Sign}(x_1 - x_2),
 \end{equation}
 以及如下的拆分逻辑回归模型：
 \begin{equation}
 \begin{cases}
-    M_b: & (x_1, x_2) \to (h_1, h_2) = (w_1x_1, w_2x_2) \\
+    M_b: & (x_1, x_2) \to (h_1, h_2) = (w_1x_1, w_2x_2), \\
     M_t: & (h_1, h_2)\rightarrow \text{Tanh}(h_1 + h_2).
 \end{cases}
 \end{equation}
@@ -185,7 +185,7 @@ $k' +  k'/2 \le k$，其中$k'$表示$k'$个元素的值自身需要$k'$个浮�
 假设有以下两个训练样本：
 \begin{equation}
 \begin{cases}
-    \bvec{x}_1 = (\phantom{0.}1, \, 0), \quad y_1 = \phantom{-}1 \\
+    \bvec{x}_1 = (\phantom{0.}1, \, 0), \quad y_1 = \phantom{-}1, \\
     \bvec{x}_2 = (          0.5, \, 1), \quad y_2 = -1.
 \end{cases}
 \end{equation}
@@ -232,7 +232,7 @@ Top-$k$稀疏化的收敛问题也会进一步导致其泛化性能降低。
     P(\text{选择该神经元}) = 
     \begin{cases}
         (1 - \alpha) / N_1  & \text{如果该神经元是Top-$k$的,} \\
-        \alpha / N_2        & \text{反之,}    
+        \alpha / N_2        & \text{反之.}    
     \end{cases}
 \end{equation}
 %

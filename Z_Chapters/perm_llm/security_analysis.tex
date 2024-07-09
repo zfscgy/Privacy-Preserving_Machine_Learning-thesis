@@ -32,8 +32,8 @@
 在浮点数秘密分享中，任何一个数$x$的分享值满足
 \begin{equation}
 \begin{cases}
-    \langle x \rangle_0 = D & \text{其中} \mathbb E[D^2] = \lambda^2 \mathbb E[x^2] \\
-    \langle x \rangle_1 = x - D
+    \langle x \rangle_0 = D, & \text{其中} \mathbb E[D^2] = \lambda^2\mathbb E[x^2], \\
+    \langle x \rangle_1 = x - D.
 \end{cases}
 \end{equation}
 此处为了方便，我们假设$\mathbb Ex = \mathbb ED = 0$。
@@ -68,7 +68,7 @@ $\sqrt{\mathbb E[(\bar x - x)^2]} = {\mathbb E[x^2]}/{10}$。
 %
 此时$P_1$可能根据这些估计的秘密分享值，也就是隐私推断中的中间结果，反推出模型权重，从而实现窃取模型的目的。
 %
-因此，采用浮点数秘密分享时，必须要采取额外的手段来防止上述攻击的产生。可能的方案有：采用第三方对$P_1$的输入文本进行验证；$P_0$设计一定的手段检测恶意行为；以及当隐私推断达到一定次数后，对模型进行恒等变换来改变权重值~\cite{xuhengyuan_2024_permutation_transformer}，再重新执行初始化阶段分享权重等，
+因此，采用浮点数秘密分享时，必须要采取额外的手段来防止上述攻击的产生。可能的方案有：采用第三方对$P_1$的输入文本进行验证；$P_0$设计一定的手段检测恶意行为；以及当隐私推断达到一定次数后，对模型进行恒等变换来改变权重值~\cite{xuhengyuan_2024_permutation_transformer}，再重新执行初始化阶段分享权重等。
 %
 
 

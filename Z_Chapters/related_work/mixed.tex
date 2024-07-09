@@ -4,7 +4,7 @@
 
 一种方法是将同态加密和其他方法结合，将线性计算部分用同态加密实现，而非线性激活函数部分则用明文实现，其计算流程大致可以表示为
 \begin{equation}
-    \llbracket \bvec y \rrbracket = W \otimes \llbracket \bvec x \rrbracket  + \llbracket \bvec b \rrbracket, \quad \bvec x' = f(\bvec y)
+    \llbracket \bvec y \rrbracket = W \otimes \llbracket \bvec x \rrbracket  + \llbracket \bvec b \rrbracket, \quad \bvec x' = f(\bvec y),
 \end{equation}
 其中，$\llbracket \cdot \rrbracket$表示加同态加密的密文，$\otimes$ 表示明文和密文的同态乘法，其结果为乘积的密文，$f$表示激活函数，$\bvec x, \bvec x'$分别表示当前层和下一层的输入。
 %

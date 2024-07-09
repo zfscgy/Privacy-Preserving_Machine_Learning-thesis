@@ -36,35 +36,35 @@
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{Z_Resources/PPML-overview.png}
-    \caption{人工智能应用中的三大隐私保护场景}
+    \caption{本文主要研究的隐私保护场景}
     \label{fig:intro:ppml-overview}
 \end{figure}
 
 
 人工智能应用中的隐私保护主要可以分为三个场景，分别是数据与模型分离的“隐私推断（Private Inference）”场景~\cite{mann_2023_secure_inference}、数据与数据纵向分离的“纵向联邦学习（Vertical Federated Learning）”场景~\cite{liu2024vertical}、以及数据与数据横向分离的“（横向）联邦学习（Federated Learning）”场景~\cite{yangqiang2019federated}。
 %
-我们将其呈现在\autoref{fig:intro:ppml-overview}中。
 %
 其中数据与数据横向分离场景中的数据隐私问题已经有联邦学习这一较为成熟的解决方案~\cite{yangqiang2019federated}。
 联邦学习的基础范式为联邦平均（Federated Averaging）算法~\cite{mcmahan_2017_fedavg}，其通过多个参与方在本地训练模型然后在服务器上以参数平均等方式聚合，从而保护各个参与方的数据隐私。
 %
-虽然联邦学习的实现较为简单高效，但是其应用场景局限在数据横向分布（各方拥有具有相同格式的不同样本）的模型训练阶段，且无法保护模型的隐私，因此具有一定的局限性。
+虽然该方法实现简单，但是其应用场景局限在数据横向分布（各方拥有具有相同格式的不同样本）的模型训练阶段，且无法保护模型的隐私，因此具有一定的局限性。
 %
-而本文所讨论的隐私保护机器学习（Privacy-Preserving Machine Learning）是解决人工智能应用中的隐私问题的更为通用的解决方案~\cite{al_2019_ppml,xu_2021_ppml}。
+而隐私保护机器学习（Privacy-Preserving Machine Learning）是解决人工智能应用中的隐私问题的更为通用的解决方案~\cite{al_2019_ppml,xu_2021_ppml}，
+其涵盖密码学~\cite{evans_2018_pragmatic_mpc}、联邦学习、拆分学习~\cite{vepakomma2018split}等多种技术，实现对人工智能模型训练或推断过程中的隐私保护，可以适配多种人工智能模型的训练和推断场景。
 %
-其涵盖密码学~\cite{evans_2018_pragmatic_mpc}、联邦学习、拆分学习~\cite{vepakomma2018split}等多种方法，实现对人工智能模型训练或推断过程中的隐私保护，可以适配多种人工智能模型的训练和推断场景。
+与联邦学习的场景互补，本文中所讨论的隐私保护机器学习方案往往考虑在单次计算中参与方较少的场景，对应数据与模型分离以及数据与数据纵向分离的场景，
+如\autoref{fig:intro:ppml-overview}所示。
 %
-与联邦学习的场景互补，本文中所讨论的隐私保护机器学习方案往往考虑在单次计算中参与方较少的场景，对应数据与模型分离以及数据与数据纵向分离的场景，主要基于拆分学习和密码学/非密码学的混合方法构建。
+面向这些场景的隐私保护机器学习解决方案主要可以分为拆分学习、基于密码学的方法，以及密码学和非密码学的混合方案三类。
 %
-对于包含大量参与方的联邦学习场景，可以通过各个参与方将数据以加密的形式上传至指定的几个服务器，从而将其转化为隐私保护机器学习问题。
 
 隐私保护机器学习的核心问题在于效率和安全。
 %
 基于密码学的隐私保护机器学习，能够达到很高的安全性，并且可以对安全性进行严格的数学证明，但是其需要复杂的多方交互计算以及昂贵的密码学加解密运算。
 随着人工智能模型的规模日益庞大，许多类似ChatGPT的大规模模型被提出~\cite{chatgpt,touvron_2023_llama,duzhengxiao_2022_glm}，其对计算能力的要求逐步提升，导致基于密码学方法的效率往往难以达到实用的标准~\cite{hou2023ciphergpt}。
 %
-而拆分学习相比密码学方法有着较高的效率，但是其安全性缺少严格的证明，许多研究也提出了针对拆分学习的攻击方法~\cite{hezecheng_2019_model_inversion_attack,abuadbba2020can_split}，
-同时，当前对于其效率优化的研究也较为缺少。
+而拆分学习以及其他混合方法相比密码学方法有着较高的效率，但是其安全性缺少严格的证明，许多研究也提出了针对这些方法的攻击方法~\cite{hezecheng_2019_model_inversion_attack,abuadbba2020can_split,wong_2020_lwe_model}。
+同时，当前对于拆分学习效率优化的研究也较为缺少。
 %
 上述的效率和安全问题制约了隐私保护机器学习的应用，因此如何更好地平衡隐私保护机器学习的效率和安全，是当前人工智能隐私领域亟待解决的问题。
 %

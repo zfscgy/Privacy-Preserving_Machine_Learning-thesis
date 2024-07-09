@@ -25,7 +25,7 @@
 %
 本文考虑最常用的等距均匀量化（Uniform Quantization），对于一个隐层向量$\bvec{h} = (h_1, \cdots, h_d)$，将其量化为 $b$ 比特的量化方法为：
 \begin{equation}
-    \bvec{h}^C = \mathsf{Compress}(\bvec{h}) = \left( \left\lfloor \dfrac{h_1 - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot  2^b \right\rfloor, \cdots, \left\lfloor \dfrac{h_n - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot 2^b \right\rfloor \right)，
+    \bvec{h}^C = \mathsf{Compress}(\bvec{h}) = \left( \left\lfloor \dfrac{h_1 - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot  2^b \right\rfloor, \cdots, \left\lfloor \dfrac{h_n - h_\text{min}}{h_\text{max} - h_\text{min}} \cdot 2^b \right\rfloor \right),
 \end{equation}
 其中，$h_\text{min}$ 和 $h_\text{max}$ 分别表示向量$\bvec{h}$中的最小值和最大值。
 %
