@@ -42,7 +42,7 @@
 %
 同时我们也注意到，在执行秘密分享的乘法时，$x - u$会暴露给双方，此时$\mathbb E[u^2] = 2\lambda^2 \mathbb E[x^2]$。
 %
-对于秘密分享乘法的结果$z = xy$，在产生Beaver三元组的时候我们已经选取了$\mathbb E \langle W \rangle_0 = \lambda^2 \mathbb E[z^2]$，因此$\langle z \rangle_0$ 与 $z$无关，而$\langle z \rangle_0$ 是$z$加上一个规模为其$\lambda$倍的噪声。
+对于秘密分享乘法的结果$z = xy$，在产生Beaver三元组的时候我们已经选取了$\mathbb E \langle w \rangle_0 = \lambda^2 \mathbb E[z^2]$，因此$\langle z \rangle_0$ 与 $z$无关，而$\langle z \rangle_0$ 是$z$加上一个规模为其$\lambda$倍的噪声。
 %
 综上所述可以得出，对于任何一个值$x$，采用浮点数秘密分享时，各方获取到的数据$x'$只有两种情况：
 \begin{enumerate}[label=(\arabic*)]
@@ -63,7 +63,7 @@
 \end{split}
 \end{equation}
 %
-若选取$\lambda = 100$，则攻击者（如$P_1$）采用同样的输入进行一万次隐私推断，并对上述秘密分享值进行平均，可以将误差缩小到原始数据规模的$1/10$水平：
+若选取$\lambda = 100$，则攻击者（如$P_1$）采用同样的输入进行10万次隐私推断，并对上述秘密分享值进行平均，可以将误差缩小到原始数据规模的$1/10$水平：
 $\sqrt{\mathbb E[(\bar x - x)^2]} = {\mathbb E[x^2]}/{10}$。
 %
 此时$P_1$可能根据这些估计的秘密分享值，也就是隐私推断中的中间结果，反推出模型权重，从而实现窃取模型的目的。

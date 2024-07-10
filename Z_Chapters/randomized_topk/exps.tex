@@ -2,7 +2,7 @@
 
 为了验证本章所提出的随机Top-$k$算法的性能，我们在4个不同类型数据集上使用不同的模型进行了实验：
 \begin{itemize}
-    \item CIFAR-100~\cite{krizhevsky_2009_cifar}: 一个常用的包含了100类总共5万张大小为$32\times 32$的彩色图片。
+    \item CIFAR-100~\cite{krizhevsky_2009_cifar}: 一个常用图像数据集，的包含了100类总共5万张大小为$32\times 32$的彩色图片。
         我们使用ResNet-20模型~\cite{hekaiming2016resnet}进行分类，拆分层设置为最后的隐层，大小为128。
     %
     \item YooChoose（1/64）~\cite{ben2015yoochoose,lijing_2017_narm}：RecSys15挑战时公布的YooChoose推荐数据集的按时间顺序划分的1/64子集，包含了大约15万条用户的点击序列，总共有约1.8万个商品类别。
@@ -193,7 +193,7 @@
 
 为了更加清晰地显示随机Top-$k$算法和其他方法的输入特征隐私保护效果，我们测量了图片恢复攻击的平方误差，即$\mathbb E\left[ \Vert \text{恢复值} - \text{原始值} \Vert^2 \right]$，并汇报在\autoref{fig:randomized_topk-attack-error}中。
 %
-从图中可以看出，Top-$k$稀疏相对于原始无压缩的拆分学习显著提高了攻击者的重建损失，增强了隐私保护效果。
-而随机Top-$k$比Top-$k$拥有更高的重建损失，说明其进一步提高了对于输入特征的隐私保护。
+从图中可以看出，Top-$k$稀疏化相对于原始无压缩的拆分学习显著提高了攻击者的重建损失，增强了隐私保护效果。
+而随机Top-$k$算法比Top-$k$拥有更高的重建损失，说明其进一步提高了对于输入特征的隐私保护。
 
 

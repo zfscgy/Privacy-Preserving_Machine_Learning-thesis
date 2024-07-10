@@ -40,13 +40,13 @@
 通过上式可以以采样的方式来估算距离相关性。
 
 \subsection{随机线性变换的距离相关性}
-现在我们研究随机线性变换后的向量与随机变换之前的向量的距离相关性。
+现在我们研究随机线性变换后的向量与原始向量的距离相关性。
 我们用$\angle[\cdot, \cdot]$表示两个向量之间的夹角。
 \begin{theorem}
 \label{thm:ss-perm:linear-dcov}
     令$X\in \mathbb R^n$是一个随机的$n$维随机向量，令$Y = AX$，
     %
-    其中 $A \in \mathbb R^{n \times d}$是一个随机线性变换，并且满足在单位正交变换下概率不变，即$P(A) = P(AT)$, $T$是$n$维单位正交矩阵（Orthonormal Matrix）。
+    其中 $A \in \mathbb R^{n \times d}$是一个随机线性变换，并且满足在单位正交变换下概率不变，即$P(A) = P(AT)$，$T$是$n$维单位正交矩阵（Orthonormal Matrix）。
     %
     则
     \begin{equation}
@@ -209,7 +209,7 @@ $b = \mathbb E \left[ {w_1^2 + \cdots + w_d^2} \right] = \sigma\sqrt{d}$。
 我们首先注意到，对于$\bvec x \in \mathbb R^d$和随机排列$\pi$，可以得到如下特性：
 \begin{itemize}
     \item $\mathbb E_\pi \pi[\bvec x] = [\mathbb E\bvec x, \cdots, \mathbb E\bvec x] = M(\bvec x)$，其中我们定义$\mathbb E\bvec x = 1/d \cdot \sum_{i=1}^d x_i$。
-    \item 对于任意排列$\pi'$，有$(\pi'[\bvec x] - \mathbb E_{\pi}\pi[\bvec x])^T \bvec 1 = 0$。
+    \item 对于任意排列$\pi'$，有$(\pi'[\bvec x] - M(\bvec x))^T \bvec 1 = 0$。
     \item 对于任意排列$\pi'$，有$\Vert \pi'[\bvec x] - M(\bvec x)\Vert = \Vert \bvec x - M(\bvec x)\Vert$。
 \end{itemize}
 %

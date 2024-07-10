@@ -23,7 +23,7 @@
 基于以上分析，本文提出了随机Top-$k$稀疏化方法，在提高训练和推断的通信效率的同时，尽可能减少了模型性能的损失。
 
 \textbf{（2）针对拆分学习面临的模型补全攻击风险，提出了基于势能损失的隐私保护方法。}
-拆分学习中，样本的拆分层表征和其类别标签往往有着较高的关联性，从而导致了模型补全攻击的隐患，即：攻击者可以利用少量泄漏的样本标签或者直接对拆分层表征上进行聚类，从而得到表征到标签的映射，窃取顶部模型以及样本标签。
+拆分学习中，样本的拆分层表征和其类别标签往往有着较高的关联性，从而导致了模型补全攻击的隐患，即：攻击者可以利用少量泄漏的样本标签或者直接对拆分层表征进行聚类，从而得到表征到标签的映射，窃取顶部模型以及样本标签。
 %
 为了防御模型补全攻击，本文将攻击过程看作攻击者的有监督或无监督学习过程，从泛化误差的角度说明当样本表征分布在决策边界时，攻击效果会降低。
 %
@@ -71,7 +71,7 @@ The main contributions of this article are listed below:
 
 
 \textbf{(1) Randomized top-$k$ sparsification to reduce communication for split learning.}
-Although split learning is more efficient than cryptographic methods, but it still has a certain level of communication cost when the split layer has a large size.
+Although split learning is more efficient than cryptographic methods, it still has a certain level of communication cost when the split layer has a large size.
 Currently, the studies on the communication efficiency are few.
 %
 In this article, we studied numerous classic compression methods, i.e, sparsification, quantization, reducing the cut layer size, and L1 regularization.
@@ -88,7 +88,7 @@ The attackers can either use a few leaked labeled samples, or cluster on the for
 %
 To defend model completion attacks, we first view the attack process as a supervised or unsupervised learning process, and demonstrate that distributing embeddings near the decision boundaries reduces attack performance by analysis of the generalization error.
 %
-Inspired by the phenomenon of electrostatic equilibrium , we propose the potential energy loss to protect split learning, by adding repulsive forces between same-class sample pairs.
+Inspired by the phenomenon of electrostatic equilibrium, we propose the potential energy loss to protect split learning, by adding repulsive forces between same-class sample pairs.
 %
 Compared with existing measures, potential energy loss significantly reduces the performance of the model completion attack, and minimizes the accuracy loss of the original task.
 
@@ -101,7 +101,7 @@ This article proposes the privacy-preserving nonlinear element-wise function eva
 %
 Combining it with secret sharing, we realize efficient privacy-preserving neural network training and inference.
 %
-Moreover, we conduct extensive quantitative analysis on the privacy leakage of random permutation based on the distance correlation metric, demonstrating the privacy leakage is negligible.
+Moreover, we conduct extensive quantitative analysis on the privacy leakage of random permutation based on the distance correlation metric, demonstrating that privacy leakage is negligible.
 
 \textbf{(4) Achieving secure large language model inference within seconds based on improved secret sharing, random permutation, and homomorphic encryption.}
 Large language models contain a large amount of parameters and require heavy computation, which presents new challenges to privacy preserving machine learning.

@@ -8,7 +8,7 @@
     %
     当输入$n$个单词（Token）后，其输出为$n \times d$大小的矩阵。
     %
-    \item Transformer层：包含了多层Transformer结构，对隐层表征进行多次变换，其输入和输出的矩阵大小均为$n \times d$（此处忽略批样本情况，进考虑三个样本）。
+    \item Transformer层：包含了多层Transformer结构，对隐层表征进行多次变换，其输入和输出的矩阵大小均为$n \times d$（此处忽略批样本情况，只考虑单个样本）。
     \item 输出词向量：与输入词向量相同，包含了一个矩阵$E' \in \mathbb R^{n\times d}$，且一般来说$E' = E$。
     当获得Transformer层的输出后，对输出的最后一行计算分数$\bvec  s = E'\bvec h$，表示输出单词的概率分布。
 \end{enumerate}
@@ -23,7 +23,7 @@
     %
     \item 将所有的查询、键、值向量分割为维度为$d'$的子向量（注意力头），总共$d/d'$个，并对其进行位置嵌入（Positional Embedding）变换，一般而言是对向量逐元素地加或乘一个和当前单词所在位置相关的固定向量。
     %
-    \item （对于每个注意力头）对于第$i$个查询$\bvec q_i'$，将其与当前存在的所有的键作内积得到分数$s'_{i, j} = \bvec q_i' \cdot \bvec k_j, j = 1\cdots n$。
+    \item （对于每个注意力头）对于第$i$个查询$\bvec q_i'$，将其与当前存在的所有的键$\bvec k'_j$作内积得到分数$s'_{i, j} = \bvec q_i' \cdot \bvec k_j, j = 1\cdots n$。
     对这些分数进行Softmax归一化后再计算加权的值向量和 $\bvec h'_i = \dfrac{\exp {s'_{i, j}}}{\sum_{k = 1}^n \exp {s'_{i, k}}} \cdot \bvec v_j \in \mathbb R^{d'}$，这是当前的注意力头的输出。
     %
     \item 将各个注意力头的输出拼接起来，得到多头注意力的输出$\bvec h_i = \mathsf{concat}(\cdots, \bvec h'_i, \cdots)$。
@@ -76,7 +76,7 @@ Transformer的其他模块包括全连接层（Fully-Connect Layer）、层归�
 其中$\bvec x'$是模型拥有方猜测的用户输入，$\bvec x$是用户的实际输入。
 %
 注意到直接对$\bvec x'$进行优化是较为困难的，因为其值域是离散的单词下标。
-虽然可以转化成读热向量（One-Hot Vector），但是其依然具有离散的约束从而导致优化难以进行。
+虽然可以转化成独热向量（One-Hot Vector），但是其依然具有离散的约束从而导致优化难以进行。
 %
 为此，模型拥有方可以首先优化初始表征$H'$，也就是词向量矩阵与（猜测的）用户输入对应的独热向量乘积：$H'_i = E\ \mathsf{onehot}(x'_i)$。
 %
