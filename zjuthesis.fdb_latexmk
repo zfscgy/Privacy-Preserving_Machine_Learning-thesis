@@ -1,17 +1,17 @@
 # Fdb version 4
-["biber zjuthesis"] 1720515728.9538 "zjuthesis.bcf" "zjuthesis.bbl" "zjuthesis" 1720594647.658 0
+["biber zjuthesis"] 1720515728.9538 "zjuthesis.bcf" "zjuthesis.bbl" "zjuthesis" 1720595741.16268 0
   "body/ref.bib" 1720427583 92625 3e2cfb6648439e3a047a3e097a81d748 ""
-  "zjuthesis.bcf" 1720594642 166189 27bbf688afe6ae145a9ab874ad950b68 "xelatex"
+  "zjuthesis.bcf" 1720595736 166189 27bbf688afe6ae145a9ab874ad950b68 "xelatex"
   (generated)
   "zjuthesis.bbl"
   "zjuthesis.blg"
   (rewritten before read)
-["xdvipdfmx"] 1720594643.03654 "zjuthesis.xdv" "zjuthesis.pdf" "zjuthesis" 1720594647.66932 0
-  "zjuthesis.xdv" 1720594642 2433636 716e293611081f12a36e56bb85608f92 "xelatex"
+["xdvipdfmx"] 1720595736.5194 "zjuthesis.xdv" "zjuthesis.pdf" "zjuthesis" 1720595741.17349 0
+  "zjuthesis.xdv" 1720595736 2433740 06de7b58132cd63bab1ee7f042a261c0 "xelatex"
   (generated)
   "zjuthesis.pdf"
   (rewritten before read)
-["xelatex"] 1720594634.89343 "d:/Lab/Thesis/src/zjuthesis.tex" "zjuthesis.xdv" "zjuthesis" 1720594647.6584 0
+["xelatex"] 1720595728.58993 "d:/Lab/Thesis/src/zjuthesis.tex" "zjuthesis.xdv" "zjuthesis" 1720595741.16292 0
   "Z_Chapters/conclusion.tex" 1720594633 4953 1b5dd14ab5b80a91f99bf1b3f2ae6614 ""
   "Z_Chapters/intro/background.tex" 1720513523 6558 14fcadda3bc668d7122436b9efb63408 ""
   "Z_Chapters/intro/chap.tex" 1719927595 410 c84706fc57da004ec3085d8a943745d9 ""
@@ -33,9 +33,9 @@
   "Z_Chapters/randomized_topk/background.tex" 1720149954 3739 3ff3d3110e02ec50d80d29372cc5f9bb ""
   "Z_Chapters/randomized_topk/chap.tex" 1719994397 953 2a64db9e2c928bc3b51baed573990953 ""
   "Z_Chapters/randomized_topk/conclusion.tex" 1720517083 1335 6aba8ea6966d78052071fdaa4aea86b3 ""
-  "Z_Chapters/randomized_topk/exps.tex" 1720517199 12747 6d34dea1f2fd9675d19bc11587aef2ac ""
+  "Z_Chapters/randomized_topk/exps.tex" 1720595280 12744 056d8166aaf81605e51ca1603875e3e6 ""
   "Z_Chapters/randomized_topk/main_table.tex" 1720423549 3774 c59c5f72e4aa6ed9651d7c1ac21f6fe3 ""
-  "Z_Chapters/randomized_topk/method.tex" 1720516768 15135 3fd6a582318b8678d7857facc1f4ed3e ""
+  "Z_Chapters/randomized_topk/method.tex" 1720595441 15135 0f98a5fd641eaae4e43b67939cd36154 ""
   "Z_Chapters/randomized_topk/preliminary.tex" 1720516249 5088 5aa10547744529620249497392929803 ""
   "Z_Chapters/related_work/chap.tex" 1720514966 2408 de882d7da4c408520f04b1df7b644692 ""
   "Z_Chapters/related_work/cryptographic_ppml.tex" 1720515789 15814 9a797dbed8740101c9127e9feedcb834 ""
@@ -46,7 +46,7 @@
   "Z_Chapters/ss_perm/conclusion.tex" 1719842660 524 31b7388b3b43808216deadaf16b768fb ""
   "Z_Chapters/ss_perm/exp.tex" 1720591138 13826 78fee6ed363cad4486e0d4c442406e21 ""
   "Z_Chapters/ss_perm/method.tex" 1720588536 24323 e2439d933c520c226cfcd3fc9d247a01 ""
-  "Z_Chapters/ss_perm/problem.tex" 1720588536 6955 55d286c076e96a1be32d1387cef3dfc1 ""
+  "Z_Chapters/ss_perm/problem.tex" 1720594747 6955 b563eedaa4a7b6d7b68fa753f52fc7c1 ""
   "Z_Chapters/ss_perm/security_analysis.tex" 1720589270 19704 c33fea9135ecb0c1487c511140859f5a ""
   "Z_Resources/PPML-overview.png" 1720507003 133150 aab252932a1162adcdce3d5fdbafc98d ""
   "Z_Resources/article_overview.png" 1720103272 59481 3740ed99ea9753a03ad97b32e50e7d41 ""
@@ -69,7 +69,7 @@
   "Z_Resources/perm-llm_ssmul.png" 1720353867 112486 71089fe97b2baa95868569443991ab80 ""
   "Z_Resources/randtopk_acc-comm.pdf" 1720073920 601916 928641c17e901943572b0ac021ddc955 ""
   "Z_Resources/randtopk_acc-epoch.pdf" 1720073912 596046 dea53bf52f95ebab83a54801ebd504ce ""
-  "Z_Resources/randtopk_algorithm.png" 1720516754 46074 2e5ab406fda3cfaf7958ce93c8d62b83 ""
+  "Z_Resources/randtopk_algorithm.png" 1720595632 46158 50f9ca3946918965df6570a1708c02ef ""
   "Z_Resources/randtopk_cifar-attack-error.pdf" 1720078769 18951 19ece3a8ec890774279036c277124aec ""
   "Z_Resources/randtopk_cifar100-generror.pdf" 1720074379 62400 5cde31e76ca60fd90aebec8128aa2f1d ""
   "Z_Resources/randtopk_cifar100-trainacc.pdf" 1720074385 47842 6d2d80386f34547e57236b6c001643df ""
@@ -94,7 +94,7 @@
   "body/graduate/content.tex" 1719906959 4723 d9a621f2538fd068cd681ec8ba0b63eb ""
   "body/graduate/post.tex" 1720152133 245 88d07b32b73c34bd677cf6c0b51f6b95 ""
   "body/graduate/post/appendix.tex" 1719197932 399 396db03ae13dc9ea6b016ff23253e4ef ""
-  "body/graduate/post/cv.tex" 1720429439 2162 7e5eee9b636aaf5720a35d4c665db9b9 ""
+  "body/graduate/post/cv.tex" 1720595727 2163 47e8d7ed693886e1c276a123c130cc25 ""
   "body/graduate/post/ref.tex" 1717155879 107 f4bce11db07da858951913c27ea12d2d ""
   "c:/Windows/Fonts/msyh.ttc" 1689134857 19701556 07c864a5b15e68fa47639738197fae38 ""
   "config/commands.tex" 1717155880 8132 afaef9d22e3be137db172d53d5e12359 ""
@@ -317,19 +317,19 @@
   "d:/Tools/texlive/2024/texmf.cnf" 1717148993 713 e69b156964470283e0530f5060668171 ""
   "figure/logo/zju.pdf" 1717155883 97344 4d07a90b33ef985a0a81eacd6a20f257 ""
   "figure/logo/zjuchar.pdf" 1717155883 106008 ddad29adc77a12298695736be8b80953 ""
-  "page/graduate/abstract.tex" 1720513523 9797 385ccf1558653834e857469617abae40 ""
+  "page/graduate/abstract.tex" 1720595441 9815 e5336a740333fe6227eb9c0b15d50484 ""
   "page/graduate/cover-chn.tex" 1719973953 4022 d9a961c08e6e32d6890347cf5a25f2fd ""
   "page/graduate/cover.tex" 1720151963 144 e2738715863626ff74eb7603f0512341 ""
   "page/graduate/previous.tex" 1719919777 223 67df82301da33e7c7f814b184c109665 ""
   "page/graduate/toc.tex" 1717155881 566 b3de91dc49ebda03f22eeff77e2ca416 ""
-  "zjuthesis.aux" 1720594642 82641 251f7da49493c70f45b2d60a90abbff2 "xelatex"
+  "zjuthesis.aux" 1720595736 82641 4fd9c93a6cc624c1239760f6fb15b52a "xelatex"
   "zjuthesis.bbl" 1720515736 721645 0ec8d30f07362d2e0ad83089274c6d80 "biber zjuthesis"
   "zjuthesis.cls" 1717155879 2872 ac5ab01d8effd844d84dd74dc08ec0f4 ""
-  "zjuthesis.lof" 1720594642 4488 512a87626d3eb25a4800d02f84c327b0 "xelatex"
-  "zjuthesis.lot" 1720594642 957 bc6db9c41e86e7c8e12768385d3f8ae9 "xelatex"
-  "zjuthesis.run.xml" 1720594642 2484 42f3da109a0bb57714d7d986a381a668 "xelatex"
+  "zjuthesis.lof" 1720595736 4488 512a87626d3eb25a4800d02f84c327b0 "xelatex"
+  "zjuthesis.lot" 1720595736 957 bc6db9c41e86e7c8e12768385d3f8ae9 "xelatex"
+  "zjuthesis.run.xml" 1720595736 2484 42f3da109a0bb57714d7d986a381a668 "xelatex"
   "zjuthesis.tex" 1720427604 5876 63585de951098cd9ddfd05f82a10f3d2 ""
-  "zjuthesis.toc" 1720594642 10827 8cd14e84f73ea743246217e266a9001a "xelatex"
+  "zjuthesis.toc" 1720595736 10827 d199c8736a322860e10035ea8db6ea92 "xelatex"
   (generated)
   "zjuthesis.aux"
   "zjuthesis.bcf"

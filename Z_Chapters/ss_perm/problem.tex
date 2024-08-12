@@ -85,7 +85,7 @@ Johnson-Lindenstrauss引理~\cite{matouvsek_2008_jl_lemma}告诉我们，对高�
     模型预测值$Y$只暴露给设定的结果获取方，可能是$P_0$或$P_1$，也可以是其他方。
     \item 模型训练：计算 $\Theta' = g(X; \Theta)$，其中$g$表示模型的训练函数，其输出为更新后的参数。
     比如对于梯度下降法，$g(X;\Theta) = \Theta - \alpha \partial L(X;\Theta) / \partial \Theta$，其中$L$表示损失函数，$\alpha$是学习率。
-    要求在训练过程中，模型参数$\Theta, \Theta'$，各方数据$X$，以及其他中间结果尽可能不暴露。
+    要求在训练过程中，模型参数$\Theta, \Theta'$、各方数据$X$，以及其他中间结果尽可能不暴露。
 \end{enumerate}
 
 在上述的隐私保护机器学习过程中，我们新增一个第三方$P_2$，其自身不带任何模型参数或数据，仅为$P_0$和$P_1$的计算提供辅助作用。
