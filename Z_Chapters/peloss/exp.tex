@@ -3,7 +3,7 @@
 %
 各个数据集和对应的模型介绍如下：
 \begin{itemize}
-    \item MNIST~\cite{mnist}：一个常用的手写数字数据集，包含了7万张$28\times 28$大小的黑白图片，根据手写数字的值划分为10类（0-9）。
+    \item MNIST~\cite{mnist}：一个常用的手写数字数据集，是一个10分类的手写数字分类数据集，包含了60000个训练样本和10000个验证样本，每个样本为$28\times 28$的灰度图片。
     对应的模型是一个隐层大小为[128, 32]的全连接神经网络，激活函数采用LeakyReLU。
     
     \item Fashion-MNIST~\cite{fashion}：一个包含了10个类别的图片数据集，包含了7万张服饰相关的$28\times 28$大小的黑白图片。
@@ -13,7 +13,7 @@
     \item CIFAR-10~\cite{krizhevsky_2009_cifar}：一个包含了10个类别的6万张图片的彩色图片数据集，图片大小为$3\times 32\times 32$。
     对应的模型是ResNet-20模型~\cite{hekaiming2016resnet}。
 
-    \item DBPedia~\cite{2007dbpedia}：一个文本分类数据集，包含了多级的标签，我们选择最上级的标签，共有9个类别，总共有大约34万条文本。
+    \item DBPedia~\cite{2007dbpedia}：一个文本分类数据集，在第\ref{chap:randomized_topk}章已经进行了介绍。
     我们采用TextCNN模型~\cite{kimyoon2014textcnn}进行分类，卷积核的大小为 $(3,4,5)$，并且使用Glove预训练词向量~\cite{pennington2014glove}。
     拆分层设置为最后的隐层，大小为300。
 \end{itemize}
